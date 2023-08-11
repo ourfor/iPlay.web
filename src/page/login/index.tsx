@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material"
+import { Button, Checkbox, Stack, TextField } from "@mui/material"
 import style from "./index.module.scss"
 
 export default function Page() {
@@ -22,6 +22,9 @@ export default function Page() {
                     />
 
                     <Button className={style["login"]} variant="contained">Sign in</Button>
+                    <Stack className={style["items"]} direction="row" justifyContent="flex-start" alignItems="center">
+                        <Checkbox className={style["remember-me"]} defaultChecked sx={{color: "#737373", '&.Mui-checked': {color: "white"}}} /> Remember me
+                    </Stack>
                 </div>
             </div>
         </div>
