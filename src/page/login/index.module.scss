@@ -1,0 +1,111 @@
+.page {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: url("./background.jpg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform-style: preserve-3d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::before {
+        top: 0;
+        left: 0;
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        filter: blur(0.25rem);
+        transform: translateZ(-1px);
+        background-image: url("./background.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container {
+        display: flex;
+        // width: 28.125rem;
+        padding: 3.75rem 4.25rem 2.5rem 4.25rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 0.25rem;
+        background: rgba(0, 0, 0, 0.75);
+        color: white;
+    }
+
+    .title {
+        color: #FFF;
+        font-family: Helvetica Neue;
+        font-size: 1.9375rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .input {
+        margin-top: 1rem;
+        width: 19.625rem;
+        height: 3.125rem;
+        flex-shrink: 0;
+    }
+    .input > label {
+        color: #8c8c8c;
+        font-family: Helvetica Neue;
+        font-size: 0.9375rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .input > div {
+        border-radius: 0.25rem;
+        background: #333;
+        display: flex;
+        width: 19.625rem;
+        height: 3.125rem;
+        padding-top: 1rem;
+        padding-bottom: 1.25rem;
+        align-items: center;
+        flex-shrink: 0;
+
+        input {
+            color: white;
+        }
+    }
+
+    .login {
+        margin-top: 1rem;
+        display: inline-flex;
+        width: 19.625rem;
+        align-items: flex-start;
+        padding-top: 0.94rem;
+        padding-bottom: 1.06rem;
+        justify-content: center;
+        border-radius: 0.25rem;
+        background: #E50914;
+        box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.55);
+
+        text-transform: none;
+        color: #FFF;
+        text-align: center;
+        font-family: Helvetica Neue;
+        font-size: 0.9375rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1rem; /* 106.667% */
+    }
+}
