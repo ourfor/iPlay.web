@@ -1,0 +1,25 @@
+@import "~@style/font/dmvendor.css";
+
+@font-face {
+    font-family: AritaHeiti;
+    src: url('./AritaHeiti-Light.otf');
+    unicode-range: U+4E00-9FFF;
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: AritaHeiti;
+    src: url('./AritaHeiti-Medium.otf');
+    unicode-range: U+4E00-9FFF;
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: AritaHeiti;
+    src: url('./AritaHeiti-Bold.otf');
+    unicode-range: U+4E00-9FFF;
+    font-weight: 700;
+    font-style: normal;
+}

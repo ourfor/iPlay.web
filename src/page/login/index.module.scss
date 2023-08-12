@@ -50,7 +50,7 @@
 
     .title {
         color: #FFF;
-        font-family: Helvetica Neue;
+        font-family: dm, AritaHeiti;
         font-size: 1.9375rem;
         font-style: normal;
         font-weight: 500;
@@ -66,9 +66,10 @@
         height: 3.125rem;
         flex-shrink: 0;
     }
+
     .input > label {
         color: #8c8c8c;
-        font-family: Helvetica Neue;
+        font-family: dm, AritaHeiti;
         font-size: 0.9375rem;
         font-style: normal;
         font-weight: 400;
@@ -94,6 +95,7 @@
 
     .items {
         width: 19.625rem;
+        font-family: dm, AritaHeiti;
     }
 
     .login {
@@ -112,7 +114,7 @@
         text-transform: none;
         color: #FFF;
         text-align: center;
-        font-family: Helvetica Neue;
+        font-family: dm, AritaHeiti;
         font-size: 0.9375rem;
         font-style: normal;
         font-weight: 500;
