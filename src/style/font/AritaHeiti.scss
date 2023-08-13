@@ -2,7 +2,10 @@
 
 @font-face {
     font-family: AritaHeiti;
-    src: url('./AritaHeiti-Light.otf');
+    src: local("AritaHeiti-Light"),
+        local("Arita Heiti"),
+        local("Arita Heiti Light")
+        url('./AritaHeiti-Light.otf');
     unicode-range: U+4E00-9FFF;
     font-weight: 300;
     font-style: normal;
@@ -10,7 +13,10 @@
 
 @font-face {
     font-family: AritaHeiti;
-    src: url('./AritaHeiti-Medium.otf');
+    src: local("AritaHeiti-Medium"),
+        local("Arita Heiti"),
+        local("Arita Heiti Medium"),
+        url('./AritaHeiti-Medium.otf');
     unicode-range: U+4E00-9FFF;
     font-weight: 500;
     font-style: normal;
@@ -18,7 +24,10 @@
 
 @font-face {
     font-family: AritaHeiti;
-    src: url('./AritaHeiti-Bold.otf');
+    src: local("AritaHeiti-Bold"),
+        local("Arita Heiti"),
+        local("Arita Heiti Bold")
+        url('./AritaHeiti-Bold.otf');
     unicode-range: U+4E00-9FFF;
     font-weight: 700;
     font-style: normal;

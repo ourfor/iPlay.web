@@ -40,6 +40,9 @@ export default function Page() {
                     <Stack className={style["items"]} direction="row" justifyContent="flex-start" alignItems="center">
                         <Checkbox className={style["remember-me"]} defaultChecked sx={{ color: "#737373", '&.Mui-checked': { color: "white" } }} /> Remember me
                     </Stack>
+                    <Stack className={style["items"]} direction="row" justifyContent="flex-start" alignItems="center">
+                        登录表示同意用户协议，版权所有
+                    </Stack>
                 </div>
             </div>
         </div>
