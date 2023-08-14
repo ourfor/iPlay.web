@@ -1,5 +1,7 @@
 import { Button, Checkbox, Stack, TextField } from "@mui/material"
 import style from "./index.module.scss"
+import { useState } from "react"
+import { API } from "@api/api"
 
 const customStyle = {
     '& .MuiOutlinedInput-root': {
@@ -13,6 +15,17 @@ const customStyle = {
 }
 
 export default function Page() {
+    const [username, setUserName] = useState("")
+    const [password, setPassword] = useState("")
+    const [remember, setRemember] = useState(false)
+
+    const submit = () => {
+        console.log(username, password, remember)
+        API.login(username, password)
+            .then(data => {
+                console.log(data)
+            })
+    }
     return (
         <div className={style["page"]}>
             <div className={style["wrap"]}>
@@ -24,6 +37,8 @@ export default function Page() {
                         id="outlined-required"
                         placeholder="用户名"
                         label="Username"
+                        value={username}
+                        onChange={e => setUserName(e.target.value)}
                         sx={customStyle}
                     />
                     <TextField
@@ -32,13 +47,22 @@ export default function Page() {
                         label="Password"
                         placeholder="密码"
                         type="password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
                         autoComplete="current-password"
                         sx={customStyle}
                     />
 
-                    <Button className={style["login"]} variant="contained">Sign in</Button>
+                    <Button className={style["login"]}
+                        onClick={submit}
+                        variant="contained">
+                        Sign in
+                    </Button>
                     <Stack className={style["items"]} direction="row" justifyContent="flex-start" alignItems="center">
-                        <Checkbox className={style["remember-me"]} defaultChecked sx={{ color: "#737373", '&.Mui-checked': { color: "white" } }} /> Remember me
+                        <Checkbox className={style["remember-me"]}
+                            value={remember}
+                            onChange={(_, checked) => setRemember(checked)}
+                            sx={{ color: "#737373", '&.Mui-checked': { color: "white" } }} /> Remember me
                     </Stack>
                     <Stack className={style["items"]} direction="row" justifyContent="flex-start" alignItems="center">
                         登录表示同意用户协议，版权所有
