@@ -2,6 +2,9 @@ import { Button, Checkbox, Stack, TextField } from "@mui/material"
 import style from "./index.module.scss"
 import { useState } from "react"
 import { API } from "@api/api"
+import { log } from "@helper/log"
+import { useAppDispatch } from "@data/StoreHook"
+import { updateUser } from "@data/User"
 
 const customStyle = {
     '& .MuiOutlinedInput-root': {
@@ -18,12 +21,14 @@ export default function Page() {
     const [username, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [remember, setRemember] = useState(false)
+    const dispatch = useAppDispatch()
 
     const submit = () => {
         console.log(username, password, remember)
         API.login(username, password)
             .then(data => {
-                console.log(data)
+                log.info(data)
+                dispatch(updateUser(data))
             })
     }
     return (

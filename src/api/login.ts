@@ -1,13 +1,4 @@
-interface LoginResponse {
-    AccessToken: string
-    ServerId: string
-    User: {
-        Name: string
-        Id: String
-        ServerId: string
-
-    }
-}
+import { User } from "@model/User";
 
 export async function login(username: string, password: string) {
     const response = await fetch("https://media.endeny.me/emby/Users/authenticatebyname?X-Emby-Client=Emby%20Web&X-Emby-Device-Name=Microsoft%20Edge%20macOS&X-Emby-Device-Id=feed8217-7abd-4d2d-a561-ed21c0b9c30e&X-Emby-Client-Version=4.7.13.0&X-Emby-Language=zh-cn", {
@@ -29,6 +20,6 @@ export async function login(username: string, password: string) {
         "mode": "cors",
         "credentials": "omit"
       });
-    const data = await response.json() as LoginResponse
+    const data = await response.json() as User
     return data
 }

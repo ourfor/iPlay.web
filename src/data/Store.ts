@@ -3,6 +3,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import settingSlice from "./Setting";
+import userSlice from "./User";
 
 const Env = {
     name: "development",
@@ -14,6 +15,10 @@ const reducer = combineReducers({
         key: [Env.storeKey, "setting"].join("/"),
         storage
     }, settingSlice),
+    user: persistReducer({
+        key: [Env.storeKey, "user"].join("/"),
+        storage
+    }, userSlice), 
 })
 
 const persistConfig = {
