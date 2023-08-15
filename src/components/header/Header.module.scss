@@ -1,0 +1,32 @@
+.header {
+    display: inline-flex;
+    flex-direction: row;
+    padding: 1.5625rem 3.75rem;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+
+    .left {
+        flex-grow: 1;
+
+        &>span {
+            font-size: 1.125rem;
+            font-style: normal;
+            line-height: normal;
+            padding: 0 1.25rem;
+        }
+    }
+
+    .right {
+        flex-shrink: 0;
+    }
+
+    .logo {
+        margin-right: 3.125rem;
+    }
+
+    .avator {
+        width: 2rem;
+        height: 2rem;
+    }
+}

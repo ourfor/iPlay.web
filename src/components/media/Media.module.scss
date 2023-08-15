@@ -1,0 +1,20 @@
+.card {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    opacity: 1;
+    transition: opacity .2s ease-out;
+
+    img {
+        border-radius: 0.5rem;
+        border: 1px solid transparent;
+        max-width: 9rem;
+        flex-grow: 1;
+    }
+
+    p {
+        font-size: 0.85rem;
+    }
+}

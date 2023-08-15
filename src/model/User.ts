@@ -3,7 +3,7 @@ export interface User {
     ServerId: string
     User: {
         Name: string
-        Id: String
+        Id: string
         ServerId: string
     }
 }

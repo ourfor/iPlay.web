@@ -1,0 +1,16 @@
+.album {
+    margin: 0.25rem;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        border: 1px solid transparent;
+        border-radius: 0.5rem;
+    }
+
+    p {
+        font-size: 0.85rem;
+    }
+}
