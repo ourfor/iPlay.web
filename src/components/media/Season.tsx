@@ -5,7 +5,7 @@ import { useAppSelector } from "@data/StoreHook";
 import { usePromise } from "@hook/usePromise";
 import { User } from "@model/User";
 import style from "./Season.module.scss"
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export interface SeasonCardListProps {
     vid: string|number
@@ -27,13 +27,14 @@ export interface SeasonCardProps {
 }
 
 export function SeasonCard(props: SeasonCardProps) {
+    const navigate = useNavigate()
     const src = imageUrl(props.sid, props.etag)
     return (
-        <Link to={`/season/${props.sid}`}>
-        <div className={style["card"]}>
+        <div className={style["card"]}
+            onClick={() => navigate(`/season/${props.sid}`)}
+            >
             <img src={src} />
             <p>{props.name}</p>
         </div>
-        </Link>
     )
 }

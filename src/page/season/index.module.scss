@@ -1,0 +1,30 @@
+.page {
+    box-sizing: border-box;
+    padding: 1rem;
+    backdrop-filter: blur(0.25rem);
+    background: linear-gradient(77deg,rgba(0,0,0,.84) 0,rgba(0,0,0,.7) 60%,rgba(0,0,0,.4) 100%);
+    color: white;
+
+    .intro {
+        display: flex;
+        margin-bottom: 1rem;
+
+        .right {
+            margin-left: 1.5rem;
+            h3 {
+                margin-top: 0.25rem;
+            }
+        }
+    }
+
+    h3 {
+        font-size: 2rem;
+    }
+
+    .poster {
+        width: 16%;
+        max-width: 181px;
+        border-radius: 0.25rem;
+        box-shadow: 0 .278em 1.39em rgb(0 0 0 / 20%);
+    }
+}

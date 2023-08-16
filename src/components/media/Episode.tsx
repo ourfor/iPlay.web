@@ -5,19 +5,21 @@ import { Episode } from "@model/Episode"
 import { User } from "@model/User"
 import style from "./Episode.module.scss"
 import { imageUrl } from "@api/config"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export function EpisodeCard(episode: Episode) {
+    const navigate = useNavigate()
     return (
-        <Link to={`/play/${episode.Id}`}>
-        <div className={style["root"]} key={episode.Id}>
+        <div className={style["root"]} 
+            key={episode.Id}
+            onClick={() => navigate(`/play/${episode.Id}`)}
+            >
             <img src={imageUrl(episode.Id, episode.ImageTags.Primary)} />
             <div>
                 <span>{episode.Name}</span>
                 <article>{episode.Overview}</article>
             </div>
         </div>
-        </Link>
     )
 }
 
@@ -31,7 +33,7 @@ export function EpisodeList(props: EpisodeListProps) {
     if (!data) return null
     return (
         <div>
-            {data.map(EpisodeCard)}
+            {data.map(episode => <EpisodeCard {...episode} />)}
         </div>
     )
 }

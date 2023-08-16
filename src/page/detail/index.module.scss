@@ -1,27 +1,66 @@
 .page {
     width: 100vw;
     min-height: 100vh;
-    box-sizing: border-box;
-    padding: 1rem;
-    background-repeat: no-repeat;
-    background-size: cover;
-    // position: relative;
-    transform-style: preserve-3d;
-    background: linear-gradient(77deg,rgba(0,0,0,.84) 0,rgba(0,0,0,.7) 60%,rgba(0,0,0,.4) 100%)!important;
     color: white;
-    // overflow-y: scroll;
 
-    &::before {
-        content: "";
+    .background {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        transform: translateZ(-1px);
         background-image: var(--bg-image, url("./background.jpg"));
         background-repeat: no-repeat;
         background-size: cover;
+
+        &::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(0.25rem);
+            background: linear-gradient(77deg,rgba(0,0,0,.84) 0,rgba(0,0,0,.7) 60%,rgba(0,0,0,.4) 100%);
+        }
+    }
+
+    .content {
+        box-sizing: border-box;
+        padding: 1rem;
+        backdrop-filter: blur(0.25rem);
+    }
+
+    h4 {
+        font-size: 1.5rem;
+    }
+
+    .tag {
+        margin: 0.25rem;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        color: rgba(0, 0, 0, 0.88);
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none;
+        font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+        display: inline-block;
+        height: auto;
+        margin-inline-end: 8px;
+        padding-inline: 7px !important;
+        white-space: nowrap;
+        background: rgba(0, 0, 0, 0.02);
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        opacity: 1;
+        transition: all 0.2s;
+        text-align: start;
+
+        font-size: .75rem;
+        color: #c41d7f;
+        background: #fff0f6;
+        border-color: #ffadd2;
     }
 
     .media-card {
@@ -42,6 +81,7 @@
         }
 
         article {
+            margin-top: 1rem;
             font-size: 0.95rem;
         }
     }

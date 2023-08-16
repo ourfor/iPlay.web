@@ -4,6 +4,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import settingSlice from "./Setting";
 import userSlice from "./User";
+import historySlice from "./History";
 
 const Env = {
     name: "development",
@@ -19,6 +20,10 @@ const reducer = combineReducers({
         key: [Env.storeKey, "user"].join("/"),
         storage
     }, userSlice), 
+    history: persistReducer({
+        key: [Env.storeKey, "history"].join("/"),
+        storage
+    }, historySlice), 
 })
 
 const persistConfig = {
@@ -26,7 +31,7 @@ const persistConfig = {
     storage,
     blacklist: [
         "dashboard", 
-        "message",
+        "message"
     ]
 }
 

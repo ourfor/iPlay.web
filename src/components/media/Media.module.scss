@@ -11,7 +11,8 @@
         border-radius: 0.5rem;
         border: 1px solid transparent;
         max-width: 9rem;
-        flex-grow: 1;
+        flex-grow: 0;
+        flex-shrink: 1;
     }
 
     p {

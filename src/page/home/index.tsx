@@ -51,7 +51,7 @@ export default function Page() {
             <Stack className={style["no-scrollbar"]} direction={"row"} overflow={"scroll"}>
                 {albums && albums.Items.map((item, i) => <Album key={`album-${i}`} {...item}/>)}
             </Stack>
-            {medias && Object.entries(medias).map(([name, media]) => (
+            {medias && Object.entries(medias).filter(([key, value]) => value && value.length).map(([name, media]) => (
                 <>
                 <p className={style["title"]}>{name}</p>
                 <Stack className={style["no-scrollbar"]} direction={"row"} overflow={"scroll"}>
