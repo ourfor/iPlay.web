@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.bbe491b9.css",
-    "main.js": "/static/js/main.42c1c654.js",
+    "main.css": "/static/css/main.9d5723a1.css",
+    "main.js": "/static/js/main.462782f7.js",
     "static/media/AritaHeiti-Light.otf": "/static/media/AritaHeiti-Light.34ff84462bdce63a1da9.otf",
     "static/media/AritaHeiti-Medium.otf": "/static/media/AritaHeiti-Medium.6875501173fe2dd7687b.otf",
     "static/media/AritaHeiti-Bold.otf": "/static/media/AritaHeiti-Bold.933d4c1edc5577b8cf2c.otf",
@@ -10,7 +10,7 @@
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.bbe491b9.css",
-    "static/js/main.42c1c654.js"
+    "static/css/main.9d5723a1.css",
+    "static/js/main.462782f7.js"
   ]
 }
