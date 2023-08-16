@@ -1,0 +1,24 @@
+$step: 10;
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+.animation-spin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4em;
+    height: 4em;
+
+    &>svg {
+        width: 3rem;
+        height: 3rem;
+        animation: spin 1200ms infinite linear;
+    }
+}

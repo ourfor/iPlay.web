@@ -1,0 +1,14 @@
+.card {
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img {
+        width: 8rem;
+        border-radius: 0.25rem;
+    }
+
+    p {
+        font-size: 0.85rem;
+    }
+}

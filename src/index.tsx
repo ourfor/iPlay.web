@@ -3,6 +3,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import PageLogin from "@page/login"
 import PageHome from "@page/home"
+import PageDetail from "@page/detail"
+import PageSeason from "@page/season"
+import PagePlay from "@page/play"
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -14,7 +17,10 @@ const root = ReactDOM.createRoot(
 
 const router = createBrowserRouter([
   {path: "/login", element: <PageLogin />},
-  {path: "/", element: <PageHome />}
+  {path: "/", element: <PageHome />},
+  {path: "/detail/*", element: <PageDetail />},
+  {path: "/season/*", element: <PageSeason />},
+  {path: "/play/*", element: <PagePlay />}
 ], {
   basename: process.env.PUBLIC_URL
 })

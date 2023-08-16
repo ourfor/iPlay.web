@@ -1,0 +1,13 @@
+.people {
+    margin: 0.25rem;
+    img {
+        max-width: 10rem;
+        border: 1px solid transparent;
+        border-radius: 0.5rem;
+    }
+
+    span {
+        display: block;
+        font-size: 0.75rem;
+    }
+}

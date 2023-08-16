@@ -18,10 +18,29 @@ export function makeUrl(params: Map<string, any>, path: string) {
     return url
 }
 
-export function imageUrl(id: string, etag: string, type: "Primary" = "Primary") {
-    return `${emby.protocol}://${emby.host}/emby/Items/${id}/Images/${type}?maxHeight=338&maxWidth=600&tag=${etag}&quality=90`
+export interface ImageProps {
+    maxHeight: number
+    maxWidth: number
+    tag: string
+    quality: number
 }
 
-export function avatorUrl(id: string, etag: string, type: "Primary" = "Primary") {
-    return `${emby.protocol}://${emby.host}/emby/Users/${id}/Images/${type}?height=152&tag=${etag}&quality=90`
+export function imageUrl(id: string, options: string|Partial<ImageProps>, type: "Primary"|string = "Primary") {
+    if (typeof options === "string") {
+        return `${emby.protocol}://${emby.host}/emby/Items/${id}/Images/${type}?maxHeight=338&maxWidth=600&tag=${options}&quality=90`
+    } else {
+        const url = new URL(`${emby.protocol}://${emby.host}/emby/Items/${id}/Images/${type}`)
+        Object.entries(options).forEach(([key, value]) => {
+            url.searchParams.set(key, String(value))
+        })
+        return url.href
+    }
+}
+
+export function avatorUrl(id: string, options: string|Partial<ImageProps>, type: "Primary" = "Primary") {
+    return `${emby.protocol}://${emby.host}/emby/Users/${id}/Images/${type}?height=152&tag=${options}&quality=90`
+}
+
+export function playUrl(path: string) {
+    return `${emby.protocol}://${emby.host}/emby${path}`
 }

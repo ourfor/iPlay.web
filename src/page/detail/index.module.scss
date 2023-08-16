@@ -1,0 +1,48 @@
+.page {
+    width: 100vw;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding: 1rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    // position: relative;
+    transform-style: preserve-3d;
+    background: linear-gradient(77deg,rgba(0,0,0,.84) 0,rgba(0,0,0,.7) 60%,rgba(0,0,0,.4) 100%)!important;
+    color: white;
+    // overflow-y: scroll;
+
+    &::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        transform: translateZ(-1px);
+        background-image: var(--bg-image, url("./background.jpg"));
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .media-card {
+        display: flex;
+
+        .cover {
+            display: block;
+            width: 20rem;
+            // background-image: var("image");
+            background-repeat: no-repeat;
+            margin: 1rem;
+            border-radius: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .title {
+            font-size: 1.75rem;
+        }
+
+        article {
+            font-size: 0.95rem;
+        }
+    }
+}

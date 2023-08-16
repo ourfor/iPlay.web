@@ -5,6 +5,7 @@ import { API } from "@api/api"
 import { log } from "@helper/log"
 import { useAppDispatch } from "@data/StoreHook"
 import { updateUser } from "@data/User"
+import { useNavigate } from "react-router-dom"
 
 const customStyle = {
     '& .MuiOutlinedInput-root': {
@@ -22,6 +23,7 @@ export default function Page() {
     const [password, setPassword] = useState("")
     const [remember, setRemember] = useState(false)
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
 
     const submit = () => {
         console.log(username, password, remember)
@@ -29,6 +31,9 @@ export default function Page() {
             .then(data => {
                 log.info(data)
                 dispatch(updateUser(data))
+                navigate({
+                    pathname: "/"
+                })
             })
     }
     return (
