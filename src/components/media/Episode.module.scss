@@ -1,6 +1,9 @@
+@import "~@style/click.scss";
+
 .root {
     display: flex;
     margin: 0.25rem;
+    @include clickable;
 
     img {
         max-width: 16rem;

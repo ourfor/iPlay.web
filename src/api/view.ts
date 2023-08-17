@@ -25,7 +25,7 @@ export async function getView(user: User) {
 export async function getLatestMedia(user: User, parentId: number) {
     const params = {
         Limit: 16,
-        Fields: "BasicSyncInfo,CanDelete,Container,PrimaryImageAspectRatio,ProductionYear,Status,EndDate",
+        Fields: "BasicSyncInfo,CanDelete,Container,PrimaryImageAspectRatio,ProductionYear,Status,EndDate,Overview",
         ImageTypeLimit: 1,
         EnableImageTypes: "Primary,Backdrop,Thumb",
         ParentId: parentId,

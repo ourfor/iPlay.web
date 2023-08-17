@@ -1,4 +1,7 @@
+@import "~@style/click.scss";
+
 .card {
+    @include clickable;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
