@@ -1,18 +1,27 @@
-import { getPlaybackInfo } from "@api/play"
 import { Spin } from "@components/animation/Spin"
-import { useAppSelector } from "@data/StoreHook"
-import { log } from "@helper/log"
-import { usePromise } from "@hook/usePromise"
-import { User } from "@model/User"
-import { useLocation } from "react-router-dom"
+import { LoaderFunctionArgs, useLoaderData } from "react-router-dom"
 import style from "./index.module.scss"
 import { Player } from "@components/media/Player"
+import { Api } from "@api/emby"
+import { useEffect } from "react"
+
+export async function pageLoader({params}: LoaderFunctionArgs) {
+    const id = Number(params.id)
+    const data = await Api.emby?.getPlaybackInfo?.(id)
+    return {
+        params: {id},
+        data
+    }
+}
 
 export default function Page() {
-    const id = useLocation().pathname.split("/").pop()
-    const user = useAppSelector(state => state.user)
-    const {loading, data} = usePromise(() => getPlaybackInfo(user as User, Number(id)), [user, id])
-    if (loading || !data || !id) return <Spin />
+    const {params: {id}, data } = useLoaderData() as SyncReturnType<typeof pageLoader>
+    useEffect(() => {
+        if (!data) return
+        document.title = data.MediaSources[0].Name
+    }, [data])
+    
+    if (!data) return <Spin />
     return (
         <div className={style["page"]}>
             <Player vid={id} model={data} />

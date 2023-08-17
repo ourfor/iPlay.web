@@ -4,7 +4,7 @@ import "plyr-react/plyr.css"
 import { PlaybackInfo } from "@model/PlaybackInfo"
 
 export interface PlayerProps {
-    vid: string
+    vid: string|number
     model: PlaybackInfo
 }
 
@@ -15,7 +15,7 @@ export function Player({vid, model}: PlayerProps) {
             src: playUrl(item.DirectStreamUrl),
             title: item.Name,
         })),
-        poster: imageUrl(vid ?? "", {maxWidth: 1920, maxHeight: 1080})
+        poster: imageUrl(String(vid ?? ""), {maxWidth: 1920, maxHeight: 1080})
         // sources: []
     }
     const options: Plyr.Options = {
