@@ -1,28 +1,29 @@
 import { imageUrl } from "@api/config"
-import { getMedia } from "@api/view"
-import { Spin } from "@components/animation/Spin"
 import { Stack } from "@components/layout/Stack"
 import { PeopleCard } from "@components/people/PeopleCard"
-import { useAppSelector } from "@data/StoreHook"
 import { log } from "@helper/log"
-import { usePromise } from "@hook/usePromise"
-import { useQuery } from "@hook/useQuery"
-import { User } from "@model/User"
-import { useLocation } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
 import style from "./index.module.scss"
 import { Chip } from "@mui/material"
 import { SeasonCardList } from "@components/media/Season"
+import { Map } from "@model/Map"
+import { Api } from "@api/EmbyAPI"
+
+export async function pageLoader({ params }: {params: Map<string, string>}) {
+    const id = Number(params.id)
+    log.info('detail id', id)
+    const data = await Api.emby?.getMedia?.(id)
+    return {
+        data
+    }
+}
 
 export default function Page() {
-    const id = useLocation().pathname.split("/").pop()
-    const user = useAppSelector(state => state.user)
-    const { loading, data } = usePromise(() => getMedia(user as User, Number(id)), [user, id])
-    if (loading) {
-        return <Spin />
-    }
-
-    log.info(data)
-    if (!loading && data) return (
+    const {
+        data
+    } = useLoaderData() as SyncReturnType<typeof pageLoader>
+    log.info(`detail data`, data)
+    if (data) return (
         <div className={style["page"]}>
             <div className={style["background"]} style={{ "--bg-image": `url(${imageUrl(data.Id, data.BackdropImageTags[0], "Backdrop/0")}` } as any} />
             <div className={style["content"]}>

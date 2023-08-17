@@ -5,6 +5,9 @@ import thunk from 'redux-thunk';
 import settingSlice from "./Setting";
 import userSlice from "./User";
 import historySlice from "./History";
+import { log } from "@helper/log";
+import { Api, EmbyAPI } from "@api/EmbyAPI";
+import { User } from "@model/User";
 
 const Env = {
     name: "development",
@@ -18,7 +21,7 @@ const reducer = combineReducers({
     }, settingSlice),
     user: persistReducer({
         key: [Env.storeKey, "user"].join("/"),
-        storage
+        storage,
     }, userSlice), 
     history: persistReducer({
         key: [Env.storeKey, "history"].join("/"),
@@ -43,7 +46,11 @@ export const store = configureStore({
     middleware: [thunk]
 })
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store, null, () => {
+    const state = store.getState()
+    log.info("init store", state)
+    Api.emby = new EmbyAPI(state.user as User)
+})
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

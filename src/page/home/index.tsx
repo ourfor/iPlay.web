@@ -52,12 +52,12 @@ export default function Page() {
                 {albums && albums.Items.map((item, i) => <Album key={`album-${i}`} {...item}/>)}
             </Stack>
             {medias && Object.entries(medias).filter(([key, value]) => value && value.length).map(([name, media]) => (
-                <>
+                <div key={name}>
                 <p className={style["title"]}>{name}</p>
                 <Stack className={style["no-scrollbar"]} direction={"row"} overflow={"scroll"}>
-                    {media && media.map(movie => <MediaCard {...movie} />)}
+                    {media && media.map((movie, i) => <MediaCard key={`media-${i}`} {...movie} />)}
                 </Stack>
-                </>
+                </div>
             ))}
         </div>
     )
