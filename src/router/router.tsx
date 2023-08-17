@@ -1,8 +1,8 @@
 import PageLogin from "@page/login"
 import PageHome from "@page/home"
-import PageDetail, { pageLoader } from "@page/detail"
+import PageSeries, { pageLoader as pageSeriesLoader } from "@page/series"
 import PageSeason from "@page/season"
-import PagePlay from "@page/play"
+import PagePlay, { pageLoader as pagePlayLoader } from "@page/play"
 import PageError from "@page/error"
 import { RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom';
 import { log } from "@helper/log"
@@ -19,16 +19,17 @@ export const router = () => createBrowserRouter([
         element: <PageHome /> 
     },
     { 
-        path: "/detail/:id", 
-        loader: pageLoader,
-        element: <PageDetail />
+        path: "/series/:id", 
+        loader: pageSeriesLoader,
+        element: <PageSeries />
     },
     { 
         path: "/season/:id", 
         element: <PageSeason /> 
     },
     { 
-        path: "/play/:id", 
+        path: "/play/:id",
+        loader: pagePlayLoader,
         element: <PagePlay /> 
     }
 ], {

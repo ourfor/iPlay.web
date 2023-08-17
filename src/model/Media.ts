@@ -17,7 +17,7 @@ export interface Media {
     ServerId: string
     Status: string
     SupportsSync: boolean
-    Type: string
+    Type: "Series"|"Movie"
     UserData: {
         UnplayedItemCount: number,
         PlaybackPositionTicks: number,

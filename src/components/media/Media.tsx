@@ -7,7 +7,7 @@ export function MediaCard(media: Media) {
     const navigate = useNavigate()
     const url = imageUrl(media.Id, media.ImageTags.Primary)
     return (
-        <div onClick={() => navigate(`/detail/${media.Id}`)} className={style["card"]}>
+        <div onClick={() => navigate(`/series/${media.Id}`)} className={style["card"]}>
             <img src={url} />
             <p>{media.Name}</p>
         </div>
