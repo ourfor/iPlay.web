@@ -2,9 +2,16 @@
     display: inline-flex;
     flex-direction: row;
     padding: 1.5625rem 3.75rem;
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    font-weight: 300;
+    top: 0;
+    left: 0;
     justify-content: center;
     align-items: center;
     flex-grow: 1;
+    backdrop-filter: blur(0.025rem);
 
     .left {
         flex-grow: 1;

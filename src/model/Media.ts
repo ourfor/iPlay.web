@@ -11,6 +11,7 @@ export interface Media {
     Thumb: string
     IsFolder: boolean
     Name: string
+    Overview: string
     PrimaryImageAspectRatio: number
     ProductionYear: number
     RunTimeTicks: number
