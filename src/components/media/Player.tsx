@@ -1,9 +1,7 @@
 import { imageUrl, playUrl } from "@api/config"
 import Plyr from "plyr-react"
 import "plyr-react/plyr.css"
-import { useHls } from "@hook/useHls"
 import { PlaybackInfo } from "@model/PlaybackInfo"
-import HlsPlayer from "./HlsPlayer"
 
 export interface PlayerProps {
     vid: string
@@ -25,6 +23,5 @@ export function Player({vid, model}: PlayerProps) {
     }
     return (
         <Plyr source={source} options={options} />
-        // <HlsPlayer source={source.sources[0].src} options={options} />
     )
 }

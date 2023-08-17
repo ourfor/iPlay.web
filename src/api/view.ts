@@ -1,13 +1,13 @@
 import { User } from "@model/User";
 import { View } from "@model/View";
-import { emby, makeUrl } from "./config";
+import { config, makeUrl } from "./config";
 import { Media } from "@model/Media";
 import { MediaDetail } from "@model/MediaDetail";
 import { Season } from "@model/Season";
 import { EmbyResponse } from "@model/EmbyResponse";
 import { Episode } from "@model/Episode";
 
-export async function viewByUser(user: User) {
+export async function getView(user: User) {
     const token = user.AccessToken
     const uid = user.User.Id
     const did = "feed8217-7abd-4d2d-a561-ed21c0b9c30e"
@@ -22,7 +22,7 @@ export async function viewByUser(user: User) {
     return data
 }
 
-export async function latestMedia(user: User, parentId: number) {
+export async function getLatestMedia(user: User, parentId: number) {
     const params = {
         Limit: 16,
         Fields: "BasicSyncInfo,CanDelete,Container,PrimaryImageAspectRatio,ProductionYear,Status,EndDate",

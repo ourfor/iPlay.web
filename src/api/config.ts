@@ -1,14 +1,14 @@
 import { Map } from "@model/Map";
 
-export const emby = {
+export const config = {
     host: "media.endeny.me",
     protocol: "https",
     port: 443
 }
 
-export function makeUrl(params: Map<string, any>, path: string) {
-    const url = new URL(`${emby.protocol}://${emby.host}/${path}`)
-    Object.entries(params).forEach(([key, value]) => {
+export function makeUrl(params: Map<string, any>|null, path: string) {
+    const url = new URL(`${config.protocol}://${config.host}/${path}`)
+    params && Object.entries(params).forEach(([key, value]) => {
         if (typeof value === "string") {
             url.searchParams.set(key, value)
         } else {
@@ -27,9 +27,9 @@ export interface ImageProps {
 
 export function imageUrl(id: string, options: string|Partial<ImageProps>, type: "Primary"|string = "Primary") {
     if (typeof options === "string") {
-        return `${emby.protocol}://${emby.host}/emby/Items/${id}/Images/${type}?maxHeight=338&maxWidth=600&tag=${options}&quality=90`
+        return `${config.protocol}://${config.host}/emby/Items/${id}/Images/${type}?maxHeight=338&maxWidth=600&tag=${options}&quality=90`
     } else {
-        const url = new URL(`${emby.protocol}://${emby.host}/emby/Items/${id}/Images/${type}`)
+        const url = new URL(`${config.protocol}://${config.host}/emby/Items/${id}/Images/${type}`)
         Object.entries(options).forEach(([key, value]) => {
             url.searchParams.set(key, String(value))
         })
@@ -38,9 +38,9 @@ export function imageUrl(id: string, options: string|Partial<ImageProps>, type: 
 }
 
 export function avatorUrl(id: string, options: string|Partial<ImageProps>, type: "Primary" = "Primary") {
-    return `${emby.protocol}://${emby.host}/emby/Users/${id}/Images/${type}?height=152&tag=${options}&quality=90`
+    return `${config.protocol}://${config.host}/emby/Users/${id}/Images/${type}?height=152&tag=${options}&quality=90`
 }
 
 export function playUrl(path: string) {
-    return `${emby.protocol}://${emby.host}/emby${path}`
+    return `${config.protocol}://${config.host}/emby${path}`
 }

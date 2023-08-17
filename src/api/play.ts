@@ -2,7 +2,7 @@ import { User } from "@model/User";
 import { makeUrl } from "./config";
 import { PlaybackInfo } from "@model/PlaybackInfo";
 
-export async function playbackInfo(user: User, id: number) {
+export async function getPlaybackInfo(user: User, id: number) {
     const params = {
         StartTimeTicks: 0,
         IsPlayback: true,
