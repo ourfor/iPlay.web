@@ -1,6 +1,6 @@
 import PageLogin from "@page/login"
 import PageHome from "@page/home"
-import PageDetail, { pageLoader } from "@page/detail"
+import PageSeries, { pageLoader } from "@page/series"
 import PageSeason from "@page/season"
 import PagePlay from "@page/play"
 import PageError from "@page/error"
@@ -19,9 +19,9 @@ export const router = () => createBrowserRouter([
         element: <PageHome /> 
     },
     { 
-        path: "/detail/:id", 
+        path: "/series/:id", 
         loader: pageLoader,
-        element: <PageDetail />
+        element: <PageSeries />
     },
     { 
         path: "/season/:id", 

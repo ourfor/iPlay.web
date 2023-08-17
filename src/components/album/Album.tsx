@@ -8,7 +8,7 @@ export function Album(detail: ViewDetail) {
     const url = imageUrl(detail.Id, detail.Etag)
     return (
         <div className={style["album"]}
-            onClick={() => navigate(`/detail/${detail.Id}`)}>
+            onClick={() => navigate(`/series/${detail.Id}`)}>
             <img style={{maxHeight: 128}} src={url} />
             <p>{detail.Name}</p>
         </div>
