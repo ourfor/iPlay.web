@@ -6,7 +6,7 @@ import settingSlice from "./Setting";
 import userSlice from "./User";
 import historySlice from "./History";
 import { log } from "@helper/log";
-import { Api, EmbyAPI } from "@api/EmbyAPI";
+import { Api, Emby } from "@api/emby";
 import { User } from "@model/User";
 
 const Env = {
@@ -49,7 +49,7 @@ export const store = configureStore({
 export const persistor = persistStore(store, null, () => {
     const state = store.getState()
     log.info("init store", state)
-    Api.emby = new EmbyAPI(state.user as User)
+    Api.emby = new Emby(state.user as User)
 })
 
 export type RootState = ReturnType<typeof store.getState>

@@ -7,7 +7,7 @@ import style from "./index.module.scss"
 import { Chip } from "@mui/material"
 import { SeasonCardList } from "@components/media/Season"
 import { Map } from "@model/Map"
-import { Api } from "@api/EmbyAPI"
+import { Api } from "@api/emby"
 
 export async function pageLoader({ params }: {params: Map<string, string>}) {
     const id = Number(params.id)

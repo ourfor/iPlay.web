@@ -1,24 +1,20 @@
-import { publicInfo } from "@api/info"
-import { latestMedia, viewByUser } from "@api/view"
 import { Album } from "@components/album/Album"
 import { MediaCard } from "@components/media/Media"
-import { useAppSelector } from "@data/StoreHook"
 import { log } from "@helper/log"
 import { usePromise } from "@hook/usePromise"
 import { Media } from "@model/Media"
-import { User } from "@model/User"
 import { View } from "@model/View"
 import { useEffect, useState } from "react"
 import { Map } from "@model/Map"
 import { Stack } from "@mui/material"
 import style from "./index.module.scss"
 import { Header } from "@components/header/Header"
+import { Api } from "@api/emby"
 
 export default function Page() {
-    const {data} = usePromise(publicInfo)
+    const { data } = usePromise(Api.emby?.getPublicInfo)
     const [albums, setAlbums] = useState<View|null>(null)
     const [medias, setMedias] = useState<Map<string, Media[]>>({})
-    const user = useAppSelector(state => state.user)
     useEffect(() => {
         log.info(data)
         if (data) {
@@ -26,24 +22,25 @@ export default function Page() {
         }
     }, [data])
     useEffect(() => {
-        viewByUser(user as User)
+        Api.emby?.getView?.()
             .then(data => {
                 log.info(data)
                 setAlbums(data)
             })
-    }, [user])
+    }, [])
 
     useEffect(() => {
         if (albums?.Items) {
             albums.Items.forEach(item => {
-                const id = item.Id
-                latestMedia(user as User, Number(id))
+                const id = Number(item.Id)
+                Api.emby?.getLatestMedia?.(id)
                     .then(medias => {
                         setMedias(map => ({...map, [item.Name]: medias}))
                     })
             })
         }
     }, [albums])
+    
     return (
         <div className={style["page"]}>
             <Header />
