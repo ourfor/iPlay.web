@@ -1,25 +1,16 @@
+import { ENV, EmbyConfig } from "@helper/env";
 import { Map } from "@model/Map";
 
-export interface EmbyConfig {
-    host: string
-    protocol: "http"|"https"
-    port: number
-    path: string
-}
+export type { EmbyConfig } from "@helper/env"
 
-export const DEFAULT_EMBY_CONFIG: EmbyConfig = {
-    host: "media.endeny.me",
-    protocol: "https",
-    port: 443,
-    path: "/"
-}
+export const DEFAULT_EMBY_CONFIG: EmbyConfig = ENV.emby
 
 export const config = {
     emby: DEFAULT_EMBY_CONFIG
 }
 
 export function makeUrl(params: Map<string, any>|null, path: string) {
-    const url = new URL(`${config.emby.protocol}://${config.emby.host}/${path}`)
+    const url = new URL(`${config.emby.protocol}://${config.emby.host}:${config.emby.port}${config.emby.path}${path}`)
     params && Object.entries(params).forEach(([key, value]) => {
         if (typeof value === "string") {
             url.searchParams.set(key, value)

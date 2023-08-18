@@ -11,8 +11,7 @@ export function Stack(props: StackProps) {
     return (
         <MStack className={style["stack"]} 
             direction={props.direction ?? "column"}
-            overflow={"scroll"}
-            >
+            overflow={"scroll"}>
             {props.children}
         </MStack>
     )
