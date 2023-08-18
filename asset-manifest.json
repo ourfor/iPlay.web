@@ -1,7 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.d367ebb5.css",
-    "main.js": "/static/js/main.9ab439c6.js",
+    "main.css": "/static/css/main.b44f90a1.css",
+    "main.js": "/static/js/main.beaa3d61.js",
+    "static/js/190.76fd5113.chunk.js": "/static/js/190.76fd5113.chunk.js",
+    "static/js/348.da209a3c.chunk.js": "/static/js/348.da209a3c.chunk.js",
+    "static/js/664.00c4c872.chunk.js": "/static/js/664.00c4c872.chunk.js",
+    "static/js/641.ef8921fc.chunk.js": "/static/js/641.ef8921fc.chunk.js",
+    "static/js/205.e17910cc.chunk.js": "/static/js/205.e17910cc.chunk.js",
+    "static/js/193.597e4f3c.chunk.js": "/static/js/193.597e4f3c.chunk.js",
+    "static/js/653.6f9a49a1.chunk.js": "/static/js/653.6f9a49a1.chunk.js",
+    "static/js/500.709c52bd.chunk.js": "/static/js/500.709c52bd.chunk.js",
     "static/media/AritaHeiti-Light.otf": "/static/media/AritaHeiti-Light.34ff84462bdce63a1da9.otf",
     "static/media/AritaHeiti-Medium.otf": "/static/media/AritaHeiti-Medium.6875501173fe2dd7687b.otf",
     "static/media/AritaHeiti-Bold.otf": "/static/media/AritaHeiti-Bold.933d4c1edc5577b8cf2c.otf",
@@ -11,7 +19,7 @@
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.d367ebb5.css",
-    "static/js/main.9ab439c6.js"
+    "static/css/main.b44f90a1.css",
+    "static/js/main.beaa3d61.js"
   ]
 }
