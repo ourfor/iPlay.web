@@ -1,12 +1,13 @@
 @import "~@style/click.scss";
 
+$bg-img: "//bing.img.run/uhd.php";
 
 .page {
     width: 100vw;
     height: 100vh;
     margin: 0;
     padding: 0;
-    background: url("./background.jpg");
+    background: url($bg-img);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -24,7 +25,7 @@
         height: 100%;
         filter: blur(0.125rem);
         transform: translateZ(-1px);
-        background-image: url("./background.jpg");
+        background-image: url($bg-img);
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
