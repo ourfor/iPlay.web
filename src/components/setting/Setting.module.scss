@@ -1,3 +1,21 @@
-.main {
+@import "~@style/dialog.scss";
+
+.main { 
     display: flex;
+    padding-top: 0.25rem;
+    .item {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        &>p {
+            margin-right: 1rem;
+        }
+    }
+    .input {
+        width: 15rem;
+        margin: 0;
+    }
+}
+
+.dialog {
+    @include dialog;
 }

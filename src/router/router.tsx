@@ -18,31 +18,37 @@ export const router = () => createBrowserRouter([
     { 
         path: "/",
         loader: pageHomeLoader,
-        element: <PageHome /> 
+        element: <PageHome />,
+        errorElement: <PageLogin /> 
     },
     { 
         path: "/series/:id", 
         loader: pageSeriesLoader,
-        element: <PageSeries />
+        element: <PageSeries />,
+        errorElement: <PageLogin /> 
     },
     { 
         path: "/movie/:id", 
         loader: pageSeriesLoader,
-        element: <PageSeries />
+        element: <PageSeries />,
+        errorElement: <PageLogin /> 
     },
     { 
         path: "/season/:id", 
-        element: <PageSeason /> 
+        element: <PageSeason />,
+        errorElement: <PageLogin /> 
     },
     { 
         path: "/play/:id",
         loader: pagePlayLoader,
-        element: <PagePlay /> 
+        element: <PagePlay />,
+        errorElement: <PageLogin /> 
     },
     { 
         path: "/album/:id",
         loader: pageAlbumLoader,
-        element: <PageAlbum /> 
+        element: <PageAlbum />,
+        errorElement: <PageLogin /> 
     }
 ], {
     basename: process.env.PUBLIC_URL

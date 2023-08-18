@@ -5,7 +5,7 @@ import { log } from "@helper/log"
 import { useAppDispatch } from "@data/StoreHook"
 import { updateUser } from "@data/User"
 import { useNavigate } from "react-router-dom"
-import { Api } from "@api/emby"
+import { Api, Emby } from "@api/emby"
 import SettingDialog from "@components/setting/SettingDialog"
 import SettingIcon from "@components/setting/SettingIcon"
 import { DialogID, openDialog } from "@data/Event"
@@ -32,6 +32,7 @@ export default function Page() {
         Api.login(username, password)
             .then(data => {
                 log.info(data)
+                Api.emby = new Emby(data)
                 dispatch(updateUser(data))
                 navigate({
                     pathname: "/"
