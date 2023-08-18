@@ -2,28 +2,32 @@ import { imageUrl } from "@api/config"
 import { Stack } from "@components/layout/Stack"
 import { PeopleCard } from "@components/people/PeopleCard"
 import { log } from "@helper/log"
-import { useLoaderData } from "react-router-dom"
+import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom"
 import style from "./index.module.scss"
-import { Chip } from "@mui/material"
+import { Button, Chip } from "@mui/material"
 import { SeasonCardList } from "@components/media/Season"
 import { Map } from "@model/Map"
 import { Api } from "@api/emby"
 import { Background } from "@components/background/Background"
 
-export async function pageLoader({ params }: {params: Map<string, string>}) {
+export async function pageLoader({ request, params }: LoaderFunctionArgs) {
     const id = Number(params.id)
-    log.info('detail id', id)
+    const type = request.url.includes("/movie") ? "movie" : "series"
     const data = await Api.emby?.getMedia?.(id)
     return {
-        data
+        data,
+        type,
+        id
     }
 }
 
 export default function Page() {
     const {
-        data
+        data,
+        type,
+        id
     } = useLoaderData() as SyncReturnType<typeof pageLoader>
-    log.info(`detail data`, data)
+    const navigate = useNavigate()
     if (data) return (
         <div className={style["page"]}>
             <Background src={imageUrl(data.Id, data.BackdropImageTags[0], "Backdrop/0")} />
@@ -37,11 +41,20 @@ export default function Page() {
                         <article>
                             {data.Overview}
                         </article>
+                        {type === "movie" && 
+                        <Button onClick={() => navigate(`/play/${id}`)} 
+                            color="primary">立即播放
+                        </Button>
+                        }
                     </div>
                 </div>
-                <h4>季</h4>
-                <SeasonCardList vid={data.Id} />
-                <h4>演职人员</h4>
+                {type === "series" && (
+                    <>
+                    <h4>季</h4>
+                    <SeasonCardList vid={data.Id} />
+                    <h4>演职人员</h4>
+                    </>
+                )}
                 <Stack direction="row">
                     {data.People.map((people, i) => <PeopleCard key={`people-${i}`} {...people} />)}
                 </Stack>

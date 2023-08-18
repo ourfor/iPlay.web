@@ -12,11 +12,20 @@ import { Header } from "@components/header/Header"
 import { Api } from "@api/emby"
 import { Banner } from "@components/banner/Banner"
 import { BannerCard } from "@components/banner/BannerCard"
+import { LoaderFunctionArgs, useLoaderData } from "react-router-dom"
+
+export async function pageLoader({params}: LoaderFunctionArgs) {
+    const albums = await Api.emby?.getView?.()
+    return {
+        albums
+    }
+}
 
 export default function Page() {
+    const { albums } = useLoaderData() as SyncReturnType<typeof pageLoader>
     const { data } = usePromise(Api.emby?.getPublicInfo)
-    const [albums, setAlbums] = useState<View|null>(null)
     const [medias, setMedias] = useState<Map<string, Media[]>>({})
+    const [recommend, setRecommend] = useState<Media[]>([])
     useEffect(() => {
         log.info(data)
         if (data) {
@@ -24,11 +33,6 @@ export default function Page() {
         }
     }, [data])
     useEffect(() => {
-        Api.emby?.getView?.()
-            .then(data => {
-                log.info(data)
-                setAlbums(data)
-            })
     }, [])
 
     useEffect(() => {
@@ -38,16 +42,18 @@ export default function Page() {
                 Api.emby?.getLatestMedia?.(id)
                     .then(medias => {
                         setMedias(map => ({...map, [item.Name]: medias}))
+                        if (medias.length > 3) {
+                            setRecommend(r => [...r, medias[0], medias[1], medias[3]])
+                        }
                     })
             })
         }
     }, [albums])
     
-    const media = Object.entries(medias).filter(([key, value]) => value && value.length)[1]?.[1]
     return (
         <div className={style["page"]}>
-            {media && <Banner className={style["banner"]} banners={
-                media.map(model => <BannerCard key={model.Id} model={model} />)
+            {recommend && <Banner className={style["banner"]} banners={
+                recommend.map(model => <BannerCard key={model.Id} model={model} />)
             } /> }
             <Header />
             <p className={style["title"]}>我的媒体</p>

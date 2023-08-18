@@ -5,9 +5,11 @@ import thunk from 'redux-thunk';
 import settingSlice from "./Setting";
 import userSlice from "./User";
 import historySlice from "./History";
+import eventSlice from "./Event";
 import { log } from "@helper/log";
 import { Api, Emby } from "@api/emby";
 import { User } from "@model/User";
+import { config } from "@api/config";
 
 const Env = {
     name: "development",
@@ -27,6 +29,10 @@ const reducer = combineReducers({
         key: [Env.storeKey, "history"].join("/"),
         storage
     }, historySlice), 
+    event: persistReducer({
+        key: [Env.storeKey, "event"].join("/"),
+        storage
+    }, eventSlice), 
 })
 
 const persistConfig = {
@@ -49,6 +55,7 @@ export const store = configureStore({
 export const persistor = persistStore(store, null, () => {
     const state = store.getState()
     log.info("init store", state)
+    if (state.setting.emby) config.emby = state.setting.emby
     Api.emby = new Emby(state.user as User)
 })
 

@@ -3,6 +3,14 @@ export interface Media {
     BackdropImageTags: string[]
     CanDelete: boolean
     Id: string
+    ParentBackdropItemId: string
+    ParentBackdropImageTags: string[]
+    ParentThumbItemId: string
+    ParentThumbImageTag: string
+    SeasonId: string
+    SeasonName: string
+    SeriesId: string
+    SeriesName: string
     ImageTags: {
         Primary: string,
         Thumb: string
