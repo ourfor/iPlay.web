@@ -3,6 +3,7 @@ import { useTransition, animated, AnimatedProps, useSpringRef } from '@react-spr
 
 import styles from './Banner.module.scss'
 import { Pagination } from '@mui/material'
+import { log } from '@helper/log'
 
 function Page(props: AnimatedProps<{ style: CSSProperties, children: ReactNode }>) {
     return (
@@ -31,11 +32,14 @@ export function Banner({ banners, className }: BannerProps) {
         leave: { opacity: 0, transform: 'translate3d(-50%,0,0)' },
     })
     useEffect(() => {
-        const id = setInterval(() => !hover && setIndex(i => (i+1)%count), 3000)
+        const id = setInterval(() => {
+            if (hover) return
+            setIndex(i => (i+1)%count)
+        }, 3000)
         return () => {
             clearInterval(id)
         }
-    }, [hover])
+    }, [hover, count])
     useEffect(() => {
         transRef.start()
     }, [index])
