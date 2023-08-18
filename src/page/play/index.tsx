@@ -20,7 +20,7 @@ export default function Page() {
     const {params: {id}, data, info } = useLoaderData() as SyncReturnType<typeof pageLoader>
     useEffect(() => {
         if (!info) return
-        document.title = [info.SeriesName, info.Name].join("-")
+        document.title = [info.SeriesName, info.Name].filter(s => s && s !== "").join("-")
     }, [info])
     
     if (!data) return <Spin />
