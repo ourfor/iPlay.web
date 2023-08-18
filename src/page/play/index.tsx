@@ -7,19 +7,21 @@ import { useEffect } from "react"
 
 export async function pageLoader({params}: LoaderFunctionArgs) {
     const id = Number(params.id)
+    const info = await Api.emby?.getMedia?.(id)
     const data = await Api.emby?.getPlaybackInfo?.(id)
     return {
         params: {id},
-        data
+        data,
+        info
     }
 }
 
 export default function Page() {
-    const {params: {id}, data } = useLoaderData() as SyncReturnType<typeof pageLoader>
+    const {params: {id}, data, info } = useLoaderData() as SyncReturnType<typeof pageLoader>
     useEffect(() => {
-        if (!data) return
-        document.title = data.MediaSources[0].Name
-    }, [data])
+        if (!info) return
+        document.title = [info.SeriesName, info.Name].filter(s => s && s !== "").join("-")
+    }, [info])
     
     if (!data) return <Spin />
     return (

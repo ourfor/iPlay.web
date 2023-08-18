@@ -95,3 +95,30 @@ export async function getEpisodes(user: User, vid: number, sid: number) {
     const data = await response.json() as EmbyResponse<Episode>
     return data.Items
 }
+
+export async function getCollection(user: User, cid: number, type: "Series"|"Movie" = "Series") {
+    const uid = user.User.Id
+    const params = {
+        UserId: user.User.Id,
+        SortBy: "SortName",
+        SortOrder: "Ascending",
+        IncludeItemTypes: type,
+        Recursive: true,
+        Fields: "BasicSyncInfo,CanDelete,Container,PrimaryImageAspectRatio,Prefix",
+        StartIndex: 0,
+        ParentId: cid,
+        EnableImageTypes: "Primary,Backdrop,Thumb",
+        ImageTypeLimit: 1,
+        Limit: 50,
+        "X-Emby-Client": "Emby Web",
+        "X-Emby-Device-Name": "Microsoft Edge macOS",
+        "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
+        "X-Emby-Client-Version": "4.7.13.0",
+        "X-Emby-Token": user.AccessToken,
+        "X-Emby-Language": "zh-cn"
+    }
+    const url = makeUrl(params, `emby/Users/${uid}/Items`)
+    const response = await fetch(url)
+    const data = await response.json() as EmbyResponse<Media>
+    return data.Items
+}

@@ -1,4 +1,8 @@
+@import "~@style/click.scss";
+
 .album {
+    @include clickable;
+    
     margin: 0.25rem;
     display: inline-flex;
     flex-direction: column;

@@ -8,6 +8,7 @@ import { Chip } from "@mui/material"
 import { SeasonCardList } from "@components/media/Season"
 import { Map } from "@model/Map"
 import { Api } from "@api/emby"
+import { Background } from "@components/background/Background"
 
 export async function pageLoader({ params }: {params: Map<string, string>}) {
     const id = Number(params.id)
@@ -25,7 +26,7 @@ export default function Page() {
     log.info(`detail data`, data)
     if (data) return (
         <div className={style["page"]}>
-            <div className={style["background"]} style={{ "--bg-image": `url(${imageUrl(data.Id, data.BackdropImageTags[0], "Backdrop/0")}` } as any} />
+            <Background src={imageUrl(data.Id, data.BackdropImageTags[0], "Backdrop/0")} />
             <div className={style["content"]}>
                 <div className={style["media-card"]}>
                     <img className={style["cover"]}

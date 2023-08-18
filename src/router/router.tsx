@@ -3,6 +3,7 @@ import PageHome from "@page/home"
 import PageSeries, { pageLoader as pageSeriesLoader } from "@page/series"
 import PageSeason from "@page/season"
 import PagePlay, { pageLoader as pagePlayLoader } from "@page/play"
+import PageAlbum, { pageLoader as pageAlbumLoader } from "@page/album"
 import PageError from "@page/error"
 import { RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom';
 import { log } from "@helper/log"
@@ -31,6 +32,11 @@ export const router = () => createBrowserRouter([
         path: "/play/:id",
         loader: pagePlayLoader,
         element: <PagePlay /> 
+    },
+    { 
+        path: "/album/:id",
+        loader: pageAlbumLoader,
+        element: <PageAlbum /> 
     }
 ], {
     basename: process.env.PUBLIC_URL
