@@ -1,6 +1,6 @@
 import { User } from "@model/User";
 import { View } from "@model/View";
-import { config, makeUrl } from "./config";
+import { DEFAULT_EMBY_CONFIG, makeUrl } from "./config";
 import { Media } from "@model/Media";
 import { MediaDetail } from "@model/MediaDetail";
 import { Season } from "@model/Season";
@@ -59,6 +59,44 @@ export async function getMedia(user: User, id: number) {
     return data
 }
 
+export async function getResume(user: User) {
+    const params = {
+        Recursive: true,
+        Fields: "BasicSyncInfo,CanDelete,Container,PrimaryImageAspectRatio,ProductionYear",
+        ImageTypeLimit: 1,
+        EnableImageTypes: "Primary,Backdrop,Thumb",
+        MediaTypes: "Video",
+        Limit: 12,
+        "X-Emby-Client": "Emby Web",
+        "X-Emby-Device-Name": "Microsoft Edge macOS",
+        "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
+        "X-Emby-Client-Version": "4.7.13.0",
+        "X-Emby-Token": user.AccessToken,
+        "X-Emby-Language": "zh-cn"
+    }
+    const uid = user.User.Id
+    const url = makeUrl(params, `emby/Users/${uid}/Items/Resume`)
+    const response = await fetch(url)
+    const data = await response.json() as EmbyResponse<Media>
+    return data.Items
+}
+
+export async function getRecommendations(user: User) {
+    const uid = user.User.Id
+    const params = {
+        "X-Emby-Client": "Emby Web",
+        "X-Emby-Device-Name": "Microsoft Edge macOS",
+        "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
+        "X-Emby-Client-Version": "4.7.13.0",
+        "X-Emby-Token": user.AccessToken,
+        "X-Emby-Language": "zh-cn"
+    }
+    const url = makeUrl(params, `emby/Users/${uid}/Suggestions`)
+    const response = await fetch(url)
+    const data = await response.json() as EmbyResponse<Media>
+    return data.Items
+}
+
 export async function getSeasons(user :User, id: number) {
     const params = {
         UserId: user.User.Id,
@@ -95,6 +133,8 @@ export async function getEpisodes(user: User, vid: number, sid: number) {
     const data = await response.json() as EmbyResponse<Episode>
     return data.Items
 }
+
+
 
 export async function getCollection(user: User, cid: number, type: "Series"|"Movie" = "Series") {
     const uid = user.User.Id

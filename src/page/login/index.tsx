@@ -6,6 +6,9 @@ import { useAppDispatch } from "@data/StoreHook"
 import { updateUser } from "@data/User"
 import { useNavigate } from "react-router-dom"
 import { Api } from "@api/emby"
+import SettingDialog from "@components/setting/SettingDialog"
+import SettingIcon from "@components/setting/SettingIcon"
+import { DialogID, openDialog } from "@data/Event"
 
 const customStyle = {
     '& .MuiOutlinedInput-root': {
@@ -76,8 +79,13 @@ export default function Page() {
                     <Stack className={style["items"]} direction="row" justifyContent="flex-start" alignItems="center">
                         登录表示同意用户协议，版权所有
                     </Stack>
+                    <div onClick={() => dispatch(openDialog({id: DialogID.SETTING, open: true}))} 
+                        className={style["tool"]}>
+                        <SettingIcon />
+                    </div>
                 </div>
             </div>
+            <SettingDialog />
         </div>
     )
 }

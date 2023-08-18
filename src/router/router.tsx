@@ -1,5 +1,5 @@
 import PageLogin from "@page/login"
-import PageHome from "@page/home"
+import PageHome, { pageLoader as pageHomeLoader } from "@page/home"
 import PageSeries, { pageLoader as pageSeriesLoader } from "@page/series"
 import PageSeason from "@page/season"
 import PagePlay, { pageLoader as pagePlayLoader } from "@page/play"
@@ -16,11 +16,17 @@ export const router = () => createBrowserRouter([
         errorElement: <PageError />
     },
     { 
-        path: "/", 
+        path: "/",
+        loader: pageHomeLoader,
         element: <PageHome /> 
     },
     { 
         path: "/series/:id", 
+        loader: pageSeriesLoader,
+        element: <PageSeries />
+    },
+    { 
+        path: "/movie/:id", 
         loader: pageSeriesLoader,
         element: <PageSeries />
     },

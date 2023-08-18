@@ -1,5 +1,6 @@
 export interface MediaSource {
     Id: string
+    Container: string
     DirectStreamUrl: string
     Path: string
     TranscodingUrl: string

@@ -33,7 +33,7 @@ export function EpisodeList(props: EpisodeListProps) {
     if (!data) return null
     return (
         <div>
-            {data.map(episode => <EpisodeCard {...episode} />)}
+            {data.map(episode => <EpisodeCard key={episode.Id} {...episode} />)}
         </div>
     )
 }
