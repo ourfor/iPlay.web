@@ -11,7 +11,7 @@ import style from "./index.module.scss"
 import { Header } from "@components/header/Header"
 import { Api } from "@api/emby"
 import { Banner } from "@components/banner/Banner"
-import { imageUrl } from "@api/config"
+import { BannerCard } from "@components/banner/BannerCard"
 
 export default function Page() {
     const { data } = usePromise(Api.emby?.getPublicInfo)
@@ -47,13 +47,7 @@ export default function Page() {
     return (
         <div className={style["page"]}>
             {media && <Banner className={style["banner"]} banners={
-                media.map(item => (
-                    <div className={style["banner-item"]} style={{width: "100vw", height: "100vh"}}>
-                        <img width={"100%"} height={"100%"} src={imageUrl(item.Id, {maxWidth: 1920, maxHeight: 1080, tag: item.BackdropImageTags[0]}, "Backdrop/0")} />
-                        <p className={style["banner-title"]}>{item.Name}</p>
-                        <article>{item.Overview}</article>
-                    </div>
-                ))
+                media.map(model => <BannerCard key={model.Id} model={model} />)
             } /> }
             <Header />
             <p className={style["title"]}>我的媒体</p>

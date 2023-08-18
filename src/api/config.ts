@@ -25,7 +25,7 @@ export interface ImageProps {
     quality: number
 }
 
-export function imageUrl(id: string, options: string|Partial<ImageProps>, type: "Primary"|string = "Primary") {
+export function imageUrl(id: string|number, options: string|Partial<ImageProps>, type: "Primary"|string = "Primary") {
     if (typeof options === "string") {
         return `${config.protocol}://${config.host}/emby/Items/${id}/Images/${type}?maxHeight=338&maxWidth=600&tag=${options}&quality=90`
     } else {

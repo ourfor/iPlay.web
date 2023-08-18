@@ -4,7 +4,9 @@ export interface MediaDetail {
     Overview: string
     Genres: string[]
     BackdropImageTags: string[]
+    CollectionType: "tvshows"|"movies"
     Id: string
+    Etag: string
     ImageTags: {
         Banner: string
         Logo: string

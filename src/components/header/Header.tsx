@@ -15,11 +15,9 @@ export function Header() {
             <div className={style["left"]}>
                 <span>首页</span>
                 <span>喜爱</span>
-                <span>最近</span>
-                <span>订阅</span>
             </div>
             <div className={style["right"]}>
-                <img className={style["logo"]} src={searchUrl} />
+                <img className={style["icon"]} src={searchUrl} />
                 <img className={style["avator"]} src={avator} />
             </div>
         </div>
