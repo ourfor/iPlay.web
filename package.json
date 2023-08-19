@@ -17,6 +17,7 @@
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@vidstack/react": "^0.6.13",
+    "antd": "^5.8.4",
     "common-type": "^1.0.3",
     "hls.js": "^1.4.10",
     "react": "^18.2.0",

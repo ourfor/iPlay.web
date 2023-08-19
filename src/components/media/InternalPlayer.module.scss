@@ -1,0 +1,12 @@
+.player {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    img {
+        border: 1px solid white;
+        border-radius: 50%;
+        width: 1.61rem;
+    }
+}

@@ -1,23 +1,40 @@
-import { getEpisodes } from "@api/view"
-import { useAppSelector } from "@data/StoreHook"
 import { usePromise } from "@hook/usePromise"
 import { Episode } from "@model/Episode"
-import { User } from "@model/User"
 import style from "./Episode.module.scss"
-import { imageUrl } from "@api/config"
-import { useNavigate } from "react-router-dom"
+import { imageUrl, playUrl } from "@api/config"
+import { Api } from "@api/emby"
+import { ExternalPlayer } from "./ExternalPlayer"
+import { InternalPlayer } from "./InternalPlayer"
+import { Stack } from "@components/layout/Stack"
+import { Select } from "antd"
+import { useEffect, useState } from "react"
 
 export function EpisodeCard(episode: Episode) {
-    const navigate = useNavigate()
+    const { data } = usePromise(() => Api.emby?.getPlaybackInfo?.(Number(episode.Id)), [episode.Id])
+    const sources = data?.MediaSources.map(item => ({label: item.Name, value: item.DirectStreamUrl}))
+    const [source, setSource] = useState<string|null>(null)
+    useEffect(() => {
+        if (sources) setSource(sources[0].value)
+    }, [data, sources])
     return (
         <div className={style["root"]} 
-            key={episode.Id}
-            onClick={() => navigate(`/play/${episode.Id}`)}
-            >
+            key={episode.Id}>
             <img src={imageUrl(episode.Id, episode.ImageTags.Primary)} />
             <div>
                 <span>{episode.Name}</span>
                 <article>{episode.Overview}</article>
+                <div className={style["action"]}>
+                    <div className={style["source-select"]}>
+                    {sources && <Select size="small"
+                            style={{minWidth: "5rem", fontSize: "0.75rem"}}
+                            onChange={e => setSource(e)}
+                            defaultValue={sources[0].value} options={sources} />}
+                    </div>
+                    <div className={style["players"]}>
+                        <InternalPlayer id={episode.Id} />
+                        {source && <ExternalPlayer src={playUrl(source)} />}
+                    </div>
+                </div>
             </div>
         </div>
     )
@@ -28,8 +45,7 @@ export interface EpisodeListProps {
     sid: string
 }
 export function EpisodeList(props: EpisodeListProps) {
-    const user = useAppSelector(state => state.user)
-    const {data} = usePromise(() => getEpisodes(user as User, Number(props.vid), Number(props.sid)), [user, props.sid, props.vid])
+    const {data} = usePromise(() => Api.emby?.getEpisodes?.(Number(props.vid), Number(props.sid)), [props.sid, props.vid])
     if (!data) return null
     return (
         <div>
