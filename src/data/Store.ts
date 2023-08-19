@@ -7,7 +7,7 @@ import userSlice from "./User";
 import historySlice from "./History";
 import eventSlice from "./Event";
 import messageSlice from "./Message"
-import { log } from "@helper/log";
+import { logger } from "@helper/log";
 import { Api, Emby } from "@api/emby";
 import { User } from "@model/User";
 import { config } from "@api/config";
@@ -59,7 +59,7 @@ export const store = configureStore({
 
 export const persistor = persistStore(store, null, () => {
     const state = store.getState()
-    log.info("init store", state)
+    logger.info("init store", state)
     if (state.setting.emby) config.emby = state.setting.emby
     Api.emby = new Emby(state.user as User)
 })
