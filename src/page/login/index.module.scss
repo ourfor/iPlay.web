@@ -1,4 +1,5 @@
 @import "~@style/click.scss";
+@import "~@style/media.scss";
 
 $bg-img: "//bing.img.run/uhd.php";
 
@@ -31,6 +32,12 @@ $bg-img: "//bing.img.run/uhd.php";
         background-repeat: no-repeat;
     }
 
+    @include mobile {
+        &,&::before {
+            background-size: cover;
+        }
+    }
+
     .wrap {
         display: flex;
         flex-direction: column;
@@ -42,6 +49,7 @@ $bg-img: "//bing.img.run/uhd.php";
     .container {
         display: flex;
         // width: 28.125rem;
+        position: relative;
         padding: 3.75rem 4.25rem 2.5rem 4.25rem;
         flex-direction: column;
         justify-content: center;
@@ -58,6 +66,10 @@ $bg-img: "//bing.img.run/uhd.php";
             bottom: 2%;
             padding: 0;
         }
+
+        @include mobile {
+            padding: 0.75rem;
+        } 
     }
 
     .title {

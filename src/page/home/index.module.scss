@@ -1,3 +1,5 @@
+@import "~@style/media.scss";
+
 .page {
     background-color: black;
     color: white;
@@ -7,6 +9,9 @@
     .title {
         font-size: 1.5rem;
         padding: 0.25rem 1rem;
+        @include mobile {
+            font-size: 1rem;
+        }
     }
 
     .playlist {
@@ -23,5 +28,11 @@
 .no-scrollbar {
     &::-webkit-scrollbar {
         display: none;
+    }
+}
+
+@include mobile {
+    .banner {
+        height: calc(100vw * 0.6);
     }
 }
