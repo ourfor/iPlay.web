@@ -1,17 +1,14 @@
-@import "~@style/click.scss";
-
 .root {
     display: flex;
     margin: 0.25rem;
-    @include clickable;
 
-    img {
+    &>img {
         max-width: 16rem;
         margin: 0.25rem 0.5rem;
         border-radius: 0.25rem;
     }
 
-    span {
+    &>span {
         margin: 0.25rem 0.75rem;
     }
 
@@ -19,5 +16,28 @@
         margin-top: 0.5rem;
         color: #ffffff99;
         font-size: 13px;
+    }
+
+    .action {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        img {
+            margin: 0.25rem 0.5rem;
+        }
+    }
+
+    .players {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .source-select {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        display: inline-flex;
+        align-items: center;
+        font-size: 0.75rem;
     }
 }
