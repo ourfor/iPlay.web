@@ -1,90 +1,73 @@
-import * as React from 'react';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import { TransitionProps } from '@mui/material/transitions';
-import { useAppDispatch, useAppSelector } from '@data/StoreHook';
-import { DialogID, openDialog } from '@data/Event';
-import { Setting } from './Setting';
 import style from "./Setting.module.scss"
-import { IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Button, Input, Modal, Select, Tag } from "antd";
+import { updateEmbyConfig } from "@data/Setting";
+import { useKeyboard } from "@hook/useKeyboard";
+import { useAppDispatch, useAppSelector } from "@data/StoreHook";
+import { DialogID, openDialog } from "@data/Event";
+import { DEFAULT_EMBY_CONFIG, EmbyConfig } from "@api/config";
 
-export interface DialogTitleProps {
-    id: string;
-    children?: React.ReactNode;
-    onClose: () => void;
-  }
-  
-  function BootstrapDialogTitle(props: DialogTitleProps) {
-    const { children, onClose, ...other } = props;
-  
-    return (
-      <DialogTitle sx={{ m: 0, p: 2, fontWeight: 500, fontSize: 16 }} {...other}>
-        {children}
-        {onClose ? (
-          <IconButton
-            aria-label="close"
-            onClick={onClose}
-            sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        ) : null}
-      </DialogTitle>
-    );
-  }
-
-const Transition = React.forwardRef(function Transition(
-    props: TransitionProps & {
-        children: React.ReactElement<any, any>;
-    },
-    ref: React.Ref<unknown>,
-) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
-
-export default function SettingDialog() {
-    const open = useAppSelector(state => state.event.dialog?.[DialogID.SETTING]) ?? false
+export function SettingDialog() {
+    const dialog = useAppSelector(state => state.event.dialog)
+    const setting = useAppSelector(state => state.setting)
     const dispatch = useAppDispatch()
-    const setOpen = (open: boolean) => {
-        dispatch(openDialog({
-            id: DialogID.SETTING,
-            open
-        }))
+    useKeyboard(window, {
+        "keydown": (e) => {
+            let isMatch = true
+            if (e.ctrlKey || e.metaKey) {
+                if (e.ctrlKey && e.metaKey) {
+                    dispatch(openDialog({ id: DialogID.SETTING, visible: true }))
+                } else {
+                    isMatch = false
+                }
+            } else {
+                isMatch = false
+            }
+            if (isMatch) e.preventDefault()
+        }
+    })
+
+    const updateConfig = (config: Partial<EmbyConfig>) => {
+        dispatch(updateEmbyConfig(config))
     }
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const Header = (
+        <div className={style["header-bar"]}>
+            <div>偏好设置</div>
+        </div>
+    )
 
     return (
-        <Dialog
-            open={open}
-            TransitionComponent={Transition}
-            className={style["dialog"]}
-            keepMounted
-            onClose={handleClose}
-            aria-describedby="alert-dialog-slide-description"
-        >
-            <BootstrapDialogTitle
-                id="customized-dialog-title"
-                onClose={handleClose}>
-                    偏好设置
-            </BootstrapDialogTitle>
-            <DialogContent>
-                <Setting />
-            </DialogContent>
-        </Dialog>
-    );
+        <Modal title={Header}
+            className={style["setting-dialog"]}
+            mask={false}
+            maskClosable={false}
+            open={dialog?.[DialogID.SETTING] ?? false}
+            onCancel={() => dispatch(openDialog({ id: DialogID.SETTING, visible: false }))}
+            centered footer={null}>
+            <div className={style["inline"]}>
+                <p className={style["title"]}>域名</p>
+                <Input value={setting.emby?.host ?? ""} onChange={e => updateConfig({ host: e.target.value })} />
+            </div>
+            <div className={style["inline"]}>
+                <p className={style["title"]}>协议</p>
+                <Select value={setting.emby?.protocol}
+                onChange={protocol => updateConfig({protocol})}
+                options={[
+                    {label: "https", value: "https"},
+                    {label: "http", value: "http"}
+                ]} />
+            </div>
+            <div className={style["inline"]}>
+                <p className={style["title"]}>端口</p>
+                <Input type="number" value={setting.emby?.port ?? 8096} onChange={e => updateConfig({ port: Number(e.target.value) })} />
+            </div>
+            <div className={style["inline"]}>
+                <p className={style["title"]}>路径</p>
+                <Input value={setting.emby?.path ?? "/"} onChange={e => updateConfig({ path: e.target.value })} />
+            </div>
+            <div className={style["inline"]}>
+                <Button onClick={() => updateConfig(DEFAULT_EMBY_CONFIG)}>恢复默认设置</Button>
+            </div>
+        </Modal>
+    )
 }

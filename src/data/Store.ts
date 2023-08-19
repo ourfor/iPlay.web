@@ -6,6 +6,7 @@ import settingSlice from "./Setting";
 import userSlice from "./User";
 import historySlice from "./History";
 import eventSlice from "./Event";
+import messageSlice from "./Message"
 import { log } from "@helper/log";
 import { Api, Emby } from "@api/emby";
 import { User } from "@model/User";
@@ -28,7 +29,11 @@ const reducer = combineReducers({
     history: persistReducer({
         key: [Env.storeKey, "history"].join("/"),
         storage
-    }, historySlice), 
+    }, historySlice),
+    message: persistReducer({
+        key: [Env.storeKey, "message"].join("/"),
+        storage
+    }, messageSlice),
     event: persistReducer({
         key: [Env.storeKey, "event"].join("/"),
         storage
