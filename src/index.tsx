@@ -8,6 +8,7 @@ import { Spin } from "@components/animation/Spin";
 import { useAppSelector } from "@data/StoreHook";
 import { useEffect } from "react";
 import { config } from "@api/config";
+import { Message } from "@components/message/Message";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -21,7 +22,10 @@ const App = () => {
     }
   }, [setting])
   return (
+    <>
     <Router />
+    <Message />
+    </>
   )
 }
 

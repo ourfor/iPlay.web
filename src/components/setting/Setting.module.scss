@@ -1,58 +1,50 @@
-@import "~@style/dialog.scss";
-@import "~@style/media.scss";
-
-.main { 
+.header-bar {
     display: flex;
-    padding-top: 0.25rem;
-    .item {
-        margin-left: 1rem;
-        margin-right: 1rem;
-        &>p {
-            margin-right: 1rem;
-        }
 
-        &>div {
-            margin-left: 0;
-        }
-    }
-    .input {
-        width: 15rem;
-        margin: 0;
-    }
-
-    @include mobile {
-        .item {
-            margin-left: 0.25rem;
-            margin-right: 0.25rem;
-            &>p {
-                margin-right: 0.25rem;
-            }
-
-            &>div {
-                margin-left: 0;
-            }
-        }
-
-        .input {
-            width: 15rem;
-        }
+    .drag-area {
+        margin-left: 2em;
     }
 }
 
-.dialog {
-    @include dialog;
+.setting-dialog {
+    font-family: LXGWWenKai;
+    .inline, .inline-means {
+        display: flex;
+        align-items: center;
 
-    @include mobile {
-        padding: 0rem;
-        backdrop-filter: none;
+        & > p {
+            margin-left: 0.5em;
+            margin-right: 0.5em;
+        }
 
-        div[role="dialog"] {
+        & > .title {
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+    }
+
+    .build-info {
+        font-size: 0.8em;
+        margin: 0.75em 0.25em;
+        padding: 0.25em;
+        background: #F9FAFB;
+        border: 0.707763px solid #E4E7EC;
+        border-radius: 4px;
+
+        .inline, .inline-means {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
             padding: 0;
-            margin: 0;
-
-            &>div {
-                padding: 0.25rem;
+            &>* {
+                margin-top: 0;
+                margin-bottom: 0;
             }
+        }
+    }
+
+    .inline-means {
+        &>* {
+            flex-grow: 1;
         }
     }
 }

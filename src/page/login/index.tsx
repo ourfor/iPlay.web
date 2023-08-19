@@ -6,9 +6,10 @@ import { useAppDispatch } from "@data/StoreHook"
 import { updateUser } from "@data/User"
 import { useNavigate } from "react-router-dom"
 import { Api, Emby } from "@api/emby"
-import SettingDialog from "@components/setting/SettingDialog"
 import SettingIcon from "@components/setting/SettingIcon"
 import { DialogID, openDialog } from "@data/Event"
+import { SettingDialog } from "@components/setting/SettingDialog"
+import { produceMessage } from "@data/Message"
 
 const customStyle = {
     '& .MuiOutlinedInput-root': {
@@ -34,16 +35,28 @@ export default function Page() {
                 log.info(data)
                 Api.emby = new Emby(data)
                 dispatch(updateUser(data))
-                navigate({
-                    pathname: "/"
-                })
+                dispatch(produceMessage({
+                    type: "success",
+                    data: "登录成功，即将跳转主页",
+                    duration: 1000
+                }))
+                setTimeout(() => {
+                    navigate({
+                        pathname: "/"
+                    })
+                }, 1000)
+            }).catch(e => {
+                dispatch(produceMessage({
+                    type: "error",
+                    data: e
+                }))
             })
     }
     return (
         <div className={style["page"]}>
             <div className={style["wrap"]}>
                 <div className={style["container"]}>
-                    <p className={style["title"]}>Sign In</p>
+                    <p className={style["title"]}>登录账号</p>
                     <TextField
                         className={style["input"]}
                         required
@@ -69,18 +82,18 @@ export default function Page() {
                     <Button className={style["login"]}
                         onClick={submit}
                         variant="contained">
-                        Sign in
+                        登录
                     </Button>
                     <Stack className={style["items"]} direction="row" justifyContent="flex-start" alignItems="center">
                         <Checkbox className={style["remember-me"]}
                             value={remember}
                             onChange={(_, checked) => setRemember(checked)}
-                            sx={{ color: "#737373", '&.Mui-checked': { color: "white" } }} /> Remember me
+                            sx={{ color: "#737373", '&.Mui-checked': { color: "white" } }} /> 记住我
                     </Stack>
                     <Stack className={style["items"]} direction="row" justifyContent="flex-start" alignItems="center">
                         登录表示同意用户协议，版权所有
                     </Stack>
-                    <div onClick={() => dispatch(openDialog({id: DialogID.SETTING, open: true}))} 
+                    <div onClick={() => dispatch(openDialog({id: DialogID.SETTING, visible: true}))} 
                         className={style["tool"]}>
                         <SettingIcon />
                     </div>
