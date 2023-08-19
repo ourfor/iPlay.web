@@ -1,7 +1,7 @@
 import { Button, Checkbox, Stack, TextField } from "@mui/material"
 import style from "./index.module.scss"
 import { useState } from "react"
-import { log } from "@helper/log"
+import { logger } from "@helper/log"
 import { useAppDispatch } from "@data/StoreHook"
 import { updateUser } from "@data/User"
 import { useNavigate } from "react-router-dom"
@@ -32,7 +32,7 @@ export default function Page() {
     const submit = () => {
         Api.login(username, password)
             .then(data => {
-                log.info(data)
+                logger.info(data)
                 Api.emby = new Emby(data)
                 dispatch(updateUser(data))
                 dispatch(produceMessage({

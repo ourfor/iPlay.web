@@ -6,7 +6,7 @@ import PagePlay, { pageLoader as pagePlayLoader } from "@page/play"
 import PageAlbum, { pageLoader as pageAlbumLoader } from "@page/album"
 import PageError from "@page/error"
 import { RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom';
-import { log } from "@helper/log"
+import { logger } from "@helper/log"
 import { Spin } from "@components/animation/Spin"
 
 export const router = () => createBrowserRouter([
@@ -55,7 +55,7 @@ export const router = () => createBrowserRouter([
 })
 
 export function Router() {
-    log.info("init router")
+    logger.info("init router")
     return (
         <RouterProvider router={router()} 
             fallbackElement={<Spin />} />

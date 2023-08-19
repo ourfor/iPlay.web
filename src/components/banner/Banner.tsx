@@ -1,8 +1,9 @@
-import React, { useState, CSSProperties, useEffect, ReactNode } from 'react'
+import React, { useState, CSSProperties, useEffect, ReactNode, useRef } from 'react'
 import { useTransition, animated, AnimatedProps, useSpringRef, useSpring } from '@react-spring/web'
 
 import styles from './Banner.module.scss'
 import { Pagination } from '@mui/material'
+import { logger } from '@helper/log'
 
 function Page(props: AnimatedProps<{ style: CSSProperties, children: ReactNode }>) {
     return (
@@ -21,7 +22,7 @@ export function Banner({ banners, className }: BannerProps) {
     const count = banners.length
     const [index, setIndex] = useState(0)
     const [hover, setHover] = useState(false)
-    const onClick = () => setIndex(state => (state + 1) % banners.length)
+    const hoverRef = useRef(hover)
     const transRef = useSpringRef()
     const transitions = useTransition(index, {
         ref: transRef,
@@ -30,6 +31,7 @@ export function Banner({ banners, className }: BannerProps) {
         enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
         leave: { opacity: 0, transform: 'translate3d(-50%,0,0)' },
     })
+
     const springs = useSpring({
         from: {
             strokeDashoffset: 120,
@@ -43,18 +45,25 @@ export function Banner({ banners, className }: BannerProps) {
         loop: true,
         ref: transRef,
     })
+
+    useEffect(() => {
+        hoverRef.current = hover;
+    }, [hoverRef, hover]) 
+
     useEffect(() => {
         const id = setInterval(() => {
-            if (hover) return
+            if (hoverRef.current) return
             setIndex(i => (i + 1) % count)
         }, 3000)
         return () => {
             clearInterval(id)
         }
-    }, [hover, count])
+    }, [hoverRef, count])
+
     useEffect(() => {
         transRef.start()
     }, [index])
+
     return (
         <div className={`flex fill ${styles.container} ${className}`}
             onMouseEnter={() => setHover(true)}

@@ -1,6 +1,6 @@
 import { Album } from "@components/album/Album"
 import { MediaCard } from "@components/media/Media"
-import { log } from "@helper/log"
+import { logger } from "@helper/log"
 import { usePromise } from "@hook/usePromise"
 import { Media } from "@model/Media"
 import { useEffect, useState } from "react"
@@ -26,7 +26,7 @@ export default function Page() {
     const [medias, setMedias] = useState<Map<string, Media[]>>({})
     const [recommend, setRecommend] = useState<Media[]>([])
     useEffect(() => {
-        log.info(data)
+        logger.info(data)
         if (data) {
             document.title = data.ServerName
         }
