@@ -2,6 +2,7 @@ import PageLogin from "@page/login"
 import PageHome, { pageLoader as pageHomeLoader } from "@page/home"
 import PageSeries, { pageLoader as pageSeriesLoader } from "@page/series"
 import PageSeason from "@page/season"
+import PageTest from "@page/test"
 import PagePlay, { pageLoader as pagePlayLoader } from "@page/play"
 import PageAlbum, { pageLoader as pageAlbumLoader } from "@page/album"
 import PageError from "@page/error"
@@ -49,6 +50,10 @@ export const router = () => createBrowserRouter([
         loader: pageAlbumLoader,
         element: <PageAlbum />,
         errorElement: <PageLogin /> 
+    },
+    {
+        path: "/*",
+        element: <PageTest />
     }
 ], {
     basename: process.env.PUBLIC_URL
