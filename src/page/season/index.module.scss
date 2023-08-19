@@ -10,12 +10,29 @@
 
     .intro {
         display: flex;
+        align-items: flex-start;
         margin-bottom: 1rem;
 
         .right {
             margin-left: 1.5rem;
             h3 {
                 margin-top: 0.25rem;
+            }
+        }
+
+        @include mobile {
+            flex-direction: row;
+            .poster {
+                width: 45%;
+                flex-grow: 0;
+                flex-shrink: 1;
+            }
+            .title {
+                font-size: 1.25rem;
+            }
+            .overview {
+                font-size: 0.75rem;
+                color: #ffffff99;
             }
         }
     }

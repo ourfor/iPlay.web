@@ -21,8 +21,8 @@ export default function Page() {
             <div className={style["intro"]}>
                 <img className={style["poster"]} src={imageUrl(data.Id ?? "", {maxHeight: 600, maxWidth: 400})} />
                 <div className={style["right"]}>
-                    <h3>{data?.SeriesName}</h3>
-                    <article>{data?.Overview}</article>
+                    <h3 className={style.title}>{data?.SeriesName}</h3>
+                    <article className={style.overview}>{data?.Overview}</article>
                 </div>
             </div>
             <EpisodeList sid={data.Id} vid={data.SeriesId} />
