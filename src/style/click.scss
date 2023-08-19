@@ -10,7 +10,7 @@
 @mixin clickable {
     cursor: pointer;
 
-    &:hover {
-        animation: enter .5s ease-in-out 1 both alternate;
-    }
+    // &:hover {
+    //     animation: enter .5s ease-in-out 1 both alternate;
+    // }
 }
