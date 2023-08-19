@@ -60,7 +60,7 @@ export default function Page() {
                 {albums && albums.Items.map((item, i) => <Album key={`album-${i}`} {...item}/>)}
             </Stack>
             {medias && Object.entries(medias).filter(([key, value]) => value && value.length).map(([name, media]) => (
-                <div key={name}>
+                <div key={name} className={style["playlist"]}>
                 <p className={style["title"]}>{name}</p>
                 <Stack direction={"row"}>
                     {media && media.map((movie, i) => <MediaCard key={`media-${i}`} {...movie} />)}
