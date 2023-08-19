@@ -2,6 +2,8 @@
 .container {
   overflow: hidden;
   position: relative;
+  @include mobile {
+  }
 }
 
 .container > div {

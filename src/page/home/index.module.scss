@@ -9,6 +9,9 @@
     .title {
         font-size: 1.5rem;
         padding: 0.25rem 1rem;
+        @include mobile {
+            font-size: 1rem;
+        }
     }
 
     .playlist {

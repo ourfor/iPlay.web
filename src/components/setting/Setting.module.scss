@@ -1,4 +1,5 @@
 @import "~@style/dialog.scss";
+@import "~@style/media.scss";
 
 .main { 
     display: flex;
@@ -9,13 +10,49 @@
         &>p {
             margin-right: 1rem;
         }
+
+        &>div {
+            margin-left: 0;
+        }
     }
     .input {
         width: 15rem;
         margin: 0;
     }
+
+    @include mobile {
+        .item {
+            margin-left: 0.25rem;
+            margin-right: 0.25rem;
+            &>p {
+                margin-right: 0.25rem;
+            }
+
+            &>div {
+                margin-left: 0;
+            }
+        }
+
+        .input {
+            width: 15rem;
+        }
+    }
 }
 
 .dialog {
     @include dialog;
+
+    @include mobile {
+        padding: 0rem;
+        backdrop-filter: none;
+
+        div[role="dialog"] {
+            padding: 0;
+            margin: 0;
+
+            &>div {
+                padding: 0.25rem;
+            }
+        }
+    }
 }

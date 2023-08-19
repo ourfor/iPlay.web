@@ -3,6 +3,10 @@
     color: white;
     min-height: 100vh;
 
+    &>.title {
+        margin-left: 1rem;
+    }
+
     .content {
         text-align: center;
         color: #e9e9e9;

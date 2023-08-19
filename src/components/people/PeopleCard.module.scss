@@ -1,3 +1,5 @@
+@import "~@style/media.scss";
+
 .people {
     margin: 0.25rem;
     img {
@@ -9,5 +11,11 @@
     span {
         display: block;
         font-size: 0.75rem;
+    }
+
+    @include mobile {
+        img {
+            width: 22vw;
+        }
     }
 }
