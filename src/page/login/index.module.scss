@@ -85,10 +85,15 @@ $bg-img: "//bing.img.run/uhd.php";
     }
 
     .input {
-        margin-top: 1rem;
         width: 19.625rem;
         height: 3.125rem;
         flex-shrink: 0;
+        background-color: #333;
+        color: white;
+
+        &::placeholder {
+            color: white;
+        }
     }
 
     .input > label {
@@ -119,18 +124,23 @@ $bg-img: "//bing.img.run/uhd.php";
 
     .items {
         width: 19.625rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
         font-family: dm, AritaHeiti;
     }
 
     .login {
         $bgcolor: #E50914; 
         margin-top: 1rem;
+        margin-bottom: 0.25rem;
         display: inline-flex;
         width: 19.625rem;
-        align-items: flex-start;
-        padding-top: 0.94rem;
-        padding-bottom: 1.06rem;
+        height: fit-content;
+        align-items: center;
         justify-content: center;
+        padding-top: 0.84rem;
+        padding-bottom: 0.92rem;
         border-radius: 0.25rem;
         background: $bgcolor;
         box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.55);
@@ -142,7 +152,7 @@ $bg-img: "//bing.img.run/uhd.php";
         font-size: 0.9375rem;
         font-style: normal;
         font-weight: 500;
-        line-height: 1rem; /* 106.667% */
+        // line-height: 1rem; /* 106.667% */
 
         &:hover {
             background-color: $bgcolor,
@@ -153,16 +163,38 @@ $bg-img: "//bing.img.run/uhd.php";
         }
     }
 
+    .user > div {
+        margin-top: 1rem;
+        border-radius: 5px;
+        border: 1px solid transparent;
+        overflow: hidden;
+    }
+
     .remember-me {
-        margin: 0;
-        padding-left: 0;
+        margin-right: 0.75rem;
+        --gray-a7: transparent;
+        --color-surface: #737373;
+        --accent-9: white;
+        --accent-9-contrast: #737373;
+
+        button {
+            background-color: #737373;
+            overflow: hidden;
+
+            span {
+                width: 75%;
+                height: 75%;
+                border-radius: 2px;
+                background-color: white;
+            }
+        }
 
         svg {
-            width: 1rem;
-            height: 1rem;
+            width: 85%;
+            height: 85%;
             flex-shrink: 0;
             border-radius: 0.125rem;
-            background: #737373;
+            color: #737373;
         }
     }
 }
