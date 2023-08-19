@@ -1,5 +1,9 @@
+@import "~@style/media.scss";
+
 .root {
     display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
     margin: 0.25rem;
 
     &>img {
@@ -12,7 +16,7 @@
         margin: 0.25rem 0.75rem;
     }
 
-    article {
+    .overview {
         margin-top: 0.5rem;
         color: #ffffff99;
         font-size: 13px;
@@ -40,4 +44,50 @@
         align-items: center;
         font-size: 0.75rem;
     }
+
+    @include mobile {
+        &>img {
+            display: inline-block;
+            width: 45%;
+            flex-grow: 0;
+            flex-shrink: 1;
+            aspect-ratio: 16/9;
+            min-height: unset;
+        }
+        .text {
+            width: 0;
+            flex-shrink: 0;
+            flex-grow: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .title {
+            padding-left: 1rem;
+        }
+        .action {
+            flex-direction: column;
+            padding-top: 0.75rem;
+        }
+
+        .overview {
+            display: none;
+        }
+    }
+}
+
+.mobileOverview {
+    display: none;
+}
+
+@include mobile {
+    .mobileOverview {
+        display: unset;
+        font-size: 12px;
+        color: #ffffff99;
+    }
+}
+
+.card {
+    margin-bottom: 1.35rem;
 }

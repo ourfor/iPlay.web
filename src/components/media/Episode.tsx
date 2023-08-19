@@ -5,7 +5,6 @@ import { imageUrl, playUrl } from "@api/config"
 import { Api } from "@api/emby"
 import { ExternalPlayer } from "./ExternalPlayer"
 import { InternalPlayer } from "./InternalPlayer"
-import { Stack } from "@components/layout/Stack"
 import { Select } from "antd"
 import { useEffect, useState } from "react"
 
@@ -17,12 +16,13 @@ export function EpisodeCard(episode: Episode) {
         if (sources) setSource(sources[0].value)
     }, [data, sources])
     return (
+        <div className={style.card}>
         <div className={style["root"]} 
             key={episode.Id}>
             <img src={imageUrl(episode.Id, episode.ImageTags.Primary)} />
-            <div>
-                <span>{episode.Name}</span>
-                <article>{episode.Overview}</article>
+            <div className={style.text}>
+                <span className={style.title}>{episode.Name}</span>
+                <article className={style.overview}>{episode.Overview}</article>
                 <div className={style["action"]}>
                     <div className={style["source-select"]}>
                     {sources && <Select size="small"
@@ -36,6 +36,8 @@ export function EpisodeCard(episode: Episode) {
                     </div>
                 </div>
             </div>
+        </div>
+        <article className={style.mobileOverview}>{episode.Overview}</article>
         </div>
     )
 }
