@@ -1,3 +1,5 @@
+@import "~@style/media.scss";
+
 .page {
     background-color: black;
     color: white;
@@ -23,5 +25,11 @@
 .no-scrollbar {
     &::-webkit-scrollbar {
         display: none;
+    }
+}
+
+@include mobile {
+    .banner {
+        height: calc(100vw * 0.6);
     }
 }

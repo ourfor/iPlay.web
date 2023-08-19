@@ -1,5 +1,7 @@
+@import "~@style/media.scss";
 .container {
   overflow: hidden;
+  position: relative;
 }
 
 .container > div {
@@ -24,6 +26,15 @@
   bottom: 5%;
   transform: translateX(-50%);
   backdrop-filter: blur(0.25rem);
+
+  @include mobile {
+    left: 50%;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .ticker {
@@ -34,6 +45,11 @@
   height: 3.5vw;
   bottom: 2rem;
   left: 2rem;
+
+  @include mobile {
+    width: 1rem !important;
+    height: 1rem !important;
+  }
 }
 
 .ticker > * {
