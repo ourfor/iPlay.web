@@ -12,7 +12,6 @@ import { Banner } from "@components/banner/Banner"
 import { BannerCard } from "@components/banner/BannerCard"
 import { LoaderFunctionArgs, useLoaderData, useNavigation } from "react-router-dom"
 import { Stack } from "@components/layout/Stack"
-import { Spin } from "@components/animation/Spin"
 
 export async function pageLoader({params}: LoaderFunctionArgs) {
     const albums = await Api.emby?.getView?.()
@@ -26,7 +25,6 @@ export default function Page() {
     const { data } = usePromise(Api.emby?.getPublicInfo)
     const [medias, setMedias] = useState<Map<string, Media[]>>({})
     const [recommend, setRecommend] = useState<Media[]>([])
-    const navigation = useNavigation()
     useEffect(() => {
         logger.info(data)
         if (data) {
@@ -53,7 +51,6 @@ export default function Page() {
     
     return (
         <div className={style["page"]}>
-            {navigation.state === "loading" && <Spin />}
             {recommend && <Banner className={style["banner"]} banners={
                 recommend.map(model => <BannerCard key={model.Id} model={model} />)
             } /> }

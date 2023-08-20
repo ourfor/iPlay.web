@@ -2,8 +2,7 @@ import React, { useState, CSSProperties, useEffect, ReactNode, useRef } from 're
 import { useTransition, animated, AnimatedProps, useSpringRef, useSpring } from '@react-spring/web'
 
 import styles from './Banner.module.scss'
-import { Pagination } from '@mui/material'
-import { logger } from '@helper/log'
+import { Pagination } from 'antd'
 
 function Page(props: AnimatedProps<{ style: CSSProperties, children: ReactNode }>) {
     return (
@@ -72,11 +71,11 @@ export function Banner({ banners, className }: BannerProps) {
                 return <Page style={style}>{banners[i]}</Page>
             })}
             <Pagination className={styles["select"]}
-                count={count}
-                page={index + 1}
-                onChange={(e, page) => setIndex(page - 1)}
-                variant="outlined"
-                color="secondary" />
+                showSizeChanger={false}
+                defaultPageSize={1}
+                total={count}
+                current={index + 1}
+                onChange={(page) => setIndex(page - 1)} />
             <div className={styles.ticker}>
                 <div />
                 <animated.svg

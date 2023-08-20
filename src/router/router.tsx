@@ -59,10 +59,16 @@ export const router = () => createBrowserRouter([
     basename: process.env.PUBLIC_URL
 })
 
+const SpinPage = (
+    <div style={{width: "100vw", height: "100vh"}}>
+        <Spin />
+    </div>
+)
+
 export function Router() {
     logger.info("init router")
     return (
         <RouterProvider router={router()} 
-            fallbackElement={<Spin />} />
+            fallbackElement={SpinPage} />
     )
 }

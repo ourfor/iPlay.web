@@ -1,4 +1,3 @@
-import { Stack as MStack } from "@mui/material"
 import { ReactNode } from "react"
 import style from "./Stack.module.scss"
 
@@ -9,10 +8,13 @@ interface StackProps {
 
 export function Stack(props: StackProps) {
     return (
-        <MStack className={style["stack"]} 
-            direction={props.direction ?? "column"}
-            overflow={"scroll"}>
+        <div className={style["stack"]}
+            style={{
+                display: "flex",
+                flexDirection: props.direction ?? "column",
+                overflow: "scroll"}
+            }>
             {props.children}
-        </MStack>
+        </div>
     )
 }
