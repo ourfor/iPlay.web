@@ -2,8 +2,10 @@
 
 .people {
     margin: 0.25rem;
+    flex-shrink: 0;
+    width: 10rem;
+
     img {
-        max-width: 10rem;
         border: 1px solid transparent;
         border-radius: 0.5rem;
     }
@@ -14,8 +16,6 @@
     }
 
     @include mobile {
-        img {
-            width: 22vw;
-        }
+        width: 22vw;
     }
 }

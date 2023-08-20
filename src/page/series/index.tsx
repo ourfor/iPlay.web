@@ -7,6 +7,8 @@ import { SeasonCardList } from "@components/media/Season"
 import { Api } from "@api/emby"
 import { Background } from "@components/background/Background"
 import { Button, Tag } from "antd"
+import _ from "lodash"
+import { Image } from "@components/base/Image"
 
 export const colors = [
     "cyan", "gold", "magenta", "orange", "lime"
@@ -30,24 +32,27 @@ export default function Page() {
         id
     } = useLoaderData() as SyncReturnType<typeof pageLoader>
     const navigate = useNavigate()
-    if (data) return (
+    if (!data) return null
+    const bgImgset = imageUrl(data.Id, data.BackdropImageTags[0], "Backdrop/0")
+    const imgset = imageUrl(data.Id, {maxWidth: 1050, maxHeight: 700, tag: data.ImageTags.Primary})
+    return (
         <div className={style["page"]}>
-            <Background src={imageUrl(data.Id, data.BackdropImageTags[0], "Backdrop/0")} />
+            <Background src={bgImgset} />
+            <div className={style.mobileCover}>
+                <Image ratio={16/9} src={bgImgset} />
+            </div>
             <div className={style["content"]}>
                 <div className={style["media-card"]}>
-                    <img className={style["cover"]}
-                        src={imageUrl(data.Id, { maxWidth: 1050, maxHeight: 700, tag: data.ImageTags.Primary })} />
+                    <img className={style["cover"]} src={imgset} />
                     <div>
-                        <h3 className={style["title"]}>{data.Name}</h3>
+                        <h3 className={style.title}>{data.Name}</h3>
                         {data.Genres.map((genre, i) => 
                             <Tag color={colors[i%colors.length]} 
                                 key={`genre-${i}`}>
                                 {genre}
                             </Tag>
                         )}
-                        <article>
-                            {data.Overview}
-                        </article>
+                        <article>{data.Overview}</article>
                         {type === "movie" && 
                         <Button className={style.playNow}
                             onClick={() => navigate(`/play/${id}`)} 
@@ -62,12 +67,15 @@ export default function Page() {
                     <SeasonCardList vid={data.Id} />
                     </>
                 )}
-                <h4>演职人员</h4>
-                <Stack direction="row">
-                    {data.People.map((people, i) => <PeopleCard key={`people-${i}`} {...people} />)}
-                </Stack>
+                {!_.isEmpty(data.People) && (
+                <>
+                    <h4>演职人员</h4>
+                    <Stack direction="row">
+                        {data.People.map((people, i) => <PeopleCard key={`people-${i}`} {...people} />)}
+                    </Stack>
+                </>
+                )}
             </div>
         </div>
     )
-    return null
 }

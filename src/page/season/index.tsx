@@ -18,10 +18,11 @@ export async function pageLoader({ request, params }: LoaderFunctionArgs) {
 export default function Page() {
     const { data } = useLoaderData() as SyncReturnType<typeof pageLoader>
     if (!data) return null
+    const imgset = imageUrl(data.Id ?? "", { maxHeight: 600, maxWidth: 400, tag: data.ImageTags.Primary })
     return (
         <div className={style["page"]}>
             <div className={style["intro"]}>
-                <img className={style["poster"]} src={imageUrl(data.Id ?? "", {maxHeight: 600, maxWidth: 400})} />
+                <img className={style["poster"]} src={imgset} />
                 <div className={style["right"]}>
                     <h3 className={style.title}>{data?.SeriesName}</h3>
                     <article className={style.overview}>{data?.Overview}</article>

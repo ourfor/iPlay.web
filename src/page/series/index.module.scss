@@ -93,10 +93,21 @@
 
         @include mobile {
             flex-direction: column;
-            .cover {
-                width: 100%;
-                margin: 0;
+            .title {
+                margin-top: 0.25rem;
             }
+            .cover {
+                display: none;
+            }
+        }
+    }
+
+
+    .mobileCover {
+        display: none;
+
+        @include mobile {
+            display: block;
         }
     }
 }

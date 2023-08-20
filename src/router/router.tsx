@@ -11,6 +11,7 @@ import { logger } from "@helper/log"
 import { Spin } from "@components/animation/Spin"
 import { Message } from "@components/message/Message"
 import { SettingDialog } from "@components/setting/SettingDialog"
+import { useEffect } from "react"
 
 const SpinPage = (
     <div style={{
@@ -25,6 +26,12 @@ const SpinPage = (
 
 export default function Root() {
     const navigation = useNavigation();
+
+    useEffect(() => {
+        if (navigation.state === "loading") {
+            window.scrollY = 0
+        }
+    }, [navigation.state])
   
     return (
       <>

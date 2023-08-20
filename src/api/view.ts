@@ -136,7 +136,7 @@ export async function getEpisodes(user: User, vid: number, sid: number) {
 
 
 
-export async function getCollection(user: User, cid: number, type: "Series"|"Movie" = "Series") {
+export async function getCollection(user: User, cid: number, type: "Series"|"Movie" = "Series", page: number = 0) {
     const uid = user.User.Id
     const params = {
         UserId: user.User.Id,
@@ -145,7 +145,7 @@ export async function getCollection(user: User, cid: number, type: "Series"|"Mov
         IncludeItemTypes: type,
         Recursive: true,
         Fields: "BasicSyncInfo,CanDelete,Container,PrimaryImageAspectRatio,Prefix",
-        StartIndex: 0,
+        StartIndex: page * 50,
         ParentId: cid,
         EnableImageTypes: "Primary,Backdrop,Thumb",
         ImageTypeLimit: 1,
@@ -160,5 +160,5 @@ export async function getCollection(user: User, cid: number, type: "Series"|"Mov
     const url = makeUrl(params, `emby/Users/${uid}/Items`)
     const response = await fetch(url)
     const data = await response.json() as EmbyResponse<Media>
-    return data.Items
+    return data
 }
