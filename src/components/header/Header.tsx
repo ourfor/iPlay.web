@@ -4,13 +4,18 @@ import logoUrl from "./logo.png"
 import searchUrl from "./search.svg"
 import { User } from "@model/User"
 import { useAppSelector } from "@data/StoreHook"
+import classnames from "classnames"
 
 
-export function Header() {
+export interface HeaderProps {
+    className?: string
+}
+
+export function Header({className}: HeaderProps) {
     const user = useAppSelector(state => state.user)
     const avator = avatorUrl(user?.User?.Id ?? "", "", "Primary")
     return (
-        <div className={style["header"]}>
+        <div className={classnames(style["header"], className)}>
             <img className={style["logo"]} src={logoUrl} />
             <div className={style["left"]}>
                 <span>首页</span>

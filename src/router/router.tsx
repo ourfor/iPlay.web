@@ -6,42 +6,10 @@ import PageTest from "@page/test"
 import PagePlay, { pageLoader as pagePlayLoader } from "@page/play"
 import PageAlbum, { pageLoader as pageAlbumLoader } from "@page/album"
 import PageError from "@page/error"
-import { Outlet, RouterProvider, createBrowserRouter, useNavigation } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { logger } from "@helper/log"
-import { Spin } from "@components/animation/Spin"
-import { Message } from "@components/message/Message"
-import { SettingDialog } from "@components/setting/SettingDialog"
-import { useEffect } from "react"
+import Root, { SpinPage, checker } from "./Root"
 
-const SpinPage = (
-    <div style={{
-        position: "fixed", 
-        top: 0, left: 0,
-        width: "100vw", 
-        height: "100vh"
-    }}>
-        <Spin />
-    </div>
-)
-
-export default function Root() {
-    const navigation = useNavigation();
-
-    useEffect(() => {
-        if (navigation.state === "loading") {
-            window.scrollY = 0
-        }
-    }, [navigation.state])
-  
-    return (
-      <>
-        <Outlet />
-        <Message />
-        <SettingDialog />
-        {navigation.state === "loading" && SpinPage}
-      </>
-    );
-  }
 
 const pages = [
     { 
@@ -53,37 +21,37 @@ const pages = [
         path: "/",
         loader: pageHomeLoader,
         element: <PageHome />,
-        errorElement: <PageLogin /> 
+        errorElement: <PageError /> 
     },
     { 
         path: "/series/:id", 
         loader: pageSeriesLoader,
         element: <PageSeries />,
-        errorElement: <PageLogin /> 
+        errorElement: <PageError /> 
     },
     { 
         path: "/movie/:id", 
         loader: pageSeriesLoader,
         element: <PageSeries />,
-        errorElement: <PageLogin /> 
+        errorElement: <PageError /> 
     },
     { 
         path: "/season/:id",
         loader: pageSeasonLoader,
         element: <PageSeason />,
-        errorElement: <PageLogin /> 
+        errorElement: <PageError /> 
     },
     { 
         path: "/play/:id",
         loader: pagePlayLoader,
         element: <PagePlay />,
-        errorElement: <PageLogin /> 
+        errorElement: <PageError /> 
     },
     { 
         path: "/album/:id",
         loader: pageAlbumLoader,
         element: <PageAlbum />,
-        errorElement: <PageLogin /> 
+        errorElement: <PageError /> 
     },
     {
         path: "/*",
@@ -94,7 +62,9 @@ const pages = [
 export const router = () => createBrowserRouter([{
     path: "/",
     element: <Root />,
-    children: pages
+    loader: checker,
+    errorElement: <PageError />,
+    children: pages,
 }], {
     basename: process.env.PUBLIC_URL
 })
@@ -103,6 +73,6 @@ export function Router() {
     logger.info("init router")
     return (
         <RouterProvider router={router()} 
-            fallbackElement={SpinPage} />
+            fallbackElement={<SpinPage />} />
     )
 }

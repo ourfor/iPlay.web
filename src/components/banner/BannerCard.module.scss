@@ -12,6 +12,8 @@
         position: absolute;
         top: 0;
         left: 0;
+        user-select: none;
+        pointer-events: none;
     }
 
     .banner-title {
