@@ -5,6 +5,7 @@
     color: white;
     box-sizing: border-box;
     margin: 0;
+    min-height: 100vh;
 
     .title {
         font-size: 1.5rem;
@@ -16,6 +17,16 @@
 
     .playlist {
         width: 100%;
+    }
+
+    .albums {
+        flex-wrap: wrap;
+        align-items: center;
+        align-content: flex-start;
+
+        @include mobile {
+            flex-wrap: nowrap;
+        }
     }
 }
 

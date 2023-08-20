@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom"
 import { Api, Emby } from "@api/emby"
 import SettingIcon from "@components/setting/SettingIcon"
 import { DialogID, openDialog } from "@data/Event"
-import { SettingDialog } from "@components/setting/SettingDialog"
 import { produceMessage } from "@data/Message"
 import { Button, Checkbox, TextField } from "@radix-ui/themes"
 
@@ -102,7 +101,6 @@ export default function Page() {
                     </div>
                 </div>
             </div>
-            <SettingDialog />
         </div>
     )
 }

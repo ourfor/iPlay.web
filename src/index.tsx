@@ -23,12 +23,7 @@ const App = () => {
       config.emby = setting.emby
     }
   }, [setting])
-  return (
-    <>
-    <Router />
-    <Message />
-    </>
-  )
+  return <Router />
 }
 
 root.render(
