@@ -5,16 +5,22 @@ import { imageUrl, playUrl } from "@api/config"
 import { Api } from "@api/emby"
 import { ExternalPlayer } from "./ExternalPlayer"
 import { InternalPlayer } from "./InternalPlayer"
-import { Select } from "antd"
-import { useEffect, useState } from "react"
+import { MouseEvent, useEffect, useMemo, useState } from "react"
+import { Select } from "@radix-ui/themes"
+import { logger } from "@helper/log"
+
+const stopEvent = (e: MouseEvent) => e.stopPropagation()
 
 export function EpisodeCard(episode: Episode) {
     const { data } = usePromise(() => Api.emby?.getPlaybackInfo?.(Number(episode.Id)), [episode.Id])
-    const sources = data?.MediaSources.map(item => ({label: item.Name, value: item.DirectStreamUrl}))
+    const sources = useMemo(() => 
+        data?.MediaSources.map(item => ({label: item.Name, value: item.DirectStreamUrl})),
+    [data])
     const [source, setSource] = useState<string|null>(null)
     useEffect(() => {
-        if (sources) setSource(sources[0].value)
-    }, [data, sources])
+        if (sources) setSource(sources?.[0].value)
+    }, [sources])
+    logger.info(source)
     return (
         <div className={style.card}>
         <div className={style["root"]} 
@@ -24,11 +30,19 @@ export function EpisodeCard(episode: Episode) {
                 <span className={style.title}>{episode.Name}</span>
                 <article className={style.overview}>{episode.Overview}</article>
                 <div className={style["action"]}>
-                    <div className={style["source-select"]}>
-                    {sources && <Select size="small"
-                            style={{minWidth: "5rem", fontSize: "0.75rem"}}
-                            onChange={e => setSource(e)}
-                            defaultValue={sources[0].value} options={sources} />}
+                    <div className={style["source-select"]} onClick={stopEvent}>
+                    {source && sources && (
+                        <Select.Root size="1"
+                            value={source}
+                            onValueChange={v => setSource(v)}
+                            defaultValue={source ?? ""}>
+                            <Select.Trigger placeholder="选择媒体文件" />
+                            <Select.Content>
+                            {sources.map(({value, label}, i) => 
+                                <Select.Item key={`${i}`} value={value}>{label}</Select.Item>)}
+                            </Select.Content>
+                        </Select.Root>
+                    )}
                     </div>
                     <div className={style["players"]}>
                         <InternalPlayer id={episode.Id} />

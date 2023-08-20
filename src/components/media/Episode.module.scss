@@ -43,6 +43,7 @@
         display: inline-flex;
         align-items: center;
         font-size: 0.75rem;
+        user-select: none;
     }
 
     @include mobile {
