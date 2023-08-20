@@ -10,7 +10,7 @@ import { Header } from "@components/header/Header"
 import { Api } from "@api/emby"
 import { Banner } from "@components/banner/Banner"
 import { BannerCard } from "@components/banner/BannerCard"
-import { LoaderFunctionArgs, useLoaderData } from "react-router-dom"
+import { LoaderFunctionArgs, useLoaderData, useNavigation } from "react-router-dom"
 import { Stack } from "@components/layout/Stack"
 
 export async function pageLoader({params}: LoaderFunctionArgs) {
