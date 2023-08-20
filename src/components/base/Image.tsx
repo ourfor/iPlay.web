@@ -3,7 +3,7 @@ import { CSSProperties } from "react";
 
 export interface ImageProps {
     className?: string
-    ratio: number
+    ratio?: number
     src: string
     alt?: string,
     style?: CSSProperties

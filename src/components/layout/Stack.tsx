@@ -1,9 +1,10 @@
-import { ReactNode } from "react"
+import { CSSProperties, ReactNode } from "react"
 import style from "./Stack.module.scss"
 import classnames from "classnames"
 
 interface StackProps {
     className?: string
+    style?: CSSProperties
     direction: "column"|"row"
     children: ReactNode|ReactNode[]
 }
@@ -14,8 +15,9 @@ export function Stack(props: StackProps) {
             style={{
                 display: "flex",
                 flexDirection: props.direction ?? "column",
-                overflow: "scroll"}
-            }>
+                overflow: "scroll",
+                ...props.style
+            }}>
             {props.children}
         </div>
     )
