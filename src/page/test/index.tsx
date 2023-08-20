@@ -1,41 +1,30 @@
 import style from "./index.module.scss"
-import {animated, useSpring, useTransition} from "@react-spring/web"
+import {animated, useChain, useSpring, useSpringRef, useTransition} from "@react-spring/web"
 
 export default function Page() {
     const data = [1, 2, 3, 4]
-    const [spring, api] = useSpring(() => ({
+    const springRef = useSpringRef()
+    const style1 = useSpring({
+        ref: springRef,
         from: {
             scale: 1,
-            x: 0
+        },
+        to: {
+            scale: 1.2
         }
-    }))
+    })
+    const transitionRef = useSpringRef()
     const transition = useTransition(data, {
+        ref: transitionRef,
         from: {x: 0},
         enter: {x: 100},
         leave: {x: 0}
     })
+    useChain([springRef, transitionRef], [0, 3])
     return (
         <div className={style.page}>
-            <animated.div style={{
-                width: "5rem",
-                height: "5rem",
-                background: "red",
-                marginTop: "1rem",
-                marginRight: "1rem",
-                ...spring
-            }} onClick={() => api.start({
-                from: {
-                    scale: 1,
-                    x: 0
-                },
-                to: {
-                    scale: 1.2,
-                    x: 1000
-                }
-            })}>
-            </animated.div>
             {transition((style, idx) => (
-                <animated.div style={style}>{idx}</animated.div>
+                <animated.div style={{...style1, ...style}}>{idx}</animated.div>
             ))}
         </div>
     )

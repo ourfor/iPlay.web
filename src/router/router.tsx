@@ -1,16 +1,42 @@
 import PageLogin from "@page/login"
 import PageHome, { pageLoader as pageHomeLoader } from "@page/home"
 import PageSeries, { pageLoader as pageSeriesLoader } from "@page/series"
-import PageSeason from "@page/season"
+import PageSeason, { pageLoader as pageSeasonLoader } from "@page/season"
 import PageTest from "@page/test"
 import PagePlay, { pageLoader as pagePlayLoader } from "@page/play"
 import PageAlbum, { pageLoader as pageAlbumLoader } from "@page/album"
 import PageError from "@page/error"
-import { RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom';
+import { Outlet, RouterProvider, createBrowserRouter, useNavigation } from 'react-router-dom';
 import { logger } from "@helper/log"
 import { Spin } from "@components/animation/Spin"
+import { Message } from "@components/message/Message"
+import { SettingDialog } from "@components/setting/SettingDialog"
 
-export const router = () => createBrowserRouter([
+const SpinPage = (
+    <div style={{
+        position: "fixed", 
+        top: 0, left: 0,
+        width: "100vw", 
+        height: "100vh"
+    }}>
+        <Spin />
+    </div>
+)
+
+export default function Root() {
+    const navigation = useNavigation();
+  
+    return (
+      <>
+        <Outlet />
+        <Message />
+        <SettingDialog />
+        {navigation.state === "loading" && SpinPage}
+      </>
+    );
+  }
+
+const pages = [
     { 
         path: "/login", 
         element: <PageLogin />,
@@ -35,7 +61,8 @@ export const router = () => createBrowserRouter([
         errorElement: <PageLogin /> 
     },
     { 
-        path: "/season/:id", 
+        path: "/season/:id",
+        loader: pageSeasonLoader,
         element: <PageSeason />,
         errorElement: <PageLogin /> 
     },
@@ -55,15 +82,15 @@ export const router = () => createBrowserRouter([
         path: "/*",
         element: <PageTest />
     }
-], {
+]
+
+export const router = () => createBrowserRouter([{
+    path: "/",
+    element: <Root />,
+    children: pages
+}], {
     basename: process.env.PUBLIC_URL
 })
-
-const SpinPage = (
-    <div style={{width: "100vw", height: "100vh"}}>
-        <Spin />
-    </div>
-)
 
 export function Router() {
     logger.info("init router")

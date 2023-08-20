@@ -12,6 +12,7 @@ import { Banner } from "@components/banner/Banner"
 import { BannerCard } from "@components/banner/BannerCard"
 import { LoaderFunctionArgs, useLoaderData, useNavigation } from "react-router-dom"
 import { Stack } from "@components/layout/Stack"
+import _ from "lodash"
 
 export async function pageLoader({params}: LoaderFunctionArgs) {
     const albums = await Api.emby?.getView?.()
@@ -50,18 +51,18 @@ export default function Page() {
     }, [albums])
     
     return (
-        <div className={style["page"]}>
-            {recommend && <Banner className={style["banner"]} banners={
+        <div className={style.page}>
+            {!_.isEmpty(recommend) && <Banner className={style["banner"]} banners={
                 recommend.map(model => <BannerCard key={model.Id} model={model} />)
             } /> }
             <Header />
-            <p className={style["title"]}>我的媒体</p>
-            <Stack direction={"row"}>
+            <p className={style.title}>我的媒体</p>
+            <Stack className={style.albums} direction={"row"}>
                 {albums && albums.Items.map((item, i) => <Album key={`album-${i}`} {...item}/>)}
             </Stack>
             {medias && Object.entries(medias).filter(([key, value]) => value && value.length).map(([name, media]) => (
-                <div key={name} className={style["playlist"]}>
-                <p className={style["title"]}>{name}</p>
+                <div key={name} className={style.playlist}>
+                <p className={style.title}>{name}</p>
                 <Stack direction={"row"}>
                     {media && media.map((movie, i) => <MediaCard key={`media-${i}`} {...movie} />)}
                 </Stack>

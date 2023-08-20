@@ -1,13 +1,25 @@
 @import "~@style/click.scss";
+@import "~@style/media.scss";
 
 .album {
     @include clickable;
     
     margin: 0.25rem;
     display: inline-flex;
+    flex-shrink: 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 15rem;
+
+    @include mobile {
+        width: 35vw;
+        flex-shrink: 0;
+    }
+
+    .cover {
+        width: fit-content;
+    }
 
     img {
         border: 1px solid transparent;
