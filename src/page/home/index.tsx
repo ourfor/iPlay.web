@@ -52,14 +52,20 @@ export default function Page() {
     
     return (
         <div className={style.page}>
-            {!_.isEmpty(recommend) && <Banner className={style["banner"]} banners={
-                recommend.map(model => <BannerCard key={model.Id} model={model} />)
-            } /> }
-            <Header />
-            <p className={style.title}>我的媒体</p>
-            <Stack className={style.albums} direction={"row"}>
-                {albums && albums.Items.map((item, i) => <Album key={`album-${i}`} {...item}/>)}
-            </Stack>
+            <div className={style.navigator}>
+                <Header className={style.header} />
+                {!_.isEmpty(recommend) && <Banner className={style["banner"]} banners={
+                    recommend.map(model => <BannerCard key={model.Id} model={model} />)
+                } />}
+            </div>
+            {!_.isEmpty(albums?.Items) && (
+            <>
+                <span className={style.albumTitle}>我的媒体</span>
+                <Stack className={style.albums} direction={"row"}>
+                    {albums?.Items.map((item, i) => <Album key={`album-${i}`} {...item}/>)}
+                </Stack>
+            </>
+            )}
             {medias && Object.entries(medias).filter(([key, value]) => value && value.length).map(([name, media]) => (
                 <div key={name} className={style.playlist}>
                 <p className={style.title}>{name}</p>

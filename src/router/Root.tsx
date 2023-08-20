@@ -1,8 +1,8 @@
 import { Api } from "@api/emby";
+import { Spin } from "@components/animation/Spin";
 import { Message } from "@components/message/Message";
 import { SettingDialog } from "@components/setting/SettingDialog";
 import { Exception, ExceptionType } from "@error/Exception";
-import { Spin } from "antd";
 import { useEffect } from "react";
 import { LoaderFunctionArgs, Outlet, useNavigation } from "react-router-dom";
 

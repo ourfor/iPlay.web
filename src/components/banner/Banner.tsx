@@ -13,11 +13,12 @@ function Page(props: AnimatedProps<{ style: CSSProperties, children: ReactNode }
 }
 
 export interface BannerProps {
+    children?: ReactNode
     className?: string
     banners: React.ReactElement[]
 }
 
-export function Banner({ banners, className }: BannerProps) {
+export function Banner({ children, banners, className }: BannerProps) {
     const count = banners.length
     const [index, setIndex] = useState(0)
     const [hover, setHover] = useState(false)
@@ -67,6 +68,7 @@ export function Banner({ banners, className }: BannerProps) {
         <div className={`flex fill ${styles.container} ${className}`}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}>
+            {children}
             {transitions((style, i) => {
                 return <Page style={style}>{banners[i]}</Page>
             })}
