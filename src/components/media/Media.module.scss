@@ -1,6 +1,37 @@
 @import "~@style/click.scss";
 @import "~@style/media.scss";
 
+.unplayed {
+    width: 2em;
+    height: 2em;
+    color: #fff;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 3px 1px -2px rgba(0,0,0,.2);
+    font-size: 88%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: .225em;
+    position: absolute;
+    right: .225em;
+    border-radius: 1em;
+    inset-inline-start: initial;
+    inset-inline-end: .225em;
+    --theme-primary-color-hue: 116;
+    --theme-primary-color-saturation: 41.7%;
+    --theme-primary-color-lightness: 50.2%;
+    --theme-accent-text-color-darkbg: #6CCF8B;
+    --theme-accent-text-color-lightbg: green;
+    background-color: hsl(var(--theme-primary-color-hue),
+        var(--theme-primary-color-saturation),
+        var(--theme-primary-color-lightness));
+
+    @include mobile {
+        font-size: 72%;
+        top: .30rem;
+        right: .30rem;
+    }
+}
+
 .card {
     @include clickable;
     display: inline-flex;
