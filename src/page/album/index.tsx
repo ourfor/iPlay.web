@@ -5,7 +5,6 @@ import style from "./index.module.scss"
 import { Background } from "@components/background/Background"
 import { imageUrl } from "@api/config"
 import { Pagination } from "antd"
-import { logger } from "@helper/log"
 import { Stack } from "@components/layout/Stack"
 import { queryParams } from "@hook/useQuery"
 

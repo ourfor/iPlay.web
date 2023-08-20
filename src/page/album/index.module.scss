@@ -17,7 +17,15 @@
 
     .pageSelector {
         margin: 1rem auto;
+        padding: 0.25rem;
         border-radius: 2px;
-        background-color: white;
+        background-color: #f9f1fe99;
+
+        :global .ant-pagination-item-active {
+            overflow: hidden;
+            &, &>a {
+                background-color: #efe7ef;
+            }
+        }
     }
 }
