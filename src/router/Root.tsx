@@ -31,16 +31,19 @@ export async function checker({params, request, context}: LoaderFunctionArgs) {
 
 export default function Root() {
     const navigation = useNavigation()
-    const site = useAppSelector(state => state.site.site)
+    const user = useAppSelector(state => state.site.site.user)
+    const emby = useAppSelector(state => state.site.site.emby)
     useEffect(() => {
-      logger.info("site switch to", site.name)
-      if (site.emby) {
-        config.emby = site.emby
+      logger.info("site switch to", user?.ServerId)
+      if (user) {
+        Api.emby = new Emby(user)
       }
-      if (site.user) {
-        Api.emby = new Emby(site.user)
-      }
-    }, [site])
+    }, [user])
+
+    useEffect(() => {
+      logger.info("update emby config")
+      config.emby = emby
+    }, [emby])
 
     useEffect(() => {
         if (navigation.state === "loading") {
