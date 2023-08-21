@@ -31,7 +31,6 @@ export async function checker({params, request, context}: LoaderFunctionArgs) {
 
 export default function Root() {
     const navigation = useNavigation()
-    const navigate = useNavigate()
     const site = useAppSelector(state => state.site.site)
     useEffect(() => {
       logger.info("site switch to", site.name)
@@ -40,7 +39,6 @@ export default function Root() {
       }
       if (site.user) {
         Api.emby = new Emby(site.user)
-        navigate(`/?site=${site.id}`)
       }
     }, [site])
 

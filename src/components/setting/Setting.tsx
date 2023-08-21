@@ -35,7 +35,9 @@ export function EmbySetting({ id, activeId, setting, updateConfig, active }: Set
                 <Input value={setting.path ?? "/"} onChange={e => updateConfig({ path: e.target.value })} />
             </div>
             <div className={style["inline"]}>
-                <Button onClick={() => active?.(id)} disabled={activeId === id}>激活</Button>
+                <Button onClick={() => active?.(id)}
+                    style={{marginRight: "0.75rem"}}
+                    disabled={activeId === id}>激活</Button>
                 <Button onClick={() => updateConfig(DEFAULT_EMBY_CONFIG)}>恢复默认设置</Button>
             </div>
         </>

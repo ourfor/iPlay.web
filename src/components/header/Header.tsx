@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@data/StoreHook"
 import classnames from "classnames"
 import { Avatar, Select } from "@radix-ui/themes"
 import { updateActiveId } from "@data/Site"
+import { useNavigate } from "react-router-dom"
 
 
 export interface HeaderProps {
@@ -14,11 +15,15 @@ export interface HeaderProps {
 
 export function Header({className}: HeaderProps) {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const site = useAppSelector(state => state.site)
     const user = site.site.user
     const avatorUrl = userAvatorUrl(user?.User?.Id ?? "", "", "Primary")
     const switchSite = (id: string) => {
         dispatch(updateActiveId(id))
+        setTimeout(() => {
+            navigate(`/?site=${id}`)
+        }, 500)
     }
     return (
         <div className={classnames(style.header, className)}>

@@ -41,6 +41,7 @@ export default function Page() {
 
     useEffect(() => {
         setMedias({})
+        setRecommend([])
     }, [siteId])
 
     useEffect(() => {
