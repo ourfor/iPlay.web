@@ -1,9 +1,9 @@
 import { DEFAULT_EMBY_CONFIG } from "@api/config";
-import { Api, Emby } from "@api/emby";
 import { EmbyConfig } from "@helper/env";
 import { Map } from "@model/Map";
 import { User } from "@model/User";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import _ from "lodash";
 
 export interface Site {
     id: string
@@ -40,6 +40,9 @@ export const slice = createSlice({
             const id = data.id
             const _old = state.sites[id]
             const _new = {..._old, ...data}
+            if (_.isEmpty(Object.values(state.sites))) {
+                state.activeId = id;
+            }
             state.sites[id] = _new
             if (state.activeId === id) {
                 state.site = _new
