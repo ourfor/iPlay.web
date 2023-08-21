@@ -1,14 +1,19 @@
 import style from "./Setting.module.scss"
 import { Button, Input, Modal, Select, Tag } from "antd";
-import { updateEmbyConfig } from "@data/Setting";
+import Setting, { updateEmbyConfig } from "@data/Setting";
 import { useKeyboard } from "@hook/useKeyboard";
 import { useAppDispatch, useAppSelector } from "@data/StoreHook";
 import { DialogID, openDialog } from "@data/Event";
 import { DEFAULT_EMBY_CONFIG, EmbyConfig } from "@api/config";
+import { EmbySetting } from "./Setting";
+import { Box, Tabs } from "@radix-ui/themes";
+import _ from "lodash";
+import { updateActiveId, updateSite, updateSiteConfig } from "@data/Site";
 
 export function SettingDialog() {
     const dialog = useAppSelector(state => state.event.dialog)
-    const setting = useAppSelector(state => state.setting)
+    const sites = useAppSelector(state => state.site.sites)
+    const activeId = useAppSelector(state => state.site.site.id)
     const dispatch = useAppDispatch()
     useKeyboard(window, {
         "keydown": (e) => {
@@ -26,8 +31,12 @@ export function SettingDialog() {
         }
     })
 
-    const updateConfig = (config: Partial<EmbyConfig>) => {
-        dispatch(updateEmbyConfig(config))
+    const updateConfig = (id: string, config: Partial<EmbyConfig>, name?: string) => {
+        dispatch(updateSiteConfig({
+            id,
+            name,
+            emby: config as any
+        }))
     }
 
     const Header = (
@@ -44,30 +53,35 @@ export function SettingDialog() {
             open={dialog?.[DialogID.SETTING] ?? false}
             onCancel={() => dispatch(openDialog({ id: DialogID.SETTING, visible: false }))}
             centered footer={null}>
-            <div className={style["inline"]}>
-                <p className={style["title"]}>域名</p>
-                <Input value={setting.emby?.host ?? ""} onChange={e => updateConfig({ host: e.target.value })} />
-            </div>
-            <div className={style["inline"]}>
-                <p className={style["title"]}>协议</p>
-                <Select value={setting.emby?.protocol}
-                onChange={protocol => updateConfig({protocol})}
-                options={[
-                    {label: "https", value: "https"},
-                    {label: "http", value: "http"}
-                ]} />
-            </div>
-            <div className={style["inline"]}>
-                <p className={style["title"]}>端口</p>
-                <Input type="number" value={setting.emby?.port ?? 8096} onChange={e => updateConfig({ port: Number(e.target.value) })} />
-            </div>
-            <div className={style["inline"]}>
-                <p className={style["title"]}>路径</p>
-                <Input value={setting.emby?.path ?? "/"} onChange={e => updateConfig({ path: e.target.value })} />
-            </div>
-            <div className={style["inline"]}>
-                <Button onClick={() => updateConfig(DEFAULT_EMBY_CONFIG)}>恢复默认设置</Button>
-            </div>
+            <Tabs.Root defaultValue={_.first(Object.values(sites))?.id}>
+                <Tabs.List>
+                    {Object.entries(sites).map(([id, site]) => 
+                        <Tabs.Trigger className={style.tabName} key={id} value={id}>{site?.name ?? id}</Tabs.Trigger>
+                    )}
+                    <Button size="small"
+                        onClick={() => dispatch(updateSite({
+                            id: `${Date.now()}`,
+                            name: `默认`,
+                            user: null,
+                            emby: DEFAULT_EMBY_CONFIG
+                        } as any))}
+                        style={{marginLeft: "1rem"}}> + </Button>
+                </Tabs.List>
+                <Box px="4" pt="3" pb="2">
+                    {Object.entries(sites).map(([id, site]) => 
+                        <Tabs.Content key={id} value={id}>
+                            <div className={style.inline}>
+                                <p className={style.title}>名称</p>
+                                <Input value={site?.name} onChange={e => updateConfig(id,{}, e.target.value)} />
+                            </div>
+                            <EmbySetting id={id}
+                                activeId={activeId}
+                                active={id => dispatch(updateActiveId(id))}
+                                setting={site!.emby} updateConfig={v => updateConfig(id, v, site?.name)} />
+                        </Tabs.Content>
+                    )}
+                </Box>
+            </Tabs.Root>
         </Modal>
     )
 }
