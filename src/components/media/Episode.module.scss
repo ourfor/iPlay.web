@@ -6,10 +6,12 @@
     flex-wrap: nowrap;
     margin: 0.25rem;
 
-    &>img {
-        max-width: 16rem;
+    &>img,&>.preview {
+        width: 256px;
         margin: 0.25rem 0.5rem;
         border-radius: 0.25rem;
+        flex-grow: 0;
+        flex-shrink: 0;
     }
 
     &>span {
@@ -47,7 +49,7 @@
     }
 
     @include mobile {
-        &>img {
+        &>img, &>.preview {
             display: inline-block;
             width: 45%;
             flex-grow: 0;
