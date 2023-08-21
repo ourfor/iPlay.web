@@ -6,6 +6,7 @@ export interface Episode {
     SeriesName: string
     SeasonId: string
     SeasonName: string
+    PrimaryImageAspectRatio: number
     ImageTags: {
         Primary: string
     }

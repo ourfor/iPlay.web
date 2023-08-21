@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Badge } from "@components/badge/Badge";
 import { UnplayedCount } from "@components/badge/UnplayedCount";
 import { Api } from "@api/emby";
+import { Image } from "@components/base/Image";
 
 export interface SeasonCardListProps {
     vid: string | number
@@ -18,6 +19,7 @@ export function SeasonCardList({ vid }: SeasonCardListProps) {
                 key={season.Id}
                 sid={season.Id} 
                 name={season.Name}
+                ratio={season.PrimaryImageAspectRatio}
                 unplayedCount={season.UserData.UnplayedItemCount}
                 etag={season.ImageTags.Primary} />
             )}
@@ -30,6 +32,7 @@ export interface SeasonCardProps {
     etag: string
     name: string
     unplayedCount?: number
+    ratio?: number
 }
 
 export function SeasonCard(props: SeasonCardProps) {
@@ -39,7 +42,10 @@ export function SeasonCard(props: SeasonCardProps) {
         <Badge>
             <div className={style["card"]}
                 onClick={() => navigate(`/season/${props.sid}`)}>
-                <img src={src} />
+                {/* <img src={src} /> */}
+                <div className={style.img}>
+                    <Image ratio={props.ratio ?? 2/3} src={src} />
+                </div>
                 <p>{props.name}</p>
             </div>
             <UnplayedCount count={props.unplayedCount} />

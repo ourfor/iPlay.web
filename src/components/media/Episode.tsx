@@ -8,6 +8,7 @@ import { InternalPlayer } from "./InternalPlayer"
 import { MouseEvent, useEffect, useMemo, useState } from "react"
 import { Select } from "@radix-ui/themes"
 import { logger } from "@helper/log"
+import { Image } from "@components/base/Image"
 
 const stopEvent = (e: MouseEvent) => e.stopPropagation()
 
@@ -21,11 +22,15 @@ export function EpisodeCard(episode: Episode) {
         if (sources) setSource(sources?.[0].value)
     }, [sources])
     logger.info(source)
+    const posterUrl = imageUrl(episode.Id, episode.ImageTags.Primary)
     return (
         <div className={style.card}>
         <div className={style["root"]} 
             key={episode.Id}>
-            <img src={imageUrl(episode.Id, episode.ImageTags.Primary)} />
+            <div className={style.preview}>
+            <Image ratio={episode.PrimaryImageAspectRatio} 
+                src={posterUrl} />
+            </div>
             <div className={style.text}>
                 <span className={style.title}>{episode.Name}</span>
                 <article className={style.overview}>{episode.Overview}</article>
