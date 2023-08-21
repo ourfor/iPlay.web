@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Image } from "@components/base/Image";
 import { Badge } from "@components/badge/Badge";
 import classnames from "classnames";
+import { UnplayedCount } from "@components/badge/UnplayedCount";
 
 export interface MediaCardProps extends Media {
     className?: string
@@ -15,15 +16,15 @@ export function MediaCard(media: MediaCardProps) {
     const url = imageUrl(media.Id, media.ImageTags.Primary)
     return (
         <Badge>
-        <div onClick={() => navigate(`/${media.Type === "Series" ? "series" : "movie"}/${media.Id}`)} 
-            className={classnames(style.card, media.className)}>
-            <Image ratio={media.PrimaryImageAspectRatio} 
-                className={style.img}
-                alt={media.Name}
-                src={url} />
-            <p>{media.Name}</p>
-        </div>
-        {media.UserData.UnplayedItemCount && <div className={style.unplayed}>{media.UserData.UnplayedItemCount}</div>}
+            <div onClick={() => navigate(`/${media.Type === "Series" ? "series" : "movie"}/${media.Id}`)}
+                className={classnames(style.card, media.className)}>
+                <Image ratio={media.PrimaryImageAspectRatio}
+                    className={style.img}
+                    alt={media.Name}
+                    src={url} />
+                <p>{media.Name}</p>
+            </div>
+            <UnplayedCount count={media.UserData.UnplayedItemCount} />
         </Badge>
     )
 }

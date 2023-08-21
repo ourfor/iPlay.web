@@ -1,3 +1,5 @@
+import { UserData } from "./UserData"
+
 export interface Season {
     BackdropImageTags: string[]
     CanDelete: boolean
@@ -18,4 +20,5 @@ export interface Season {
     ServerId: string
     SupportsSync: boolean
     Type: string
+    UserData: UserData
 }

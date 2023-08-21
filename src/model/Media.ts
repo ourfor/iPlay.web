@@ -1,3 +1,5 @@
+import { UserData } from "./UserData"
+
 export interface Media {
     AirDays: string[]
     BackdropImageTags: string[]
@@ -27,16 +29,5 @@ export interface Media {
     Status: string
     SupportsSync: boolean
     Type: "Series"|"Movie"
-    UserData: {
-        UnplayedItemCount: number,
-        PlaybackPositionTicks: number,
-        PlayCount: number,
-        IsFavorite: boolean,
-        Played: boolean
-    }
-    IsFavorite: boolean
-    PlayCount: number
-    PlaybackPositionTicks: number
-    Played: boolean
-    UnplayedItemCount: number
+    UserData: UserData
 }
