@@ -9,17 +9,7 @@ import SettingIcon from "@components/setting/SettingIcon"
 import { DialogID, openDialog } from "@data/Event"
 import { produceMessage } from "@data/Message"
 import { Button, Checkbox, TextField } from "@radix-ui/themes"
-
-const customStyle = {
-    '& .MuiOutlinedInput-root': {
-        '&:hover fieldset': {
-            borderColor: '#B2BAC2',
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: '#B2BAC2',
-        },
-    }
-}
+import { updateActiveSite } from "@data/Site"
 
 export default function Page() {
     const [username, setUserName] = useState("")
@@ -30,10 +20,11 @@ export default function Page() {
 
     const submit = () => {
         Api.login(username, password)
-            .then(data => {
-                logger.info(data)
-                Api.emby = new Emby(data)
-                dispatch(updateUser(data))
+            .then(user => {
+                logger.info(user)
+                Api.emby = new Emby(user)
+                dispatch(updateUser(user))
+                dispatch(updateActiveSite({user}))
                 dispatch(produceMessage({
                     type: "success",
                     data: "登录成功，即将跳转主页",

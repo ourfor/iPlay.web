@@ -6,11 +6,13 @@ import settingSlice from "./Setting";
 import userSlice from "./User";
 import historySlice from "./History";
 import eventSlice from "./Event";
+import siteSlice, { DEFAULT_SITE, updateSite } from "./Site"
 import messageSlice from "./Message"
 import { logger } from "@helper/log";
 import { Api, Emby } from "@api/emby";
 import { User } from "@model/User";
 import { config } from "@api/config";
+import _ from "lodash";
 
 const Env = {
     name: "development",
@@ -25,7 +27,11 @@ const reducer = combineReducers({
     user: persistReducer({
         key: [Env.storeKey, "user"].join("/"),
         storage,
-    }, userSlice), 
+    }, userSlice),
+    site: persistReducer({
+        key: [Env.storeKey, "site"].join("/"),
+        storage,
+    }, siteSlice),
     history: persistReducer({
         key: [Env.storeKey, "history"].join("/"),
         storage
@@ -37,14 +43,14 @@ const reducer = combineReducers({
     event: persistReducer({
         key: [Env.storeKey, "event"].join("/"),
         storage
-    }, eventSlice), 
+    }, eventSlice),
 })
 
 const persistConfig = {
     key: [Env.storeKey, "root"].join("/"),
     storage,
     blacklist: [
-        "dashboard", 
+        "dashboard",
         "message"
     ]
 }
@@ -60,8 +66,14 @@ export const store = configureStore({
 export const persistor = persistStore(store, null, () => {
     const state = store.getState()
     logger.info("init store", state)
-    if (state.setting.emby) config.emby = state.setting.emby
-    Api.emby = new Emby(state.user as User)
+    const site = state.site.site
+    if (site) config.emby = site.emby
+    if (_.isEmpty(Object.values(state.site.sites))) {
+        store.dispatch(updateSite(DEFAULT_SITE))
+    }
+    if (site.user?.AccessToken) {
+        Api.emby = new Emby(site.user as User)
+    }
 })
 
 export type RootState = ReturnType<typeof store.getState>

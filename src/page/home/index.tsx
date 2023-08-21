@@ -13,17 +13,23 @@ import { BannerCard } from "@components/banner/BannerCard"
 import { LoaderFunctionArgs, useLoaderData, useNavigation } from "react-router-dom"
 import { Stack } from "@components/layout/Stack"
 import _ from "lodash"
+import { queryParams } from "@hook/useQuery"
 
-export async function pageLoader({params}: LoaderFunctionArgs) {
+export async function pageLoader({request, params}: LoaderFunctionArgs) {
+    const query = queryParams<{site?: string}>(request.url)
+    logger.info(`site id`, query.site)
     const albums = await Api.emby?.getView?.()
     return {
+        params: {
+            siteId: query.site
+        },
         albums
     }
 }
 
 export default function Page() {
-    const { albums } = useLoaderData() as SyncReturnType<typeof pageLoader>
-    const { data } = usePromise(Api.emby?.getPublicInfo)
+    const { albums, params: {siteId} } = useLoaderData() as SyncReturnType<typeof pageLoader>
+    const { data } = usePromise(Api.emby?.getPublicInfo, [siteId])
     const [medias, setMedias] = useState<Map<string, Media[]>>({})
     const [recommend, setRecommend] = useState<Media[]>([])
     useEffect(() => {
@@ -32,8 +38,10 @@ export default function Page() {
             document.title = data.ServerName
         }
     }, [data])
+
     useEffect(() => {
-    }, [])
+        setMedias({})
+    }, [siteId])
 
     useEffect(() => {
         if (albums?.Items) {

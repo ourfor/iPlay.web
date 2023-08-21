@@ -23,6 +23,11 @@
         }
     }
 
+    .tabName {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
     .build-info {
         font-size: 0.8em;
         margin: 0.75em 0.25em;
@@ -47,4 +52,9 @@
             flex-grow: 1;
         }
     }
+}
+
+button[data-state=active] {
+    border-color: blue;
+    border-bottom: 1px solid;
 }
