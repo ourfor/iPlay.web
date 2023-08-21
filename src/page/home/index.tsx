@@ -70,7 +70,7 @@ export default function Page() {
                 <div key={name} className={style.playlist}>
                 <p className={style.title}>{name}</p>
                 <Stack direction={"row"}>
-                    {media && media.map((movie, i) => <MediaCard key={`media-${i}`} {...movie} />)}
+                    {media && media.map((movie, i) => <MediaCard className={style.mediaCard} key={`media-${i}`} {...movie} />)}
                 </Stack>
                 </div>
             ))}

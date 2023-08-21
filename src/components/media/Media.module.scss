@@ -42,12 +42,13 @@
     padding: 0.25rem;
     opacity: 1;
     transition: opacity .2s ease-out;
-    width: 9rem;
-    @include mobile {
-        width: 25vw;
-    }
+    width: 100%;
+    box-sizing: border-box;
+    user-select: none;
 
     .img {
+        -webkit-user-drag: none;
+        user-select: none;
         border-radius: 0.5rem;
         border: 1px solid transparent;
         flex-grow: 0;

@@ -13,6 +13,7 @@ export function Image({ className, ratio, src, alt, style }: ImageProps) {
     return (
         <AspectRatio className={className} ratio={ratio}>
             <img
+                draggable={false}
                 src={src}
                 alt={alt}
                 style={{

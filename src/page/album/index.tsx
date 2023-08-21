@@ -27,10 +27,10 @@ export default function Page() {
     const {params: {id, page}, total, data, album } = useLoaderData() as SyncReturnType<typeof pageLoader>
     const navigate = useNavigate()
     return (
-        <div className={style["page"]}>
+        <div className={style.page}>
             <Background src={imageUrl(id, album?.Etag ?? "")} />
             <h3 className={style.title}>{album?.Name}</h3>
-            <div className={style["content"]}>
+            <div className={style.content}>
                 {data && data.map(media => <MediaCard key={media.Id} {...media} />)}
             </div>
             <Stack direction="row">
