@@ -1,12 +1,14 @@
+import classnames from "classnames";
 import { ReactNode } from "react";
 
 export interface BadgeProps {
+    className?: string
     children: ReactNode|ReactNode[]
 }
 
-export function Badge({children}: BadgeProps) {
+export function Badge({className, children}: BadgeProps) {
     return (
-        <div style={{position: "relative"}}>
+        <div className={classnames(className)} style={{position: "relative"}}>
             {children}
         </div>
     )

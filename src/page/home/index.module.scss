@@ -28,6 +28,13 @@
             flex-wrap: nowrap;
         }
     }
+
+    .mediaCard {
+        width: 9rem;
+        @include mobile {
+            width: 25vw;
+        }
+    }
 }
 
 .navigator {

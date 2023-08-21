@@ -4,14 +4,19 @@ import style from "./Media.module.scss"
 import { useNavigate } from "react-router-dom";
 import { Image } from "@components/base/Image";
 import { Badge } from "@components/badge/Badge";
+import classnames from "classnames";
 
-export function MediaCard(media: Media) {
+export interface MediaCardProps extends Media {
+    className?: string
+}
+
+export function MediaCard(media: MediaCardProps) {
     const navigate = useNavigate()
     const url = imageUrl(media.Id, media.ImageTags.Primary)
     return (
         <Badge>
         <div onClick={() => navigate(`/${media.Type === "Series" ? "series" : "movie"}/${media.Id}`)} 
-            className={style.card}>
+            className={classnames(style.card, media.className)}>
             <Image ratio={media.PrimaryImageAspectRatio} 
                 className={style.img}
                 alt={media.Name}
