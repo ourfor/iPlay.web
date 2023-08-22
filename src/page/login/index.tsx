@@ -10,15 +10,19 @@ import { DialogID, openDialog } from "@data/Event"
 import { produceMessage } from "@data/Message"
 import { Button, Checkbox, TextField } from "@radix-ui/themes"
 import { updateActiveSite } from "@data/Site"
+import { UpdateIcon } from "@radix-ui/react-icons"
+import { SpinBox } from "@components/animation/Spin"
 
 export default function Page() {
     const [username, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [remember, setRemember] = useState(false)
+    const [loading, setLoading] = useState(false)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     const submit = () => {
+        setLoading(true)
         Api.login(username, password)
             .then(user => {
                 logger.info(user)
@@ -40,6 +44,8 @@ export default function Page() {
                     type: "error",
                     data: e
                 }))
+            }).finally(() => {
+                setLoading(false)
             })
     }
     return (
@@ -74,6 +80,11 @@ export default function Page() {
                     <Button className={style["login"]}
                         onClick={submit}
                         variant="soft">
+                        {loading && (
+                        <SpinBox>
+                            <UpdateIcon />
+                        </SpinBox>
+                        )}
                         登录
                     </Button>
                     <div className={style["items"]}>
