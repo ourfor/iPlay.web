@@ -1,9 +1,16 @@
 import { DEFAULT_EMBY_CONFIG } from "@api/config";
 import { EmbyConfig } from "@helper/env";
+import { logger } from "@helper/log";
 import { Map } from "@model/Map";
 import { User } from "@model/User";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import _ from "lodash";
+import { createAppAsyncThunk } from "./Store";
+
+export interface Manifest {
+    short_name: string
+    name: string
+}
 
 export interface Site {
     id: string
@@ -30,6 +37,13 @@ export const DEFAULT_SITESTORE: SiteStore = {
     sites: {},
     site: DEFAULT_SITE
 }
+
+export const getSiteInfo = createAppAsyncThunk("site/info", async (id: number, api) => {
+    logger.info(`api`, api.extra)
+    const response = await fetch("http://localhost:3000/manifest.json")
+    const data = await response.json() as Manifest
+    return data
+})
 
 export const slice = createSlice({
     name: "site",
@@ -84,6 +98,14 @@ export const slice = createSlice({
         resetSite: () => {
             return DEFAULT_SITESTORE
         }
+    },
+    extraReducers: builder => {
+        builder.addCase(getSiteInfo.pending, () => {
+            logger.info("pending")
+        })
+        builder.addCase(getSiteInfo.fulfilled, (state, data) => {
+            logger.info(`fulfilled`, data.payload)
+        })
     }
 })
 

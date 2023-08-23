@@ -8,12 +8,19 @@ import { Router } from "@router/router";
 import { Theme } from '@radix-ui/themes';
 import { SpinPage } from '@router/Root';
 import { logger } from '@helper/log';
+import { useEffect } from 'react';
+import { useAppDispatch } from '@data/StoreHook';
+import { getSiteInfo } from '@data/Site';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 )
 
 const App = () => {
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(getSiteInfo(0))
+  }, [])
   logger.info("flush app")
   return <Router />
 }
