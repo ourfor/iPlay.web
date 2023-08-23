@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { Action, ThunkAction, combineReducers, configureStore, createAsyncThunk } from "@reduxjs/toolkit";
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
@@ -13,6 +13,7 @@ import { Api, Emby } from "@api/emby";
 import { User } from "@model/User";
 import { config } from "@api/config";
 import _ from "lodash";
+import { listener, listenerMiddleware } from "./middleware/Listener";
 
 const Env = {
     name: "development",
@@ -60,7 +61,13 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 export const store = configureStore({
     reducer: persistedReducer,
     devTools: Env.name !== 'production',
-    middleware: [thunk]
+    middleware: (getDefaultMiddleware) => 
+        getDefaultMiddleware({
+            thunk: {
+                extraArgument: Api
+            },
+            listenerMiddleware
+        }).concat(thunk, listener)
 })
 
 export const persistor = persistStore(store, null, () => {

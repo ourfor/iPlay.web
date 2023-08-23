@@ -1,15 +1,12 @@
 import style from "./index.module.scss"
 import { useState } from "react"
-import { logger } from "@helper/log"
 import { useAppDispatch } from "@data/StoreHook"
-import { updateUser } from "@data/User"
 import { useNavigate } from "react-router-dom"
-import { Api, Emby } from "@api/emby"
 import SettingIcon from "@components/setting/SettingIcon"
 import { DialogID, openDialog } from "@data/Event"
 import { produceMessage } from "@data/Message"
 import { Button, Checkbox, TextField } from "@radix-ui/themes"
-import { updateActiveSite } from "@data/Site"
+import { loginToSite } from "@data/Site"
 import { UpdateIcon } from "@radix-ui/react-icons"
 import { SpinBox } from "@components/animation/Spin"
 
@@ -22,13 +19,9 @@ export default function Page() {
     const navigate = useNavigate()
 
     const submit = () => {
-        setLoading(true)
-        Api.login(username, password)
-            .then(user => {
-                logger.info(user)
-                Api.emby = new Emby(user)
-                dispatch(updateUser(user))
-                dispatch(updateActiveSite({user}))
+        const callback = {
+            resolve: () => {
+                setLoading(false)
                 dispatch(produceMessage({
                     type: "success",
                     data: "登录成功，即将跳转主页",
@@ -39,14 +32,21 @@ export default function Page() {
                         pathname: "/"
                     })
                 }, 1000)
-            }).catch(e => {
+            },
+            reject: () => {
+                setLoading(false)
                 dispatch(produceMessage({
                     type: "error",
-                    data: e
+                    data: ""
                 }))
-            }).finally(() => {
-                setLoading(false)
-            })
+            }
+        }
+        setLoading(true)
+        dispatch(loginToSite({
+            username,
+            password,
+            callback
+        }))
     }
     return (
         <div className={style["page"]}>
