@@ -21,7 +21,6 @@ export function EpisodeCard(episode: Episode) {
     useEffect(() => {
         if (sources) setSource(sources?.[0].value)
     }, [sources])
-    logger.info(source)
     const posterUrl = imageUrl(episode.Id, episode.ImageTags.Primary)
     return (
         <div className={style.card}>

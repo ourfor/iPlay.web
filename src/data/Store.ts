@@ -1,6 +1,6 @@
 import { Action, ThunkAction, combineReducers, configureStore, createAsyncThunk } from "@reduxjs/toolkit";
 import storage from 'redux-persist/lib/storage';
-import { persistReducer, persistStore } from 'redux-persist';
+import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import settingSlice from "./Setting";
 import userSlice from "./User";
@@ -63,6 +63,9 @@ export const store = configureStore({
     devTools: Env.name !== 'production',
     middleware: (getDefaultMiddleware) => 
         getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
             thunk: {
                 extraArgument: Api
             },

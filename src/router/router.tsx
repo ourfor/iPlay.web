@@ -8,7 +8,8 @@ import PageAlbum, { pageLoader as pageAlbumLoader } from "@page/album"
 import PageError from "@page/error"
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { logger } from "@helper/log"
-import Root, { SpinPage, checker } from "./Root"
+import Root, { checker } from "./Root"
+import { Page } from "../page/spin"
 
 
 const pages = [
@@ -73,6 +74,6 @@ export function Router() {
     logger.info("init router")
     return (
         <RouterProvider router={router()} 
-            fallbackElement={<SpinPage />} />
+            fallbackElement={<Page />} />
     )
 }

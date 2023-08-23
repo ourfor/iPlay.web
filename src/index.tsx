@@ -6,7 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@data/Store";
 import { Router } from "@router/router";
 import { Theme } from '@radix-ui/themes';
-import { SpinPage } from '@router/Root';
+import { Page } from "@page/spin";
 import { logger } from '@helper/log';
 import { useEffect } from 'react';
 import { useAppDispatch } from '@data/StoreHook';
@@ -28,7 +28,7 @@ const App = () => {
 root.render(
   // <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={<SpinPage />} persistor={persistor}>
+      <PersistGate loading={<Page />} persistor={persistor}>
         <Theme>
           <App />
         </Theme>
