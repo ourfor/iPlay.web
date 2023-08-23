@@ -5,7 +5,9 @@ import { Map } from "@model/Map";
 import { User } from "@model/User";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import _ from "lodash";
-import { createAppAsyncThunk } from "./Store";
+import { createAppAsyncThunk } from "./type";
+import { Emby } from "@api/emby";
+import { listenerMiddleware } from "./middleware/Listener";
 
 export interface Manifest {
     short_name: string
@@ -30,18 +32,36 @@ export interface SiteStore {
     activeId?: string|null
     sites: Map<string, Site>
     site: Site
+    loading: boolean
 }
 
 export const DEFAULT_SITESTORE: SiteStore = {
     activeId: null,
     sites: {},
-    site: DEFAULT_SITE
+    site: DEFAULT_SITE,
+    loading: false
 }
 
 export const getSiteInfo = createAppAsyncThunk("site/info", async (id: number, api) => {
     logger.info(`api`, api.extra)
     const response = await fetch("http://localhost:3000/manifest.json")
     const data = await response.json() as Manifest
+    return data
+})
+type Authentication = {
+    username: string, 
+    password: string,
+    callback?: {
+        resolve?: () => void
+        reject?: () => void
+    }
+}
+export const loginToSite = createAppAsyncThunk("site/login", async (user: Authentication, config) => {
+    const api = config.extra
+    const data = await api.login(user.username, user.password)
+    if (data) {
+        api.emby = new Emby(data)
+    }
     return data
 })
 
@@ -106,6 +126,36 @@ export const slice = createSlice({
         builder.addCase(getSiteInfo.fulfilled, (state, data) => {
             logger.info(`fulfilled`, data.payload)
         })
+        builder.addCase(loginToSite.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(loginToSite.fulfilled, (state, data) => {
+            state.loading = false
+            const user = data.payload
+            logger.info(user)
+            state.site = {...state.site, user}
+            const id = state.site.id
+            if (state.sites[id]) {
+                state.sites[id] = {...state.sites[id], user} as Site
+            }
+        })
+        builder.addCase(loginToSite.rejected, (state, data) => {
+            state.loading = false
+        })
+    }
+})
+
+listenerMiddleware.startListening({
+    actionCreator: loginToSite.fulfilled,
+    effect: async (data, api) => {
+        data.meta.arg.callback?.resolve?.()
+    }
+})
+
+listenerMiddleware.startListening({
+    actionCreator: loginToSite.rejected,
+    effect: async (data, api) => {
+        data.meta.arg.callback?.reject?.()
     }
 })
 

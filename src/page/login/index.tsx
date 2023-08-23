@@ -9,7 +9,7 @@ import SettingIcon from "@components/setting/SettingIcon"
 import { DialogID, openDialog } from "@data/Event"
 import { produceMessage } from "@data/Message"
 import { Button, Checkbox, TextField } from "@radix-ui/themes"
-import { updateActiveSite } from "@data/Site"
+import { loginToSite, updateActiveSite } from "@data/Site"
 import { UpdateIcon } from "@radix-ui/react-icons"
 import { SpinBox } from "@components/animation/Spin"
 
@@ -23,30 +23,56 @@ export default function Page() {
 
     const submit = () => {
         setLoading(true)
-        Api.login(username, password)
-            .then(user => {
-                logger.info(user)
-                Api.emby = new Emby(user)
-                dispatch(updateUser(user))
-                dispatch(updateActiveSite({user}))
-                dispatch(produceMessage({
-                    type: "success",
-                    data: "登录成功，即将跳转主页",
-                    duration: 1000
-                }))
-                setTimeout(() => {
-                    navigate({
-                        pathname: "/"
-                    })
-                }, 1000)
-            }).catch(e => {
-                dispatch(produceMessage({
-                    type: "error",
-                    data: e
-                }))
-            }).finally(() => {
-                setLoading(false)
-            })
+        dispatch(loginToSite({
+            username,
+            password,
+            callback: {
+                resolve: () => {
+                    setLoading(false)
+                    dispatch(produceMessage({
+                        type: "success",
+                        data: "登录成功，即将跳转主页",
+                        duration: 1000
+                    }))
+                    setTimeout(() => {
+                        navigate({
+                            pathname: "/"
+                        })
+                    }, 1000)
+                },
+                reject: () => {
+                    setLoading(false)
+                    dispatch(produceMessage({
+                        type: "error",
+                        data: ""
+                    }))
+                }
+            }
+        }))
+        // Api.login(username, password)
+        //     .then(user => {
+        //         logger.info(user)
+        //         Api.emby = new Emby(user)
+        //         dispatch(updateUser(user))
+        //         dispatch(updateActiveSite({user}))
+        //         dispatch(produceMessage({
+        //             type: "success",
+        //             data: "登录成功，即将跳转主页",
+        //             duration: 1000
+        //         }))
+        //         setTimeout(() => {
+        //             navigate({
+        //                 pathname: "/"
+        //             })
+        //         }, 1000)
+        //     }).catch(e => {
+        //         dispatch(produceMessage({
+        //             type: "error",
+        //             data: e
+        //         }))
+        //     }).finally(() => {
+        //         setLoading(false)
+        //     })
     }
     return (
         <div className={style["page"]}>

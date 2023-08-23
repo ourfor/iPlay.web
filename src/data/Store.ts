@@ -1,4 +1,4 @@
-import { combineReducers, configureStore, createAsyncThunk } from "@reduxjs/toolkit";
+import { Action, ThunkAction, combineReducers, configureStore, createAsyncThunk } from "@reduxjs/toolkit";
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
@@ -13,6 +13,7 @@ import { Api, Emby } from "@api/emby";
 import { User } from "@model/User";
 import { config } from "@api/config";
 import _ from "lodash";
+import { listener, listenerMiddleware } from "./middleware/Listener";
 
 const Env = {
     name: "development",
@@ -64,8 +65,9 @@ export const store = configureStore({
         getDefaultMiddleware({
             thunk: {
                 extraArgument: Api
-            }
-        }).concat(thunk)
+            },
+            listenerMiddleware
+        }).concat(thunk, listener)
 })
 
 export const persistor = persistStore(store, null, () => {
@@ -83,9 +85,3 @@ export const persistor = persistStore(store, null, () => {
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
-export const createAppAsyncThunk = createAsyncThunk.withTypes<{
-    state: RootState
-    dispatch: AppDispatch
-    rejectValue: string
-    extra: typeof Api
-}>()
