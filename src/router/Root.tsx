@@ -14,7 +14,8 @@ export const SpinPage = () => (
         position: "fixed", 
         top: 0, left: 0,
         width: "100vw", 
-        height: "100vh"
+        height: "100vh",
+        backdropFilter: "blur(0.25rem)"
     }}>
         <Spin />
     </div>
