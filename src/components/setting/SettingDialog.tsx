@@ -8,7 +8,7 @@ import { DEFAULT_EMBY_CONFIG, EmbyConfig } from "@api/config";
 import { EmbySetting } from "./Setting";
 import { Box, Tabs } from "@radix-ui/themes";
 import _ from "lodash";
-import { updateActiveId, updateSite, updateSiteConfig } from "@data/Site";
+import { removeSite, updateActiveId, updateSite, updateSiteConfig } from "@data/Site";
 
 export function SettingDialog() {
     const dialog = useAppSelector(state => state.event.dialog)
@@ -77,6 +77,7 @@ export function SettingDialog() {
                             <EmbySetting id={id}
                                 activeId={activeId}
                                 active={id => dispatch(updateActiveId(id))}
+                                remove={id => dispatch(removeSite(id))}
                                 setting={site!.emby} updateConfig={v => updateConfig(id, v, site?.name)} />
                         </Tabs.Content>
                     )}
