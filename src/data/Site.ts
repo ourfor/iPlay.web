@@ -92,6 +92,11 @@ export const slice = createSlice({
             }
             return state
         },
+        removeSite: (state, action: PayloadAction<string>) => {
+            const id = action.payload
+            delete state.sites[id]
+            return state
+        },
         updateSiteConfig: (state, action: PayloadAction<Partial<Site>>) => {
             const {id, emby, name} = action.payload
             if (!id || !emby) return state
@@ -159,5 +164,12 @@ listenerMiddleware.startListening({
     }
 })
 
-export const { updateSite, updateActiveSite, updateActiveId, updateSiteConfig, resetSite } = slice.actions
+export const { 
+    updateSite, 
+    updateActiveSite, 
+    updateActiveId, 
+    updateSiteConfig, 
+    resetSite,
+    removeSite
+} = slice.actions
 export default slice.reducer

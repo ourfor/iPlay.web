@@ -7,10 +7,11 @@ export interface SettingProps {
     activeId?: string
     setting: EmbyConfig
     active?: (id: string) => void
+    remove?: (id: string) => void
     updateConfig: (config: Partial<EmbyConfig>) => void
 }
 
-export function EmbySetting({ id, activeId, setting, updateConfig, active }: SettingProps) {
+export function EmbySetting({ id, activeId, setting, updateConfig, active, remove }: SettingProps) {
     return (
         <>
             <div className={style["inline"]}>
@@ -38,6 +39,9 @@ export function EmbySetting({ id, activeId, setting, updateConfig, active }: Set
                 <Button onClick={() => active?.(id)}
                     style={{marginRight: "0.75rem"}}
                     disabled={activeId === id}>激活</Button>
+                <Button onClick={() => remove?.(id)}
+                    style={{marginRight: "0.75rem"}}
+                    disabled={activeId === id}>删除</Button>
                 <Button onClick={() => updateConfig(DEFAULT_EMBY_CONFIG)}>恢复默认设置</Button>
             </div>
         </>
