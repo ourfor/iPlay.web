@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.78d60df8.css",
-    "main.js": "/static/js/main.a038de95.js",
+    "main.css": "/static/css/main.ab61e602.css",
+    "main.js": "/static/js/main.ad07eb5b.js",
     "static/js/190.76fd5113.chunk.js": "/static/js/190.76fd5113.chunk.js",
     "static/js/348.da209a3c.chunk.js": "/static/js/348.da209a3c.chunk.js",
     "static/js/664.00c4c872.chunk.js": "/static/js/664.00c4c872.chunk.js",
@@ -10,16 +10,16 @@
     "static/js/193.597e4f3c.chunk.js": "/static/js/193.597e4f3c.chunk.js",
     "static/js/653.6f9a49a1.chunk.js": "/static/js/653.6f9a49a1.chunk.js",
     "static/js/500.709c52bd.chunk.js": "/static/js/500.709c52bd.chunk.js",
-    "static/media/LXGWWenKaiLite-Regular.ttf": "/static/media/LXGWWenKaiLite-Regular.8b851a2421f6574c7623.ttf",
+    "static/media/AritaHeiti-Light.otf": "/static/media/AritaHeiti-Light.34ff84462bdce63a1da9.otf",
+    "static/media/AritaHeiti-Medium.otf": "/static/media/AritaHeiti-Medium.6875501173fe2dd7687b.otf",
+    "static/media/AritaHeiti-Bold.otf": "/static/media/AritaHeiti-Bold.933d4c1edc5577b8cf2c.otf",
     "static/media/background.jpg": "/static/media/background.12f80c1886c344b6a3bf.jpg",
-    "static/media/iina.png": "/static/media/iina.214f4649a6f246ff4ab6.png",
     "static/media/logo.png": "/static/media/logo.c34213fdca7ad3227ea3.png",
-    "static/media/nplayer.png": "/static/media/nplayer.b8e2e4ad4359b28725cc.png",
     "static/media/search.svg": "/static/media/search.459060eeae78f0a1be81e61fcc3f4c9c.svg",
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.78d60df8.css",
-    "static/js/main.a038de95.js"
+    "static/css/main.ab61e602.css",
+    "static/js/main.ad07eb5b.js"
   ]
 }
