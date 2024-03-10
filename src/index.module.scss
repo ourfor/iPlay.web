@@ -1,13 +1,17 @@
-@import "~@style/font/AritaHeiti.scss";
+@import "~@style/font/font.scss";
+@import "~@style/scrollbar.scss";
 
 body {
     margin: 0;
     padding: 0;
     width: 100vw;
     height: 100vh;
-    font-family: Arita;
+    font-family: LXGWWenKai;
+    background-color: transparent;
+    @include scrollbar;
 }
 
-#root {
-    overflow: scroll;
+:global #root {
+    width: 100%;
+    min-height: 100%;
 }

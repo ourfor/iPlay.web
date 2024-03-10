@@ -1,92 +1,88 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import { TransitionProps } from '@mui/material/transitions';
-import { useAppDispatch, useAppSelector } from '@data/StoreHook';
-import { DialogID, openDialog } from '@data/Event';
-import { Setting } from './Setting';
 import style from "./Setting.module.scss"
-import { IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Button, Input, Modal, Select, Tag } from "antd";
+import Setting, { updateEmbyConfig } from "@data/Setting";
+import { useKeyboard } from "@hook/useKeyboard";
+import { useAppDispatch, useAppSelector } from "@data/StoreHook";
+import { DialogID, openDialog } from "@data/Event";
+import { DEFAULT_EMBY_CONFIG, EmbyConfig } from "@api/config";
+import { EmbySetting } from "./Setting";
+import { Box, Tabs } from "@radix-ui/themes";
+import _ from "lodash";
+import { removeSite, updateActiveId, updateSite, updateSiteConfig } from "@data/Site";
 
-export interface DialogTitleProps {
-    id: string;
-    children?: React.ReactNode;
-    onClose: () => void;
-  }
-  
-  function BootstrapDialogTitle(props: DialogTitleProps) {
-    const { children, onClose, ...other } = props;
-  
-    return (
-      <DialogTitle sx={{ m: 0, p: 2, fontWeight: 500, fontSize: 16 }} {...other}>
-        {children}
-        {onClose ? (
-          <IconButton
-            aria-label="close"
-            onClick={onClose}
-            sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        ) : null}
-      </DialogTitle>
-    );
-  }
-
-const Transition = React.forwardRef(function Transition(
-    props: TransitionProps & {
-        children: React.ReactElement<any, any>;
-    },
-    ref: React.Ref<unknown>,
-) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
-
-export default function SettingDialog() {
-    const open = useAppSelector(state => state.event.dialog?.[DialogID.SETTING]) ?? false
+export function SettingDialog() {
+    const dialog = useAppSelector(state => state.event.dialog)
+    const sites = useAppSelector(state => state.site.sites)
+    const activeId = useAppSelector(state => state.site.site.id)
     const dispatch = useAppDispatch()
-    const setOpen = (open: boolean) => {
-        dispatch(openDialog({
-            id: DialogID.SETTING,
-            open
+    useKeyboard(window, {
+        "keydown": (e) => {
+            let isMatch = true
+            if (e.ctrlKey || e.metaKey) {
+                if (e.ctrlKey && e.metaKey) {
+                    dispatch(openDialog({ id: DialogID.SETTING, visible: true }))
+                } else {
+                    isMatch = false
+                }
+            } else {
+                isMatch = false
+            }
+            if (isMatch) e.preventDefault()
+        }
+    })
+
+    const updateConfig = (id: string, config: Partial<EmbyConfig>, name?: string) => {
+        dispatch(updateSiteConfig({
+            id,
+            name,
+            emby: config as any
         }))
     }
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const Header = (
+        <div className={style["header-bar"]}>
+            <div>偏好设置</div>
+        </div>
+    )
 
     return (
-        <Dialog
-            open={open}
-            TransitionComponent={Transition}
-            className={style["dialog"]}
-            keepMounted
-            onClose={handleClose}
-            aria-describedby="alert-dialog-slide-description"
-        >
-            <BootstrapDialogTitle
-                id="customized-dialog-title"
-                onClose={handleClose}>
-                    偏好设置
-            </BootstrapDialogTitle>
-            <DialogContent>
-                <Setting />
-            </DialogContent>
-        </Dialog>
-    );
+        <Modal title={Header}
+            className={style["setting-dialog"]}
+            mask={false}
+            maskClosable={false}
+            open={dialog?.[DialogID.SETTING] ?? false}
+            onCancel={() => dispatch(openDialog({ id: DialogID.SETTING, visible: false }))}
+            centered footer={null}>
+            <Tabs.Root defaultValue={_.first(Object.values(sites))?.id}>
+                <Tabs.List>
+                    {Object.entries(sites).map(([id, site]) => 
+                        <Tabs.Trigger className={style.tabName} key={id} value={id}>{site?.name ?? id}</Tabs.Trigger>
+                    )}
+                    <Button size="small"
+                        onClick={() => dispatch(updateSite({
+                            id: `${Date.now()}`,
+                            name: `默认`,
+                            user: null,
+                            emby: DEFAULT_EMBY_CONFIG
+                        } as any))}
+                        style={{marginLeft: "1rem"}}> + </Button>
+                </Tabs.List>
+                <Box px="4" pt="3" pb="2">
+                    {Object.entries(sites).map(([id, site]) => 
+                        <Tabs.Content key={id} value={id}>
+                            <div className={style.inline}>
+                                <p className={style.title}>名称</p>
+                                <Input value={site?.name} onChange={e => updateConfig(id,{}, e.target.value)} />
+                            </div>
+                            <EmbySetting id={id}
+                                activeId={activeId}
+                                active={id => dispatch(updateActiveId(id))}
+                                remove={id => dispatch(removeSite(id))}
+                                setting={site!.emby} updateConfig={v => updateConfig(id, v, site?.name)} />
+                        </Tabs.Content>
+                    )}
+                </Box>
+            </Tabs.Root>
+        </Modal>
+    )
 }

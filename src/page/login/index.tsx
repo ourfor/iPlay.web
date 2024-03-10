@@ -1,92 +1,108 @@
-import { Button, Checkbox, Stack, TextField } from "@mui/material"
 import style from "./index.module.scss"
 import { useState } from "react"
-import { log } from "@helper/log"
 import { useAppDispatch } from "@data/StoreHook"
-import { updateUser } from "@data/User"
 import { useNavigate } from "react-router-dom"
-import { Api, Emby } from "@api/emby"
-import SettingDialog from "@components/setting/SettingDialog"
 import SettingIcon from "@components/setting/SettingIcon"
 import { DialogID, openDialog } from "@data/Event"
-
-const customStyle = {
-    '& .MuiOutlinedInput-root': {
-        '&:hover fieldset': {
-            borderColor: '#B2BAC2',
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: '#B2BAC2',
-        },
-    }
-}
+import { produceMessage } from "@data/Message"
+import { Button, Checkbox, TextField } from "@radix-ui/themes"
+import { loginToSite } from "@data/Site"
+import { UpdateIcon } from "@radix-ui/react-icons"
+import { SpinBox } from "@components/animation/Spin"
 
 export default function Page() {
     const [username, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [remember, setRemember] = useState(false)
+    const [loading, setLoading] = useState(false)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     const submit = () => {
-        Api.login(username, password)
-            .then(data => {
-                log.info(data)
-                Api.emby = new Emby(data)
-                dispatch(updateUser(data))
-                navigate({
-                    pathname: "/"
-                })
-            })
+        const callback = {
+            resolve: () => {
+                setLoading(false)
+                dispatch(produceMessage({
+                    type: "success",
+                    data: "登录成功，即将跳转主页",
+                    duration: 1000
+                }))
+                setTimeout(() => {
+                    navigate({
+                        pathname: "/"
+                    })
+                }, 1000)
+            },
+            reject: () => {
+                setLoading(false)
+                dispatch(produceMessage({
+                    type: "error",
+                    data: ""
+                }))
+            }
+        }
+        setLoading(true)
+        dispatch(loginToSite({
+            username,
+            password,
+            callback
+        }))
     }
     return (
         <div className={style["page"]}>
             <div className={style["wrap"]}>
                 <div className={style["container"]}>
-                    <p className={style["title"]}>Sign In</p>
-                    <TextField
+                    <p className={style["title"]}>登录账号</p>
+                    <div className={style.user}>
+                    <TextField.Input
                         className={style["input"]}
                         required
                         id="outlined-required"
                         placeholder="用户名"
-                        label="Username"
+                        // label="Username"
                         value={username}
                         onChange={e => setUserName(e.target.value)}
-                        sx={customStyle}
+                        // sx={customStyle}
                     />
-                    <TextField
+                    <TextField.Input
                         className={style["input"]}
                         id="outlined-password-input"
-                        label="Password"
+                        // label="Password"
                         placeholder="密码"
                         type="password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                         autoComplete="current-password"
-                        sx={customStyle}
+                        // sx={customStyle}
                     />
+                    </div>
 
                     <Button className={style["login"]}
                         onClick={submit}
-                        variant="contained">
-                        Sign in
+                        variant="soft">
+                        {loading && (
+                        <SpinBox>
+                            <UpdateIcon />
+                        </SpinBox>
+                        )}
+                        登录
                     </Button>
-                    <Stack className={style["items"]} direction="row" justifyContent="flex-start" alignItems="center">
+                    <div className={style["items"]}>
                         <Checkbox className={style["remember-me"]}
-                            value={remember}
-                            onChange={(_, checked) => setRemember(checked)}
-                            sx={{ color: "#737373", '&.Mui-checked': { color: "white" } }} /> Remember me
-                    </Stack>
-                    <Stack className={style["items"]} direction="row" justifyContent="flex-start" alignItems="center">
+                            variant="surface"
+                            checked={remember}
+                            onCheckedChange={checked => setRemember(checked === true)}
+                            /> 记住我
+                    </div>
+                    <div className={style["items"]}>
                         登录表示同意用户协议，版权所有
-                    </Stack>
-                    <div onClick={() => dispatch(openDialog({id: DialogID.SETTING, open: true}))} 
+                    </div>
+                    <div onClick={() => dispatch(openDialog({id: DialogID.SETTING, visible: true}))} 
                         className={style["tool"]}>
                         <SettingIcon />
                     </div>
                 </div>
             </div>
-            <SettingDialog />
         </div>
     )
 }

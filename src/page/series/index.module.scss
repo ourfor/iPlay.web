@@ -1,3 +1,5 @@
+@import "~@style/media.scss";
+
 .page {
     width: 100vw;
     min-height: 100vh;
@@ -63,6 +65,10 @@
         border-color: #ffadd2;
     }
 
+    .playNow {
+        margin-top: 1rem;
+    }
+
     .media-card {
         display: flex;
 
@@ -83,6 +89,25 @@
         article {
             margin-top: 1rem;
             font-size: 0.95rem;
+        }
+
+        @include mobile {
+            flex-direction: column;
+            .title {
+                margin-top: 0.25rem;
+            }
+            .cover {
+                display: none;
+            }
+        }
+    }
+
+
+    .mobileCover {
+        display: none;
+
+        @include mobile {
+            display: block;
         }
     }
 }

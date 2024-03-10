@@ -1,4 +1,5 @@
 @import "~@style/click.scss";
+@import "~@style/media.scss";
 
 .card {
     @include clickable;
@@ -6,15 +7,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     padding: 0.25rem;
     opacity: 1;
     transition: opacity .2s ease-out;
+    width: 100%;
+    box-sizing: border-box;
+    user-select: none;
 
-    img {
+    .img {
+        -webkit-user-drag: none;
+        user-select: none;
         border-radius: 0.5rem;
         border: 1px solid transparent;
-        width: 9rem;
-        height: 13.6rem;
         flex-grow: 0;
         flex-shrink: 1;
         transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;

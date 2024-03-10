@@ -1,4 +1,5 @@
 @import "~@style/click.scss";
+@import "~@style/media.scss";
 
 .card {
     @include clickable;
@@ -6,12 +7,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    img {
+    .img {
         width: 8rem;
         border-radius: 0.25rem;
     }
 
     p {
         font-size: 0.85rem;
+    }
+
+    @include mobile {
+        flex-grow: 0;
+        flex-shrink: 0;
+        width: 25vw;
+        .img {
+            width: 100%;
+        }
     }
 }

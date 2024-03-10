@@ -1,6 +1,6 @@
 import { User } from "@model/User";
 import { getPlaybackInfo } from "./play";
-import { getCollection, getLatestMedia, getMedia, getRecommendations, getResume, getView } from "./view";
+import { getCollection, getEpisodes, getLatestMedia, getMedia, getRecommendations, getResume, getSeasons, getView } from "./view";
 import { getPublicInfo } from "./info";
 import { login } from "./login";
 
@@ -28,6 +28,8 @@ export class Emby {
         this.getCollection = getCollection.bind(this, this.user)
         this.getResume = getResume.bind(this, this.user)
         this.getRecommendations = getRecommendations.bind(this, this.user)
+        this.getEpisodes = getEpisodes.bind(this, this.user)
+        this.getSeasons = getSeasons.bind(this, this.user)
     }
 
     public getPlaybackInfo = this._user ? getPlaybackInfo.bind(this, this.user) : null
@@ -38,6 +40,8 @@ export class Emby {
     public getCollection = this._user ? getCollection.bind(this, this.user) : null
     public getResume = this._user ? getResume.bind(this, this.user) : null
     public getRecommendations = this._user ? getRecommendations.bind(this, this.user) : null
+    public getEpisodes = this._user ? getEpisodes.bind(this, this.user) : null
+    public getSeasons = this._user ? getSeasons.bind(this, this.user) : null
 }
 
 export const Api = {

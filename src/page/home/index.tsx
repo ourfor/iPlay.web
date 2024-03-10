@@ -1,6 +1,6 @@
 import { Album } from "@components/album/Album"
 import { MediaCard } from "@components/media/Media"
-import { log } from "@helper/log"
+import { logger } from "@helper/log"
 import { usePromise } from "@hook/usePromise"
 import { Media } from "@model/Media"
 import { useEffect, useState } from "react"
@@ -10,29 +10,39 @@ import { Header } from "@components/header/Header"
 import { Api } from "@api/emby"
 import { Banner } from "@components/banner/Banner"
 import { BannerCard } from "@components/banner/BannerCard"
-import { LoaderFunctionArgs, useLoaderData } from "react-router-dom"
+import { LoaderFunctionArgs, useLoaderData, useNavigation } from "react-router-dom"
 import { Stack } from "@components/layout/Stack"
+import _ from "lodash"
+import { queryParams } from "@hook/useQuery"
 
-export async function pageLoader({params}: LoaderFunctionArgs) {
+export async function pageLoader({request, params}: LoaderFunctionArgs) {
+    const query = queryParams<{site?: string}>(request.url)
+    logger.info(`site id`, query.site)
     const albums = await Api.emby?.getView?.()
     return {
+        params: {
+            siteId: query.site
+        },
         albums
     }
 }
 
 export default function Page() {
-    const { albums } = useLoaderData() as SyncReturnType<typeof pageLoader>
-    const { data } = usePromise(Api.emby?.getPublicInfo)
+    const { albums, params: {siteId} } = useLoaderData() as SyncReturnType<typeof pageLoader>
+    const { data } = usePromise(Api.emby?.getPublicInfo, [siteId])
     const [medias, setMedias] = useState<Map<string, Media[]>>({})
     const [recommend, setRecommend] = useState<Media[]>([])
     useEffect(() => {
-        log.info(data)
+        logger.info(data)
         if (data) {
             document.title = data.ServerName
         }
     }, [data])
+
     useEffect(() => {
-    }, [])
+        setMedias({})
+        setRecommend([])
+    }, [siteId])
 
     useEffect(() => {
         if (albums?.Items) {
@@ -50,20 +60,26 @@ export default function Page() {
     }, [albums])
     
     return (
-        <div className={style["page"]}>
-            {recommend && <Banner className={style["banner"]} banners={
-                recommend.map(model => <BannerCard key={model.Id} model={model} />)
-            } /> }
-            <Header />
-            <p className={style["title"]}>我的媒体</p>
-            <Stack direction={"row"}>
-                {albums && albums.Items.map((item, i) => <Album key={`album-${i}`} {...item}/>)}
-            </Stack>
+        <div className={style.page}>
+            <div className={style.navigator}>
+                <Header className={style.header} />
+                {!_.isEmpty(recommend) && <Banner className={style["banner"]} banners={
+                    recommend.map(model => <BannerCard key={model.Id} model={model} />)
+                } />}
+            </div>
+            {!_.isEmpty(albums?.Items) && (
+            <>
+                <span className={style.albumTitle}>我的媒体</span>
+                <Stack className={style.albums} direction={"row"}>
+                    {albums?.Items.map((item, i) => <Album key={`album-${i}`} {...item}/>)}
+                </Stack>
+            </>
+            )}
             {medias && Object.entries(medias).filter(([key, value]) => value && value.length).map(([name, media]) => (
-                <div key={name}>
-                <p className={style["title"]}>{name}</p>
+                <div key={name} className={style.playlist}>
+                <p className={style.title}>{name}</p>
                 <Stack direction={"row"}>
-                    {media && media.map((movie, i) => <MediaCard key={`media-${i}`} {...movie} />)}
+                    {media && media.map((movie, i) => <MediaCard className={style.mediaCard} key={`media-${i}`} {...movie} />)}
                 </Stack>
                 </div>
             ))}

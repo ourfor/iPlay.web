@@ -1,0 +1,40 @@
+@mixin scrollbar {
+    &::-webkit-scrollbar {
+        width: 1rem;
+        height: 1rem;
+        background: transparent;
+        display: none;
+    }
+    &::-webkit-scrollbar-track-piece {
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        transition: all 3s ease-in-out 2s;
+        border-color: transparent;
+        background-color: hsla(var(--theme-text-color-hue),var(--theme-text-color-saturation),var(--theme-text-color-lightness),.5);
+        z-index: 40;
+        border-radius: .42em;
+    }
+    &::-webkit-scrollbar-button {
+        display: none;
+    }
+    &::-webkit-scrollbar-corner {
+        display: none;
+    }
+
+    &:hover {
+        &::-webkit-scrollbar-thumb {
+            transition: all 3s ease-in-out 2s;
+            border-color: transparent;
+            background-color: rgba(130, 138, 135, 0.537);
+            z-index: 40;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            transition: all 3s ease-in-out 2s;
+            background-color: rgba(130, 138, 135, 0.752);;
+        }
+    }
+}

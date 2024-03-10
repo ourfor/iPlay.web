@@ -1,15 +1,18 @@
 import PageLogin from "@page/login"
 import PageHome, { pageLoader as pageHomeLoader } from "@page/home"
 import PageSeries, { pageLoader as pageSeriesLoader } from "@page/series"
-import PageSeason from "@page/season"
+import PageSeason, { pageLoader as pageSeasonLoader } from "@page/season"
+import PageTest from "@page/test"
 import PagePlay, { pageLoader as pagePlayLoader } from "@page/play"
 import PageAlbum, { pageLoader as pageAlbumLoader } from "@page/album"
 import PageError from "@page/error"
-import { RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom';
-import { log } from "@helper/log"
-import { Spin } from "@components/animation/Spin"
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { logger } from "@helper/log"
+import Root, { checker } from "./Root"
+import { Page } from "../page/spin"
 
-export const router = () => createBrowserRouter([
+
+const pages = [
     { 
         path: "/login", 
         element: <PageLogin />,
@@ -19,45 +22,58 @@ export const router = () => createBrowserRouter([
         path: "/",
         loader: pageHomeLoader,
         element: <PageHome />,
-        errorElement: <PageLogin /> 
+        errorElement: <PageError /> 
     },
     { 
         path: "/series/:id", 
         loader: pageSeriesLoader,
         element: <PageSeries />,
-        errorElement: <PageLogin /> 
+        errorElement: <PageError /> 
     },
     { 
         path: "/movie/:id", 
         loader: pageSeriesLoader,
         element: <PageSeries />,
-        errorElement: <PageLogin /> 
+        errorElement: <PageError /> 
     },
     { 
-        path: "/season/:id", 
+        path: "/season/:id",
+        loader: pageSeasonLoader,
         element: <PageSeason />,
-        errorElement: <PageLogin /> 
+        errorElement: <PageError /> 
     },
     { 
         path: "/play/:id",
         loader: pagePlayLoader,
         element: <PagePlay />,
-        errorElement: <PageLogin /> 
+        errorElement: <PageError /> 
     },
     { 
         path: "/album/:id",
         loader: pageAlbumLoader,
         element: <PageAlbum />,
-        errorElement: <PageLogin /> 
+        errorElement: <PageError /> 
+    },
+    {
+        path: "/*",
+        element: <PageTest />
     }
-], {
+]
+
+export const router = () => createBrowserRouter([{
+    path: "/",
+    element: <Root />,
+    loader: checker,
+    errorElement: <PageError />,
+    children: pages,
+}], {
     basename: process.env.PUBLIC_URL
 })
 
 export function Router() {
-    log.info("init router")
+    logger.info("init router")
     return (
         <RouterProvider router={router()} 
-            fallbackElement={<Spin />} />
+            fallbackElement={<Page />} />
     )
 }

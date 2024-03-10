@@ -28,12 +28,12 @@ export interface ImageProps {
     quality: number
 }
 
-export function imageUrl(id: string|number, options: string|Partial<ImageProps>, type: "Primary"|string = "Primary") {
+export function imageUrl(id: string|number, options: string|Partial<ImageProps>|null, type: "Primary"|string = "Primary") {
     if (typeof options === "string") {
-        return `${config.emby.protocol}://${config.emby.host}/emby/Items/${id}/Images/${type}?maxHeight=338&maxWidth=600&tag=${options}&quality=90`
+        return `${config.emby.protocol}://${config.emby.host}:${config.emby.port}${config.emby.path}emby/Items/${id}/Images/${type}?maxHeight=338&maxWidth=600&tag=${options}&quality=90`
     } else {
-        const url = new URL(`${config.emby.protocol}://${config.emby.host}/emby/Items/${id}/Images/${type}`)
-        Object.entries(options).forEach(([key, value]) => {
+        const url = new URL(`${config.emby.protocol}://${config.emby.host}:${config.emby.port}${config.emby.path}emby/Items/${id}/Images/${type}`)
+        options && Object.entries(options).forEach(([key, value]) => {
             url.searchParams.set(key, String(value))
         })
         return url.href
@@ -41,9 +41,9 @@ export function imageUrl(id: string|number, options: string|Partial<ImageProps>,
 }
 
 export function avatorUrl(id: string, options: string|Partial<ImageProps>, type: "Primary" = "Primary") {
-    return `${config.emby.protocol}://${config.emby.host}/emby/Users/${id}/Images/${type}?height=152&tag=${options}&quality=90`
+    return `${config.emby.protocol}://${config.emby.host}:${config.emby.port}${config.emby.path}emby/Users/${id}/Images/${type}?height=152&tag=${options}&quality=90`
 }
 
 export function playUrl(path: string) {
-    return `${config.emby.protocol}://${config.emby.host}/emby${path}`
+    return `${config.emby.protocol}://${config.emby.host}:${config.emby.port}${config.emby.path}emby${path}`
 }
