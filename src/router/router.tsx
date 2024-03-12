@@ -8,13 +8,13 @@ import PageAlbum, { pageLoader as pageAlbumLoader } from "@page/album"
 import PageSearch, { pageLoader as pageSearchLoader } from "@page/search"
 import PageFavorite, { pageLoader as pageFavoriteLoader } from "@page/favorite"
 import PageError from "@page/error"
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouteObject, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { logger } from "@helper/log"
 import Root, { checker } from "./Root"
 import { Page } from "../page/spin"
 
 
-const pages = [
+const pages: RouteObject[] = [
     { 
         path: "/login", 
         element: <PageLogin />,
@@ -24,7 +24,7 @@ const pages = [
         path: "/",
         loader: pageHomeLoader,
         element: <PageHome />,
-        errorElement: <PageError /> 
+        errorElement: <PageError />
     },
     { 
         path: "/favorite",
