@@ -1,15 +1,27 @@
 .page {
     width: 100vw;
-    height: 100vh;
+    padding-bottom: 1rem;
 
     &>h1 {
         text-align: center;
     }
 
-    &>div {
+    &>.search {
         width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    &>.searchResult {
         display: flex;
         flex-direction: column;
+        justify-content: center;
         align-items: center;
+    }
+
+    &>.selectPage {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1rem auto;
     }
 }
