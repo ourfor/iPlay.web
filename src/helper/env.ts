@@ -9,6 +9,10 @@ export interface Env {
     emby: EmbyConfig
     tmdb: {
         api_key: string|undefined
+    },
+    adsense: {
+        id: string|nil,
+        slot: string|nil
     }
 }
 
@@ -21,5 +25,9 @@ export const ENV: Env = {
     },
     tmdb: {
         api_key: process.env.REACT_APP_TMDB_API_KEY ?? ""
+    },
+    adsense: {
+        id: process.env.REACT_APP_GOOGLE_AD_ID ?? "",
+        slot: process.env.REACT_APP_GOOGLE_AD_SLOT ?? ""
     }
 }

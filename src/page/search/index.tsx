@@ -6,6 +6,7 @@ import { MovieCard } from "./MovieCard"
 import { Search } from "@components/search/Search"
 import { Header } from "@components/header/Header"
 import { Pagination } from "antd"
+import { Adsense } from "@components/adsense/Adsense"
 
 export async function pageLoader({request, params}: LoaderFunctionArgs) {
     const url = new URL(request.url)
@@ -49,6 +50,7 @@ export default function Page() {
                 current={data?.page ?? 1}
                 onChange={(page) => navigate(`/search?query=${query}&page=${page}`)} />
             : null}
+            <Adsense />
         </div>
     )
 }
