@@ -27,6 +27,7 @@
 
         @include mobile {
             flex-wrap: nowrap;
+            justify-content: flex-start;
         }
     }
 
