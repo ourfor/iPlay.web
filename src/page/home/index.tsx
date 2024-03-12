@@ -14,6 +14,7 @@ import { LoaderFunctionArgs, useLoaderData, useNavigation } from "react-router-d
 import { Stack } from "@components/layout/Stack"
 import _ from "lodash"
 import { queryParams } from "@hook/useQuery"
+import { Adsense } from "@components/adsense/Adsense"
 
 export async function pageLoader({request, params}: LoaderFunctionArgs) {
     const query = queryParams<{site?: string}>(request.url)
@@ -83,6 +84,7 @@ export default function Page() {
                 </Stack>
                 </div>
             ))}
+            <Adsense />
         </div>
     )
 }

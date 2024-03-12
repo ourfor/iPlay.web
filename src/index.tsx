@@ -11,6 +11,7 @@ import { logger } from '@helper/log';
 import { useEffect } from 'react';
 import { useAppDispatch } from '@data/StoreHook';
 import { getSiteInfo } from '@data/Site';
+import { ENV } from '@helper/env';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
