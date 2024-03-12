@@ -32,6 +32,12 @@
                 color: var(--primary-color, #1890ff);
             }
 
+            &.active {
+                color: red;
+                font-size: 1.25rem;
+                font-style: bold;           
+            }
+
             @include mobile {
                 font-size: 0.95rem;
                 padding: 0 0.75rem;
