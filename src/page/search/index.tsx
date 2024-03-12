@@ -35,7 +35,7 @@ export default function Page() {
             <Search className={style.search} 
                 initValue={query ?? ""}
                 onValueChange={q => navigate(`/search?query=${q}`)} />
-            {query?.length == 0 ?
+            {query?.length ?? 0 > 0 ?
             <h1>搜索结果: {query}, 共{data?.total_results}个结果</h1>
             : null}
             <div className={style.searchResult}>

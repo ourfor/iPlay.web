@@ -13,9 +13,15 @@
 
     &>.searchResult {
         display: flex;
+        margin: auto;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
+        max-width: 80%;
+        &>div {
+            width: 100%;
+            max-width: unset;
+        }
     }
 
     &>.selectPage {
