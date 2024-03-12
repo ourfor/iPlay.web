@@ -4,7 +4,7 @@ import { useEffect } from "react"
 export function Adsense() {
     if (!ENV.adsense.id || !ENV.adsense.slot) return null
 
-    const src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ENV.adsense}`
+    const src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ENV.adsense.id}`
     const onLoad = () => {
         const adsbygoogle = (window as any).adsbygoogle || [];
         adsbygoogle.push({});
