@@ -1,6 +1,7 @@
 import { ENV } from "@helper/env"
 import { logger } from "@helper/log"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
+import style from "./Adsense.module.scss"
 
 export function Adsense() {
     if (!ENV.adsense.id || !ENV.adsense.slot) return null
@@ -8,7 +9,7 @@ export function Adsense() {
 }
 
 export function AdsenseFixedArea() {
-
+    const dom = useRef<HTMLDivElement>(null)
     const src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ENV.adsense.id}`
     const onLoad = () => {
         const adsbygoogle = (window as any).adsbygoogle || [];
@@ -25,7 +26,7 @@ export function AdsenseFixedArea() {
     }, [])
     
     return (
-        <div className="ads-holder">
+        <div ref={dom} className={style.adsense}>
             <ins className="adsbygoogle"
                 style={{display:"block", textAlign:"center"}}
                 data-ad-layout="in-article"

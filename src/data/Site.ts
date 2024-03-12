@@ -44,10 +44,11 @@ export const DEFAULT_SITESTORE: SiteStore = {
 
 export const getSiteInfo = createAppAsyncThunk("site/info", async (id: number, api) => {
     logger.info(`api`, api.extra)
-    const response = await fetch("http://localhost:3000/manifest.json")
+    const response = await fetch("/manifest.json")
     const data = await response.json() as Manifest
     return data
 })
+
 type Authentication = {
     username: string, 
     password: string,
