@@ -6,7 +6,10 @@ export type { EmbyConfig } from "@helper/env"
 export const DEFAULT_EMBY_CONFIG: EmbyConfig = ENV.emby
 
 export const config = {
-    emby: DEFAULT_EMBY_CONFIG
+    emby: DEFAULT_EMBY_CONFIG,
+    tmdb: {
+        api_key: ENV.tmdb.api_key
+    }
 }
 
 export function makeUrl(params: Map<string, any>|null, path: string) {

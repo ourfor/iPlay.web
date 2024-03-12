@@ -1,0 +1,104 @@
+import { logger } from "@helper/log";
+import { config as GlobalConfig } from "@api/config"
+
+export namespace TMDB {
+    const apiHost = 'https://api.themoviedb.org/3';
+    export const imgHost = 'https://image.tmdb.org/t/p/original';
+    const config = {
+        api_key: GlobalConfig.tmdb.api_key,
+        include_adult: false,
+        language: 'zh-CN',
+        _api: apiHost,
+    }
+
+    export interface MovieDetail {
+        adult: boolean,
+        backdrop_path: string,
+        belongs_to_collection: null,
+        budget: number,
+        genres: {
+            id: number,
+            name: string
+        }[],
+        homepage: string,
+        id: number,
+        imdb_id: string,
+        original_language: string,
+        original_title: string,
+        overview: string,
+        popularity: number,
+        poster_path: string,
+        production_companies: {
+            id: number,
+            logo_path: string,
+            name: string,
+            origin_country: string
+        }[],
+        production_countries: {
+            iso_3166_1: string,
+            name: string
+        }[],
+        release_date: string,
+        revenue: number,
+        runtime: number,
+        spoken_languages: {
+            english_name: string,
+            iso_639_1: string,
+            name: string
+        }[],
+        status: string,
+        tagline: string,
+        title: string,
+        video: boolean,
+        vote_average: number,
+        vote_count: number
+    }
+    export interface SearchResponse {
+        page: number,
+        results: Partial<MovieDetail>[],
+        // results: {
+        //     adult: boolean,
+        //     backdrop_path: string,
+        //     genre_ids: number[],
+        //     id: number,
+        //     original_language: string,
+        //     original_title: string,
+        //     overview: string,
+        //     popularity: number,
+        //     poster_path: string,
+        //     release_date: string,
+        //     title: string,
+        //     video: boolean,
+        //     vote_average: number,
+        //     vote_count: number
+        // }[]
+    }
+
+    export async function searchMovie(query: string, page: number = 1): Promise<SearchResponse | null>{
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+            }
+        };
+
+        const url = new URL(`${config._api}/search/movie`)
+        url.searchParams.append('query', query);
+        url.searchParams.append('page', page.toString());
+        Object.entries(config).forEach(([key, value]) => {
+            if (key.startsWith('_') || !value) {
+                return;
+            }
+            url.searchParams.append(key, value?.toString());
+        })
+        try {
+            const response = await fetch(url.toString(), options);
+            const data = await response.json();
+            return data;
+        } catch (err) {
+            logger.error(err);
+        }
+        return null
+    }
+
+}

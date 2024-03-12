@@ -1,0 +1,18 @@
+.root {
+    max-width: 80%;
+    padding: .25rem;
+    display: flex;
+    border: 1px solid #ccc;
+    margin: .5rem;
+    border-radius: 8px;
+    align-items: center;
+    flex-direction: row;
+    &>img {
+        max-width: 20rem;
+    }
+
+    &>section {
+        margin-right: 1rem;
+        margin-left: 1rem;
+    }
+}
