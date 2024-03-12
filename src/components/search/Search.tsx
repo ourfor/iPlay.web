@@ -9,7 +9,7 @@ interface SearchProps {
     onValueChange?: (value: string) => void
 }
 
-export const Search: React.FC<SearchProps> = (props) => {
+export function Search(props: SearchProps) {
     const { onValueChange, initValue = "" } = props
     const [value, setValue] = useState(initValue)
     return (
