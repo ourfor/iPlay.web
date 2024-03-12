@@ -27,13 +27,14 @@ export function Header({className}: HeaderProps) {
     }
     return (
         <div className={classnames(style.header, className)}>
-            <img className={style.logo} src={logoUrl} />
+            <img alt="🍵" className={style.logo} src={logoUrl} />
             <div className={style.left}>
                 <span>首页</span>
                 <span>喜爱</span>
+                <span onClick={() => navigate(`/search`)}>搜索</span>
             </div>
             <div className={style.right}>
-                <img className={style.icon} src={searchUrl} />
+                <img alt="🔍" className={style.icon} src={searchUrl} />
                 <Avatar className={style.avator} src={avatorUrl} fallback={"?"} />
                 <div className={style.switchSite}>
                 <Select.Root size="1"
