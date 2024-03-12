@@ -1,3 +1,5 @@
+@import "~@style/media.scss";
+
 .root {
     max-width: 80%;
     padding: .25rem;
@@ -7,8 +9,18 @@
     border-radius: 8px;
     align-items: center;
     flex-direction: row;
+
+    @include mobile {
+        flex-direction: column;
+        max-width: 95%;
+        margin: .5rem auto;
+    }
+
     &>img {
         max-width: 20rem;
+        @include mobile {
+            max-width: 95%;
+        }
     }
 
     &>section {
