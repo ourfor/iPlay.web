@@ -7,7 +7,7 @@ body {
     width: 100vw;
     height: 100vh;
     font-family: LXGWWenKai;
-    background-color: transparent;
+    background-color: black !important;
     @include scrollbar;
 }
 

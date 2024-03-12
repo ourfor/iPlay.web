@@ -2,7 +2,7 @@ import { logger } from "@helper/log";
 import { config as GlobalConfig } from "@api/config"
 
 export namespace TMDB {
-    const apiHost = 'https://api.themoviedb.org/3';
+    const apiHost = 'https://proxyall.endemy.me/3';
     export const imgHost = 'https://image.tmdb.org/t/p/original';
     const config = {
         api_key: GlobalConfig.tmdb.api_key,
@@ -65,6 +65,7 @@ export namespace TMDB {
             method: 'GET',
             headers: {
                 accept: 'application/json',
+                "X-HOST": "api.themoviedb.org"
             }
         };
 
