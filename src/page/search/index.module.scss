@@ -1,3 +1,5 @@
+@import "~@style/media.scss";
+
 .page {
     width: 100vw;
     padding-bottom: 1rem;
@@ -19,8 +21,14 @@
         justify-content: center;
         align-items: flex-start;
         max-width: 80%;
+        @include mobile {
+            max-width: 95%;
+        }
         &>div {
             width: 100%;
+            @include mobile {
+                width: unset;
+            }
             max-width: unset;
         }
     }
