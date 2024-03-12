@@ -29,7 +29,7 @@ export function Header({className}: HeaderProps) {
         <div className={classnames(style.header, className)}>
             <img alt="🍵" className={style.logo} src={logoUrl} />
             <div className={style.left}>
-                <span>首页</span>
+                <span onClick={() => navigate("/")}>首页</span>
                 <span>喜爱</span>
                 <span onClick={() => navigate(`/search`)}>搜索</span>
             </div>

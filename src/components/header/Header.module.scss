@@ -26,6 +26,11 @@
             font-style: normal;
             line-height: normal;
             padding: 0 1.25rem;
+            cursor: pointer;
+
+            &:hover {
+                color: var(--primary-color, #1890ff);
+            }
 
             @include mobile {
                 font-size: 0.95rem;

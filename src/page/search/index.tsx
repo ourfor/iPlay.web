@@ -1,12 +1,11 @@
-import { Spin } from "@components/animation/Spin"
-import { LoaderFunctionArgs, useLoaderData } from "react-router-dom"
+import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom"
 import style from "./index.module.scss"
-import { Player } from "@components/media/Player"
-import { Api } from "@api/emby"
-import { useEffect } from "react"
 import { logger } from "@helper/log"
 import { TMDB } from "@api/tmdb"
 import { MovieCard } from "./MovieCard"
+import { Search } from "@components/search/Search"
+import { Header } from "@components/header/Header"
+import { Pagination } from "antd"
 
 export async function pageLoader({request, params}: LoaderFunctionArgs) {
     const url = new URL(request.url)
@@ -28,14 +27,28 @@ export async function pageLoader({request, params}: LoaderFunctionArgs) {
 
 export default function Page() {
     const {params: {query}, data } = useLoaderData() as SyncReturnType<typeof pageLoader>
-
+    const navigate = useNavigate()
     
     return (
         <div className={style["page"]}>
-            <h1>搜索结果: {query}</h1>
+            <Header />
+            <Search className={style.search} 
+                initValue={query ?? ""}
+                onValueChange={q => navigate(`/search?query=${q}`)} />
+            {query?.length == 0 ?
+            <h1>搜索结果: {query}, 共{data?.total_results}个结果</h1>
+            : null}
             <div className={style.searchResult}>
                 {data?.results.map((movie, i) => <MovieCard key={i} movie={movie} />)}
             </div>
+            {(data?.total_pages ?? 0) > 1 ?
+            <Pagination className={style.selectPage}
+                showSizeChanger={false}
+                defaultPageSize={1}
+                total={data?.total_pages ?? 0}
+                current={data?.page ?? 1}
+                onChange={(page) => navigate(`/search?query=${query}&page=${page}`)} />
+            : null}
         </div>
     )
 }
