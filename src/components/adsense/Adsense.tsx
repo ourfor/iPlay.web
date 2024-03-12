@@ -1,4 +1,5 @@
 import { ENV } from "@helper/env"
+import { logger } from "@helper/log"
 import { useEffect } from "react"
 
 export function Adsense() {
@@ -9,12 +10,17 @@ export function Adsense() {
         const adsbygoogle = (window as any).adsbygoogle || [];
         adsbygoogle.push({});
     }
+    useEffect(() => {
+        const script = document.createElement("script")
+        script.onload = onLoad
+        script.src = src
+        script.crossOrigin = "anonymous"
+        script.async = true
+        document.head.appendChild(script)
+        logger.info("load adsense")
+    }, [])
     return (
         <div className="ads-holder">
-            <script async 
-                src={src}
-                onLoad={onLoad}
-                crossOrigin="anonymous" />
             <ins className="adsbygoogle"
                 style={{display:"block", textAlign:"center"}}
                 data-ad-layout="in-article"
