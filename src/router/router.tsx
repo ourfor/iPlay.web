@@ -5,6 +5,7 @@ import PageSeason, { pageLoader as pageSeasonLoader } from "@page/season"
 import PageTest from "@page/test"
 import PagePlay, { pageLoader as pagePlayLoader } from "@page/play"
 import PageAlbum, { pageLoader as pageAlbumLoader } from "@page/album"
+import PageSearch, { pageLoader as pageSearchLoader } from "@page/search"
 import PageError from "@page/error"
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { logger } from "@helper/log"
@@ -22,6 +23,12 @@ const pages = [
         path: "/",
         loader: pageHomeLoader,
         element: <PageHome />,
+        errorElement: <PageError /> 
+    },
+    { 
+        path: "/search",
+        loader: pageSearchLoader,
+        element: <PageSearch />,
         errorElement: <PageError /> 
     },
     { 

@@ -6,16 +6,24 @@ import { useAppDispatch, useAppSelector } from "@data/StoreHook"
 import classnames from "classnames"
 import { Avatar, Select } from "@radix-ui/themes"
 import { updateActiveId } from "@data/Site"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 
 export interface HeaderProps {
     className?: string
 }
 
+const menu = [
+    {path: "/", name: "首页", onClick: (navigate: any) => navigate("/")},
+    {path: "/favorite", name: "喜爱", onClick: (navigate: any) => navigate("/favorite")},
+    {path: "/search", name: "搜索", onClick: (navigate: any) => navigate("/search")},
+]
+
 export function Header({className}: HeaderProps) {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const location = useLocation()
+    const pathname = location.pathname
     const site = useAppSelector(state => state.site)
     const user = site.site.user
     const avatorUrl = userAvatorUrl(user?.User?.Id ?? "", "", "Primary")
@@ -27,13 +35,18 @@ export function Header({className}: HeaderProps) {
     }
     return (
         <div className={classnames(style.header, className)}>
-            <img className={style.logo} src={logoUrl} />
+            <img alt="🍵" className={style.logo} src={logoUrl} />
             <div className={style.left}>
-                <span>首页</span>
-                <span>喜爱</span>
+                {menu.map((item, i) => (
+                    <span key={i} data-path={item.path}
+                        onClick={() => item.onClick(navigate)}
+                        className={[pathname === item.path ? style.active : ""].join(" ")}>
+                        {item.name}
+                    </span>
+                ))}
             </div>
             <div className={style.right}>
-                <img className={style.icon} src={searchUrl} />
+                <img alt="🔍" className={style.icon} src={searchUrl} />
                 <Avatar className={style.avator} src={avatorUrl} fallback={"?"} />
                 <div className={style.switchSite}>
                 <Select.Root size="1"
