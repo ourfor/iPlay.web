@@ -184,3 +184,31 @@ export async function getCollection(user: User, cid: number, type: "Series"|"Mov
     const data = await response.json() as EmbyResponse<Media>
     return data
 }
+
+export async function lookupItem(user: User, title: string) {
+    const params = {
+        UserId: user.User.Id,
+        SortBy: "SortName",
+        SortOrder: "Ascending",
+        Fields: "BasicSyncInfo,CanDelete,Container,PrimaryImageAspectRatio,ProductionYear,Status,EndDate",
+        StartIndex: 0,
+        EnableImageTypes: "Primary,Backdrop,Thumb",
+        ImageTypeLimit: 1,
+        Recursive: true,
+        SearchTerm: title,
+        GroupProgramsBySeries: true,
+        Limit: 50
+    }
+    const url = makeUrl(params, `/emby/Items`)
+    const response = await fetch(url, {
+        headers: {
+            "X-Emby-Client": "Emby Web",
+            "X-Emby-Device-Name": "Microsoft Edge macOS",
+            "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
+            "X-Emby-Client-Version": "4.7.13.0",
+            "X-Emby-Token": user.AccessToken,
+        }
+    })
+    const data = await response.json() as EmbyResponse<Media>
+    return data
+}

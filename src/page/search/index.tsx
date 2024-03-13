@@ -8,27 +8,34 @@ import { Header } from "@components/header/Header"
 import { Pagination } from "antd"
 import { Adsense } from "@components/adsense/Adsense"
 import Firework from "@components/firework/firework"
+import { Api } from "@api/emby"
+import { MediaCard } from "@components/media/Media"
 
 export async function pageLoader({request, params}: LoaderFunctionArgs) {
     const url = new URL(request.url)
     const query = url.searchParams.get("query")
     const page = Number(url.searchParams.get("page"))
     logger.info(`search`, url.searchParams.get("query"))
+    logger.info("search")
     let data = null
+    let local = null
     if (query) {
         data = await TMDB.searchMovie(query, page == 0 ? 1 : page)
         logger.info(data)
+        local = await Api.emby?.getItemWithName?.(query)
+        logger.info(local)
     }
     return {
         params: {
             query,
         },
-        data
+        data,
+        local
     }
 }
 
 export default function Page() {
-    const {params: {query}, data } = useLoaderData() as SyncReturnType<typeof pageLoader>
+    const {params: {query}, data, local } = useLoaderData() as SyncReturnType<typeof pageLoader>
     const navigate = useNavigate()
     
     return (
@@ -37,10 +44,16 @@ export default function Page() {
             <Search className={style.search} 
                 initValue={query ?? ""}
                 onValueChange={q => navigate(`/search?query=${q}`)} />
-            {query?.length ?? 0 > 0 ?
-            <h1>搜索结果: {query}, 共{data?.total_results}个结果</h1>
-            : null}
             <div className={style.searchResult}>
+                {query?.length ?? 0 > 0 ?
+                <h3>本地结果: {query}, 共{local?.Items.length}个结果</h3>
+                : null}
+                <section className={style.local}>
+                    {local?.Items.map((item, i) => <MediaCard key={i} className={style.mediaCard} {...item} />)}
+                </section>
+                {query?.length ?? 0 > 0 ?
+                <h3>外部结果: {query}, 共{data?.total_results}个结果</h3>
+                : null}
                 {data?.results.map((movie, i) => <MovieCard key={i} movie={movie} />)}
             </div>
             {(data?.total_pages ?? 0) > 1 ?
