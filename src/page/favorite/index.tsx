@@ -5,6 +5,8 @@ import { TMDB } from "@api/tmdb"
 import { Search } from "@components/search/Search"
 import { Header } from "@components/header/Header"
 import { Adsense } from "@components/adsense/Adsense"
+import Firework from "@components/firework/firework"
+import { Explosion } from "@components/firework/explosion"
 
 export async function pageLoader({request, params}: LoaderFunctionArgs) {
     const url = new URL(request.url)
@@ -31,8 +33,8 @@ export default function Page() {
     return (
         <div className={style["page"]}>
             <Header />
-
             <Adsense />
+            <Explosion />
         </div>
     )
 }
