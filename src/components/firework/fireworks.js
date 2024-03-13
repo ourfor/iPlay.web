@@ -82,9 +82,9 @@ class Boom {
 }
 
 export class CursorSpecialEffects {
-    constructor() {
+    constructor(dom) {
         this.computerCanvas = document.createElement('canvas')
-        this.renderCanvas = document.createElement('canvas')
+        this.renderCanvas = dom ?? document.createElement('canvas')
 
         this.computerContext = this.computerCanvas.getContext('2d')
         this.renderContext = this.renderCanvas.getContext('2d')
@@ -115,7 +115,7 @@ export class CursorSpecialEffects {
         this.running = false
     }
 
-    init() {
+    init(parent) {
         const style = this.renderCanvas.style
         style.position = 'fixed'
         style.top = style.left = 0
@@ -125,7 +125,9 @@ export class CursorSpecialEffects {
         style.width = this.renderCanvas.width = this.computerCanvas.width = this.globalWidth
         style.height = this.renderCanvas.height = this.computerCanvas.height = this.globalHeight
 
-        document.body.append(this.renderCanvas)
+        if (parent) {
+            parent.appendChild(this.renderCanvas)
+        }
 
         window.addEventListener('mousedown', this.handleMouseDown.bind(this))
         window.addEventListener('pagehide', this.handlePageHide.bind(this))
