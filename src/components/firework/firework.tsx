@@ -1,12 +1,15 @@
 import { useEffect, useRef } from 'react';
-import { init } from './fireworks.js';
+import { CursorSpecialEffects } from './fireworks.js';
+import { init } from './firework2.js';
 
 export function Firework(){
 
     const dom = useRef(null)
     useEffect(() => {
         init(dom.current);
-    })
+        // const cursorSpecialEffects = new CursorSpecialEffects()
+        // cursorSpecialEffects.init()
+    }, [])
 
     const style = {
         position: 'fixed',
