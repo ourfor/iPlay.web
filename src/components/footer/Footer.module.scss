@@ -1,0 +1,39 @@
+@import "~@style/media.scss";
+
+.root {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 4.5rem;
+    margin-bottom: 4.5rem;
+
+    & * {
+        color: rgba(255,255,255,0.7);
+        font-size: 1rem;
+        font-weight: 400;
+    }
+
+    ul.nav {
+        list-style: circle;
+    }
+
+    .copyright {
+        display: flex;
+
+        &>span {
+            flex: 1;
+            &:last-child {
+                text-align: right;
+            }
+        }
+
+        @include mobile {
+            flex-direction: column-reverse;
+            &>span {
+                &:last-child {
+                    margin-top: 1rem;
+                    text-align: left;
+                }
+            }
+        }
+    }
+}
