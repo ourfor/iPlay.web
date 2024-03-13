@@ -9,6 +9,7 @@ import { Background } from "@components/background/Background"
 import { Button, Tag } from "antd"
 import _ from "lodash"
 import { Image } from "@components/base/Image"
+import { Adsense } from "@components/adsense/Adsense"
 
 export const colors = [
     "cyan", "gold", "magenta", "orange", "lime"
@@ -76,6 +77,7 @@ export default function Page() {
                 </>
                 )}
             </div>
+            <Adsense />
         </div>
     )
 }

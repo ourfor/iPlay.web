@@ -48,5 +48,6 @@ export function avatorUrl(id: string, options: string|Partial<ImageProps>, type:
 }
 
 export function playUrl(path: string) {
+    if (path.startsWith("http")) return path
     return `${config.emby.protocol}://${config.emby.host}:${config.emby.port}${config.emby.path}emby${path}`
 }
