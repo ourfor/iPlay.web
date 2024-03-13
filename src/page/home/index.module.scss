@@ -30,10 +30,17 @@
             justify-content: flex-start;
         }
 
-        &>div {
-            flex: 1;
-            min-width: 21%;
-            max-width: 23%;
+        @include desktop {
+            &>div {
+                flex: 1;
+                min-width: 21%;
+                max-width: 23%;
+            }
+        }
+
+        @include mobile {
+            flex-wrap: nowrap;
+            justify-content: flex-start;
         }
     }
 
