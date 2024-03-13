@@ -6,7 +6,7 @@ import SettingIcon from "@components/setting/SettingIcon"
 import { DialogID, openDialog } from "@data/Event"
 import { produceMessage } from "@data/Message"
 import { Button, Checkbox, TextField } from "@radix-ui/themes"
-import { loginToSite } from "@data/Site"
+import { loginAsGuest, loginToSite } from "@data/Site"
 import { UpdateIcon } from "@radix-ui/react-icons"
 import { SpinBox } from "@components/animation/Spin"
 
@@ -48,6 +48,20 @@ export default function Page() {
             callback
         }))
     }
+    const onLoginAsGuest = () => {
+        dispatch(loginAsGuest(""))
+        dispatch(produceMessage({
+            type: "success",
+            data: "登录成功，即将跳转主页",
+            duration: 1000
+        }))
+        setTimeout(() => {
+            navigate({
+                pathname: "/"
+            })
+        }, 1000)
+    }
+
     return (
         <div className={style["page"]}>
             <div className={style["wrap"]}>
@@ -102,6 +116,9 @@ export default function Page() {
                         <SettingIcon />
                     </div>
                 </div>
+                <Button className={[style.login, style.guest].join(" ")}
+                    variant="soft"
+                    onClick={() => onLoginAsGuest()}>访客登陆</Button>
             </div>
         </div>
     )

@@ -17,7 +17,7 @@ export interface Manifest {
 export interface Site {
     id: string
     name?: string
-    user: User|null
+    user: User | null
     emby: EmbyConfig
 }
 
@@ -29,7 +29,7 @@ export const DEFAULT_SITE: Site = {
 }
 
 export interface SiteStore {
-    activeId?: string|null
+    activeId?: string | null
     sites: Map<string, Site>
     site: Site
     loading: boolean
@@ -50,13 +50,32 @@ export const getSiteInfo = createAppAsyncThunk("site/info", async (id: number, a
 })
 
 type Authentication = {
-    username: string, 
+    username: string,
     password: string,
     callback?: {
         resolve?: () => void
         reject?: () => void
     }
 }
+
+export const loginAsGuest = createAppAsyncThunk("site/login", async (user: string, config) => {
+    const api = config.extra
+    const data = {
+        User: {
+            Name: "guest",
+            ServerId: "FFFF",
+            Id: "guest"
+        },
+        AccessToken: "FFFF",
+        ServerId: "FFFF"
+    }
+
+    if (data) {
+        api.emby = new Emby(data)
+    }
+    return data
+})
+
 export const loginToSite = createAppAsyncThunk("site/login", async (user: Authentication, config) => {
     const api = config.extra
     const data = await api.login(user.username, user.password)
@@ -74,7 +93,7 @@ export const slice = createSlice({
             const data = action.payload
             const id = data.id
             const _old = state.sites[id]
-            const _new = {..._old, ...data}
+            const _new = { ..._old, ...data }
             if (_.isEmpty(Object.values(state.sites))) {
                 state.activeId = id;
             }
@@ -99,11 +118,11 @@ export const slice = createSlice({
             return state
         },
         updateSiteConfig: (state, action: PayloadAction<Partial<Site>>) => {
-            const {id, emby, name} = action.payload
+            const { id, emby, name } = action.payload
             if (!id || !emby) return state
             if (!state.sites[id]) return state
             const _old = state.sites[id]!.emby
-            const _new = {..._old, ...emby}
+            const _new = { ..._old, ...emby }
             state.sites[id]!.emby = _new
             state.sites[id]!.name = name
             if (id === state.activeId) {
@@ -114,10 +133,10 @@ export const slice = createSlice({
         },
         updateActiveSite: (state, action: PayloadAction<Partial<Site>>) => {
             const site = action.payload
-            state.site = {...state.site, ...site}
+            state.site = { ...state.site, ...site }
             const id = state.site.id
             if (state.sites[id]) {
-                state.sites[id] = {...state.sites[id], ...site} as Site
+                state.sites[id] = { ...state.sites[id], ...site } as Site
             }
             return state
         },
@@ -139,10 +158,10 @@ export const slice = createSlice({
             state.loading = false
             const user = data.payload
             logger.info(user)
-            state.site = {...state.site, user}
+            state.site = { ...state.site, user }
             const id = state.site.id
             if (state.sites[id]) {
-                state.sites[id] = {...state.sites[id], user} as Site
+                state.sites[id] = { ...state.sites[id], user } as Site
             }
         })
         builder.addCase(loginToSite.rejected, (state, data) => {
@@ -165,11 +184,11 @@ listenerMiddleware.startListening({
     }
 })
 
-export const { 
-    updateSite, 
-    updateActiveSite, 
-    updateActiveId, 
-    updateSiteConfig, 
+export const {
+    updateSite,
+    updateActiveSite,
+    updateActiveId,
+    updateSiteConfig,
     resetSite,
     removeSite
 } = slice.actions

@@ -198,4 +198,20 @@ $bg-img: "//source.unsplash.com/random";
             color: #737373;
         }
     }
+
+    .guest {
+        $bgcolor: green; 
+        background-color: $bgcolor;
+        width: 19.625rem;
+        margin-top: 1rem;
+
+        &:hover {
+            background-color: $bgcolor,
+          }
+
+        &:active {
+            background-color: $bgcolor,
+        }
+    }
+
 }
