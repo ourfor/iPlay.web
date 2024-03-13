@@ -1,4 +1,4 @@
-import PageLogin from "@page/login"
+import PageLogin, { pageLoader as pageLoginLoader } from "@page/login"
 import PageHome, { pageLoader as pageHomeLoader } from "@page/home"
 import PageSeries, { pageLoader as pageSeriesLoader } from "@page/series"
 import PageSeason, { pageLoader as pageSeasonLoader } from "@page/season"
@@ -18,6 +18,7 @@ const pages: RouteObject[] = [
     { 
         path: "/login", 
         element: <PageLogin />,
+        loader: pageLoginLoader,
         errorElement: <PageError />
     },
     { 
