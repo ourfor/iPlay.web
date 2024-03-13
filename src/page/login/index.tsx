@@ -1,22 +1,78 @@
 import style from "./index.module.scss"
-import { useState } from "react"
-import { useAppDispatch } from "@data/StoreHook"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { useAppDispatch, useAppSelector } from "@data/StoreHook"
+import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom"
 import SettingIcon from "@components/setting/SettingIcon"
 import { DialogID, openDialog } from "@data/Event"
 import { produceMessage } from "@data/Message"
 import { Button, Checkbox, TextField } from "@radix-ui/themes"
-import { loginAsGuest, loginToSite } from "@data/Site"
+import { DEFAULT_SITE, Site, loginAsGuest, loginToSite, updateSiteConfig } from "@data/Site"
 import { UpdateIcon } from "@radix-ui/react-icons"
 import { SpinBox } from "@components/animation/Spin"
+import { EmbyConfig } from "@helper/env"
+import { logger } from "@helper/log"
+
+export async function pageLoader({request, params}: LoaderFunctionArgs) {
+    const url = new URL(request.url)
+    const site = url.searchParams.get("site")
+    const name = url.searchParams.get("name")
+    const host = url.searchParams.get("host")
+    const port = url.searchParams.get("port")
+    const path = url.searchParams.get("path")
+    const protocol = url.searchParams.get("protocol")
+    return {
+        params: {
+            name, site, host, port, path, protocol
+        },
+    }
+}
 
 export default function Page() {
+    const {params: query } = useLoaderData() as SyncReturnType<typeof pageLoader>
     const [username, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [remember, setRemember] = useState(false)
     const [loading, setLoading] = useState(false)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const activeSite = useAppSelector(state => state.site.site)
+
+    const getEmbyFromQuery = () => {
+        const {host, port, path, name, protocol} = query
+        const emby: Partial<EmbyConfig> = {}
+        if (host) emby.host= host
+        if (port) emby.port = Number(port)
+        if (path) emby.path = path
+        if (protocol) emby.protocol = protocol === "https" ? "https" : "http"
+        if (Object.values(emby).length === 0) return null
+        else {
+            return {
+                ...activeSite,
+                name: name ?? activeSite.name ?? "🍵",
+                emby: {
+                    ...activeSite.emby,
+                    ...(emby as any)
+                }
+            }
+        }
+    }
+
+    const updateSiteFromQuery = (site: Site) => {
+        const { site: siteId } = query
+        logger.info(siteId, site)
+        dispatch(updateSiteConfig({
+            id: siteId ?? site.id,
+            emby: site.emby
+        }))
+    }
+
+    useEffect(() => {
+        const emby = getEmbyFromQuery()
+        if (!emby) {
+            return
+        }
+        updateSiteFromQuery(emby)
+    }, [])
 
     const submit = () => {
         const callback = {

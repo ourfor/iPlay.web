@@ -124,7 +124,7 @@ export const slice = createSlice({
             const _old = state.sites[id]!.emby
             const _new = { ..._old, ...emby }
             state.sites[id]!.emby = _new
-            state.sites[id]!.name = name
+            state.sites[id]!.name = name ?? "🍵"
             if (id === state.activeId) {
                 state.site.emby = _new
                 state.site.name = name
