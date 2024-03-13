@@ -33,6 +33,17 @@
         }
     }
 
+    .local {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .mediaCard {
+            width: 10rem;
+        }
+    }
+
     &>.selectPage {
         display: flex;
         width: fit-content;

@@ -1,5 +1,8 @@
+import { useEffect } from "react"
 import style from "./index.module.scss"
 import {animated, useChain, useSpring, useSpringRef, useTransition} from "@react-spring/web"
+import { Api } from "@api/emby"
+import { logger } from "@helper/log"
 
 export default function Page() {
     const data = [1, 2, 3, 4]
@@ -21,6 +24,9 @@ export default function Page() {
         leave: {x: 0}
     })
     useChain([springRef, transitionRef], [0, 3])
+    useEffect(() => {
+
+    }, [])
     return (
         <div className={style.page}>
             {transition((style, idx) => (
