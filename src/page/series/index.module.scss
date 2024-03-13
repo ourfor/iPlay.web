@@ -5,6 +5,14 @@
     min-height: 100vh;
     color: white;
 
+    .playerIcon {
+        justify-content: flex-start;
+        margin-top: 1rem;
+        &>div {
+            margin: auto .25rem;
+        }
+    }
+
     .background {
         position: fixed;
         top: 0;

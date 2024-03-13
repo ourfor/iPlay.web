@@ -3,6 +3,7 @@ import iinaIcon from "./icon/iina.png"
 import nplayerIcon from "./icon/nplayer.png"
 
 export interface ExternalPlayerProps {
+    className?: string
     src: string
 }
 
@@ -21,9 +22,9 @@ const players = {
     }
 }
 
-export function ExternalPlayer({ src }: ExternalPlayerProps) {
+export function ExternalPlayer({ src, className }: ExternalPlayerProps) {
     return (
-        <div className={style["external-player"]}>
+        <div className={[style["external-player"], className].join(" ")}>
         {Object.entries(players).map(([name, item]) => (
             <div className={style["player"]} key={name} 
                 onClick={() => item.action(src)}>
