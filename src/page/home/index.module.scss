@@ -29,6 +29,12 @@
             flex-wrap: nowrap;
             justify-content: flex-start;
         }
+
+        &>div {
+            flex: 1;
+            min-width: 21%;
+            max-width: 23%;
+        }
     }
 
     .mediaCard {
