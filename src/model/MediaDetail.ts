@@ -1,3 +1,4 @@
+import { MediaSource } from "@model/PlaybackInfo"
 export interface MediaDetail {
     Name: string
     OriginalTitle: string
@@ -16,6 +17,7 @@ export interface MediaDetail {
     People: People[]
     SeriesId: string
     SeriesName: string
+    MediaSources?: MediaSource[]
 }
 
 export interface People {

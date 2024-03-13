@@ -1,4 +1,4 @@
-import { imageUrl } from "@api/config"
+import { imageUrl, makeUrl, playUrl } from "@api/config"
 import { Stack } from "@components/layout/Stack"
 import { PeopleCard } from "@components/people/PeopleCard"
 import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom"
@@ -10,6 +10,8 @@ import { Button, Tag } from "antd"
 import _ from "lodash"
 import { Image } from "@components/base/Image"
 import { Adsense } from "@components/adsense/Adsense"
+import { ExternalPlayer } from "@components/media/ExternalPlayer"
+import { MediaSource } from "@model/PlaybackInfo"
 
 export const colors = [
     "cyan", "gold", "magenta", "orange", "lime"
@@ -36,6 +38,10 @@ export default function Page() {
     if (!data) return null
     const bgImgset = imageUrl(data.Id, data.BackdropImageTags[0], "Backdrop/0")
     const imgset = imageUrl(data.Id, {maxWidth: 1050, maxHeight: 700, tag: data.ImageTags.Primary})
+    const getPlayUrl = (source: MediaSource) => {
+        if (source.Path.startsWith("http")) return source.Path
+        else return playUrl(source.DirectStreamUrl)
+    }
     return (
         <div className={style["page"]}>
             <Background src={bgImgset} />
@@ -60,6 +66,7 @@ export default function Page() {
                             color="primary">立即播放
                         </Button>
                         }
+                        {data.MediaSources?.map((source, i) => <ExternalPlayer className={style.playerIcon} key={i} src={getPlayUrl(source)} />)}
                     </div>
                 </div>
                 {type === "series" && (
