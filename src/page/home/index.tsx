@@ -15,6 +15,7 @@ import { Stack } from "@components/layout/Stack"
 import _ from "lodash"
 import { queryParams } from "@hook/useQuery"
 import { Adsense } from "@components/adsense/Adsense"
+import { Footer } from "@components/footer/Footer"
 
 export async function pageLoader({request, params}: LoaderFunctionArgs) {
     const query = queryParams<{site?: string}>(request.url)
@@ -85,6 +86,7 @@ export default function Page() {
                 </div>
             ))}
             <Adsense />
+            <Footer />
         </div>
     )
 }

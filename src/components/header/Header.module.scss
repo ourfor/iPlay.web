@@ -35,8 +35,7 @@
 
             &.active {
                 color: red;
-                font-size: 1.25rem;
-                font-style: bold;           
+                font-weight: 400;
             }
 
             @include mobile {
