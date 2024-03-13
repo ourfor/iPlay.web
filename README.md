@@ -11,10 +11,19 @@
 
 ## 界面
 
-||||
-|:-:|:-:|:-:|
+|![](./doc/image/20240313_125004.png)|![](./doc/image/20240313_125059.png)|![](./doc/image/20240313_125123.png)|
+|-|-|-|
 |![推荐页面](./doc/image/Screen-20230821@2x.png)|![推荐页面2](./doc/image/Screen-20230821@2x1.png)|![媒体列表](./doc/image/Screen-20230818@2x2.png)|
 |![剧集详细](./doc/image/Screen-20230818@2x3.png)|![播放页面](./doc/image/Screen-20230818@2x4.png)|![登录页面](./doc/image/Screen-20230821@2x4.png)|
+
+适配移动端
+
+<div style="display: inline-flex;align-item:center;justify-content: space-around">
+<img width="45%" src="./doc/image/IMG_0255.png" />
+<img width="45%" src="./doc/image/IMG_0256.png" />
+</div>
+
+
 
 ## 功能
 
