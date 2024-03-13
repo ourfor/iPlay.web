@@ -185,6 +185,31 @@ export async function getCollection(user: User, cid: number, type: "Series"|"Mov
     return data
 }
 
+export async function searchRecommend(user: User) {
+    const params = {
+        UserId: user.User.Id,
+        SortBy: "IsFavoriteOrLiked,Random",
+        IncludeItemTypes: "Movie,Series,MusicArtist",
+        Limit: 20,
+        Recursive: true,
+        ImageTypeLimit: 0,
+        EnableImages: false,
+        EnableTotalRecordCount: false
+    }
+    const url = makeUrl(params, `/emby/Items`)
+    const response = await fetch(url, {
+        headers: {
+            "X-Emby-Client": "Emby Web",
+            "X-Emby-Device-Name": "Microsoft Edge macOS",
+            "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
+            "X-Emby-Client-Version": "4.7.13.0",
+            "X-Emby-Token": user.AccessToken,
+        }
+    })
+    const data = await response.json() as EmbyResponse<Media>
+    return data
+}
+
 export async function lookupItem(user: User, title: string) {
     const params = {
         UserId: user.User.Id,

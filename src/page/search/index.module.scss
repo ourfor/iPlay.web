@@ -44,6 +44,16 @@
         }
     }
 
+    .searchRecommend {
+        max-width: 80%;
+        margin: auto;
+        &>span {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
     &>.selectPage {
         display: flex;
         width: fit-content;
