@@ -15,7 +15,7 @@ export function Player({ vid, model }: PlayerProps) {
         type: "video",
         title: model.MediaSources[0].Name,
         sources: model.MediaSources.map(item => ({
-            src: playUrl(item.DirectStreamUrl),
+            src: item.Path.startsWith("http") ? item.Path : playUrl(item.DirectStreamUrl),
             title: item.Name,
             type: "video/mp4"
         })),

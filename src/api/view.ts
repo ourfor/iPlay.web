@@ -6,18 +6,22 @@ import { MediaDetail } from "@model/MediaDetail";
 import { Season } from "@model/Season";
 import { EmbyResponse } from "@model/EmbyResponse";
 import { Episode } from "@model/Episode";
+import { head } from "lodash";
 
 export async function getView(user: User) {
     const token = user.AccessToken
     const uid = user.User.Id
     const did = "feed8217-7abd-4d2d-a561-ed21c0b9c30e"
     const params = {
-        "X-Emby-Device-Id": did,
-        "X-Emby-Token": token,
         "X-Emby-Language": "zh-cn"
     }
     const url = makeUrl(params, `emby/Users/${uid}/Views`)
-    const response = await fetch(url);
+    const response = await fetch(url, {
+        headers: {
+            "X-Emby-Device-Id": did,
+            "X-Emby-Token": token,
+        }
+    });
     const data = await response.json() as View
     return data
 }
@@ -29,16 +33,19 @@ export async function getLatestMedia(user: User, parentId: number) {
         ImageTypeLimit: 1,
         EnableImageTypes: "Primary,Backdrop,Thumb",
         ParentId: parentId,
-        "X-Emby-Client": "Emby Web",
-        "X-Emby-Device-Name": "Microsoft Edge macOS",
-        "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
-        "X-Emby-Client-Version": "4.7.13.0",
-        "X-Emby-Token": user.AccessToken,
         "X-Emby-Language": "zh-cn"
     }
     const uid = user.User.Id
     const url = makeUrl(params, `emby/Users/${uid}/Items/Latest`)
-    const response = await fetch(url)
+    const response = await fetch(url, {
+        headers: {
+            "X-Emby-Client": "Emby Web",
+            "X-Emby-Token": user.AccessToken,
+            "X-Emby-Device-Name": "Microsoft Edge macOS",
+            "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
+            "X-Emby-Client-Version": "4.7.13.0",
+        }
+    })
     const data = await response.json() as Media[]
     return data
 }
@@ -67,16 +74,19 @@ export async function getResume(user: User) {
         EnableImageTypes: "Primary,Backdrop,Thumb",
         MediaTypes: "Video",
         Limit: 12,
-        "X-Emby-Client": "Emby Web",
-        "X-Emby-Device-Name": "Microsoft Edge macOS",
-        "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
-        "X-Emby-Client-Version": "4.7.13.0",
-        "X-Emby-Token": user.AccessToken,
         "X-Emby-Language": "zh-cn"
     }
     const uid = user.User.Id
     const url = makeUrl(params, `emby/Users/${uid}/Items/Resume`)
-    const response = await fetch(url)
+    const response = await fetch(url, {
+        headers: {
+            "X-Emby-Client": "Emby Web",
+            "X-Emby-Device-Name": "Microsoft Edge macOS",
+            "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
+            "X-Emby-Client-Version": "4.7.13.0",
+            "X-Emby-Token": user.AccessToken,
+        }
+    })
     const data = await response.json() as EmbyResponse<Media>
     return data.Items
 }
@@ -84,15 +94,18 @@ export async function getResume(user: User) {
 export async function getRecommendations(user: User) {
     const uid = user.User.Id
     const params = {
-        "X-Emby-Client": "Emby Web",
-        "X-Emby-Device-Name": "Microsoft Edge macOS",
-        "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
-        "X-Emby-Client-Version": "4.7.13.0",
-        "X-Emby-Token": user.AccessToken,
         "X-Emby-Language": "zh-cn"
     }
     const url = makeUrl(params, `emby/Users/${uid}/Suggestions`)
-    const response = await fetch(url)
+    const response = await fetch(url, {
+        headers: {
+            "X-Emby-Client": "Emby Web",
+            "X-Emby-Device-Name": "Microsoft Edge macOS",
+            "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
+            "X-Emby-Client-Version": "4.7.13.0",
+            "X-Emby-Token": user.AccessToken,
+        }
+    })
     const data = await response.json() as EmbyResponse<Media>
     return data.Items
 }
@@ -102,15 +115,18 @@ export async function getSeasons(user :User, id: number) {
         UserId: user.User.Id,
         Fields: "BasicSyncInfo,CanDelete,Container,PrimaryImageAspectRatio",
         EnableTotalRecordCount: false,
-        "X-Emby-Client": "Emby Web",
-        "X-Emby-Device-Name": "Microsoft Edge macOS",
-        "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
-        "X-Emby-Client-Version": "4.7.13.0",
-        "X-Emby-Token": user.AccessToken,
         "X-Emby-Language": "zh-cn"
     }
     const url = makeUrl(params, `emby/Shows/${id}/Seasons`)
-    const response = await fetch(url)
+    const response = await fetch(url, {
+        headers: {
+            "X-Emby-Client": "Emby Web",
+            "X-Emby-Device-Name": "Microsoft Edge macOS",
+            "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
+            "X-Emby-Client-Version": "4.7.13.0",
+            "X-Emby-Token": user.AccessToken,
+        }
+    })
     const data = await response.json() as EmbyResponse<Season>
     return data.Items
 }
@@ -121,15 +137,18 @@ export async function getEpisodes(user: User, vid: number, sid: number) {
         SeasonId: sid,
         Fields: "Overview,PrimaryImageAspectRatio",
         EnableTotalRecordCount: false,
-        "X-Emby-Client": "Emby Web",
-        "X-Emby-Device-Name": "Microsoft Edge macOS",
-        "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
-        "X-Emby-Client-Version": "4.7.13.0",
-        "X-Emby-Token": user.AccessToken,
         "X-Emby-Language": "zh-cn"
     }
     const url = makeUrl(params, `emby/Shows/${vid}/Episodes`)
-    const response = await fetch(url)
+    const response = await fetch(url, {
+        headers: {
+            "X-Emby-Client": "Emby Web",
+            "X-Emby-Device-Name": "Microsoft Edge macOS",
+            "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
+            "X-Emby-Client-Version": "4.7.13.0",
+            "X-Emby-Token": user.AccessToken,
+        }
+    })
     const data = await response.json() as EmbyResponse<Episode>
     return data.Items
 }
@@ -150,15 +169,18 @@ export async function getCollection(user: User, cid: number, type: "Series"|"Mov
         EnableImageTypes: "Primary,Backdrop,Thumb",
         ImageTypeLimit: 1,
         Limit: 50,
-        "X-Emby-Client": "Emby Web",
-        "X-Emby-Device-Name": "Microsoft Edge macOS",
-        "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
-        "X-Emby-Client-Version": "4.7.13.0",
-        "X-Emby-Token": user.AccessToken,
         "X-Emby-Language": "zh-cn"
     }
     const url = makeUrl(params, `emby/Users/${uid}/Items`)
-    const response = await fetch(url)
+    const response = await fetch(url, {
+        headers: {
+            "X-Emby-Client": "Emby Web",
+            "X-Emby-Device-Name": "Microsoft Edge macOS",
+            "X-Emby-Device-Id": "feed8217-7abd-4d2d-a561-ed21c0b9c30e",
+            "X-Emby-Client-Version": "4.7.13.0",
+            "X-Emby-Token": user.AccessToken,
+        }
+    })
     const data = await response.json() as EmbyResponse<Media>
     return data
 }

@@ -15,11 +15,14 @@ const stopEvent = (e: MouseEvent) => e.stopPropagation()
 export function EpisodeCard(episode: Episode) {
     const { data } = usePromise(() => Api.emby?.getPlaybackInfo?.(Number(episode.Id)), [episode.Id])
     const sources = useMemo(() => 
-        data?.MediaSources.map(item => ({label: item.Name, value: item.DirectStreamUrl})),
-    [data])
+        data?.MediaSources.map(item => ({
+            label: item.Name, 
+            value: item.Path.startsWith("http") ? item.Path : item.DirectStreamUrl
+        })), [data])
     const [source, setSource] = useState<string|null>(null)
     useEffect(() => {
         if (sources) setSource(sources?.[0].value)
+        logger.info("sources", sources)
     }, [sources])
     const posterUrl = imageUrl(episode.Id, episode.ImageTags.Primary)
     return (
