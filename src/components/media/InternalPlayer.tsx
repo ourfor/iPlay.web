@@ -9,8 +9,10 @@ export interface InternalPlayerProps {
 export function InternalPlayer({id}: InternalPlayerProps) {
     const navigate = useNavigate()
     return (
-        <div className={style["player"]} onClick={() => navigate(`/play/${id}`)}>
-            <img src={vidstackIcon} />
+        <div className={[style["internal-player"]].join(" ")}>
+        <div title="vidstack" className={style["player"]} onClick={() => navigate(`/play/${id}`)}>
+            <img alt="vidstack" src={vidstackIcon} />
+        </div>
         </div>
     )
 }
