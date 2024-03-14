@@ -1,20 +1,19 @@
+![影片详细](image/20240314_180043.png)
+
 # 前言
 
-一个简单、开源的视频点播平台，适配多种媒体服务器数据源
+一个简单、开源的视频点播平台，适配多种媒体服务器数据源。
 
 ## 使用
-![登录页面](./doc/image/Screen-20230821@2x4.png)
 
 目前已经适配Emby数据源, 点击登录页面右下角⚙️, 填写emby服务器相关信息，然后点击登录即可
-
-![登录设置](./doc/image/Screen-20230821@2x3.png)
 
 ## 界面
 
 |![](./doc/image/20240313_125004.png)|![](./doc/image/20240313_125059.png)|![](./doc/image/20240313_125123.png)|
 |-|-|-|
 |![推荐页面](./doc/image/Screen-20230821@2x.png)|![推荐页面2](./doc/image/Screen-20230821@2x1.png)|![媒体列表](./doc/image/Screen-20230818@2x2.png)|
-|![剧集详细](./doc/image/Screen-20230818@2x3.png)|![播放页面](./doc/image/Screen-20230818@2x4.png)|![登录页面](./doc/image/Screen-20230821@2x4.png)|
+|![影片详细](image/20240314_180043.png)|![播放页面](./doc/image/Screen-20230818@2x4.png)|![登录页面](./doc/image/Screen-20230821@2x4.png)|
 
 适配移动端
 
