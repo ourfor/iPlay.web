@@ -3,6 +3,10 @@ import iinaIcon from "./icon/iina.png"
 import nplayerIcon from "./icon/nplayer.png"
 import infuseIcon from "./icon/infuse.png"
 import vlcIcon from "./icon/vlc.png"
+import potplayerIcon from "./icon/potplayer.png"
+import kmplayerIcon from "./icon/kmplayer.png"
+import mxplayerIcon from "./icon/mxplayer.png"
+import mxplayerProIcon from "./icon/mxplayerpro.png"
 
 export interface ExternalPlayerProps {
     className?: string
@@ -41,21 +45,21 @@ const players = {
     },
     portplayer: {
         title: "PortPlayer",
-        icon: "",
+        icon: potplayerIcon,
         action: (url: string) => {
             window.open(`portplayer://${encodeURI(url)}`)
         }
     },
     kmplayer: {
         title: "KMPlayer",
-        icon: "",
+        icon: kmplayerIcon,
         action: (url: string) => {
             window.open(`kmplayer://${encodeURI(url)}`)
         }
     },
     mxplayer: {
         title: "MXPlayer",
-        icon: "",
+        icon: mxplayerIcon,
         action: (url: string) => {
             const title = new URL(url).pathname
             window.open(`intent:${encodeURI(url)}#Intent;package=com.mxtech.videoplayer.ad;S.title=${title};end`)
@@ -63,7 +67,7 @@ const players = {
     },
     mxplayerpro: {
         title: "MXPlayer Pro",
-        icon: "",
+        icon: mxplayerProIcon,
         action: (url: string) => {
             const title = new URL(url).pathname
             window.open(`intent:${encodeURI(url)}#Intent;package=com.mxtech.videoplayer.pro;S.title=${title};end`)
