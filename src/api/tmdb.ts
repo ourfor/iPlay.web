@@ -88,4 +88,27 @@ export namespace TMDB {
         return null
     }
 
+    export async function discoverMovie() {
+        const url = new URL(`${config._api}/discover/movie`)
+        const params = {
+            include_adult: false,
+            include_video: false,
+            language: "zh-CN",
+            page: 1,
+            sort_by: "popularity.desc"
+        }
+        Object.entries(params).forEach(([key, value]) => {
+            url.searchParams.append(key, value?.toString());
+        });
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                "X-HOST": "api.themoviedb.org"
+            }
+        };
+        const response = await fetch(url, options)
+        const data = await response.json() as SearchResponse;
+        return data;
+    }
 }

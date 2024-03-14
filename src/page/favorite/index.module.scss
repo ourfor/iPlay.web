@@ -35,4 +35,17 @@
         border-radius: 2px;
         background-color: #f9f1fe99;
     }
+
+    .trend {
+        text-align: center;
+        &>.card {
+            max-width: 85%;
+            display: block;
+            margin: 0.5rem auto;
+        }
+
+        &>div {
+            margin: 0.5rem auto;
+        }
+    }
 }
