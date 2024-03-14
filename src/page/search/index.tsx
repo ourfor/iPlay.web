@@ -68,7 +68,7 @@ export default function Page() {
                 {query?.length ?? 0 > 0 ?
                 <h3>外部结果: {query}, 共{data?.total_results}个结果</h3>
                 : null}
-                {data?.results.map((movie, i) => <MovieCard key={i} movie={movie} />)}
+                {data?.results.map((movie, i) => <MovieCard color="random" key={i} movie={movie} />)}
             </div>
             {(data?.total_pages ?? 0) > 1 ?
             <Pagination className={style.selectPage}
