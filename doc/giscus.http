@@ -1,0 +1,17 @@
+curl 'https://giscus.app/api/discussions' \
+  -H 'authority: giscus.app' \
+  -H 'accept: */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'origin: https://giscus.app' \
+  -H 'pragma: no-cache' \
+  -H 'referer: https://giscus.app/' \
+  -H 'sec-ch-ua: "Chromium";v="122", "Not(A:Brand";v="24", "Microsoft Edge";v="122"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0' \
+  --data-raw '{"repo":"ourfor/iplay","input":{"repositoryId":"R_kgDOKF9yOg","categoryId":"DIC_kwDOKF9yOs4Cd2rv","title":"search","body":"🔍 搜索内容"}}'
