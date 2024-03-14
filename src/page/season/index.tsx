@@ -4,12 +4,12 @@ import style from "./index.module.scss"
 import { imageUrl } from "@api/config"
 import { Api } from "@api/emby"
 import { Adsense } from "@components/adsense/Adsense"
-import { Footer } from "@components/footer/Footer"
 import { Comment } from "@components/comment/comment"
 
 export async function pageLoader({ request, params }: LoaderFunctionArgs) {
     const id = Number(params.id)
     const data = await Api.emby?.getMedia?.(id)
+    if (data?.Name) document.title = `🍵 ${data?.Name}`
     return {
         params: {
             id
