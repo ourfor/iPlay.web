@@ -12,6 +12,7 @@ import { Image } from "@components/base/Image"
 import { Adsense } from "@components/adsense/Adsense"
 import { ExternalPlayer } from "@components/media/ExternalPlayer"
 import { MediaSource } from "@model/PlaybackInfo"
+import { Comment } from "@components/comment/comment"
 
 export const colors = [
     "cyan", "gold", "magenta", "orange", "lime"
@@ -85,6 +86,7 @@ export default function Page() {
                 )}
             </div>
             <Adsense />
+            <Comment />
         </div>
     )
 }
