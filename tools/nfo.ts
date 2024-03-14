@@ -1,20 +1,31 @@
-
-
-
 // @see https://kodi.wiki/view/NFO_files/Movies
-interface Actor {
+export interface Actor {
     // Actor name
     name: string
     // Role played by the actor
     role?: string
     // Actor thumb image
-    thumb?: string
+    thumb?: string|null
     // Actor order
     // The <order> tag determines where in the list the actor will appear. 0 = first in the list
     order?: string
 }
 
-interface Movie {
+export interface Uniqueid {
+    $default?: boolean,
+    // Unique identifier type
+    $type: string,
+    // Unique identifier value
+    $: string
+}
+
+export interface Thumb {
+    $preview?: string,
+    $aspect?: string,
+    $: string
+}
+
+export interface Movie {
     // The title for the movie
     title: string
     // Displays the original title of the movie.
@@ -59,5 +70,20 @@ interface Movie {
     trailer?: string
 
     actor?: Actor[]
+    uiniqueid?: Uniqueid[]
 }
 
+export function xmlModelize(obj: object) {
+    return Object.entries(obj).reduce((map, [key, value]) => {
+        if (key.startsWith("$")) {
+            if (key === "$") key = "#text"
+            else {
+                key = key.replace("$", "@")
+            }
+        }
+        return {
+            ...map,
+            [key]: value
+        }
+    }, {})
+}
