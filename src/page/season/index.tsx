@@ -5,6 +5,7 @@ import { imageUrl } from "@api/config"
 import { Api } from "@api/emby"
 import { Adsense } from "@components/adsense/Adsense"
 import { Footer } from "@components/footer/Footer"
+import { Comment } from "@components/comment/comment"
 
 export async function pageLoader({ request, params }: LoaderFunctionArgs) {
     const id = Number(params.id)
@@ -32,6 +33,7 @@ export default function Page() {
             </div>
             <EpisodeList sid={data.Id} vid={data.SeriesId} />
             <Adsense />
+            <Comment />
         </div>
     )
 }

@@ -10,6 +10,7 @@ import { Adsense } from "@components/adsense/Adsense"
 import Firework from "@components/firework/firework"
 import { Api } from "@api/emby"
 import { MediaCard } from "@components/media/Media"
+import { Comment } from "@components/comment/comment"
 
 export const colors = [
     "cyan", "gold", "magenta", "orange", "lime",
@@ -79,6 +80,7 @@ export default function Page() {
             : null}
             <Firework />
             <Adsense />
+            <Comment />
         </div>
     )
 }
