@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.83ceb4f8.css",
-    "main.js": "/static/js/main.58813c05.js",
+    "main.css": "/static/css/main.d150fec2.css",
+    "main.js": "/static/js/main.e4c51932.js",
     "static/js/190.76fd5113.chunk.js": "/static/js/190.76fd5113.chunk.js",
     "static/js/348.da209a3c.chunk.js": "/static/js/348.da209a3c.chunk.js",
     "static/js/664.00c4c872.chunk.js": "/static/js/664.00c4c872.chunk.js",
@@ -15,13 +15,17 @@
     "static/media/iina.png": "/static/media/iina.214f4649a6f246ff4ab6.png",
     "static/media/logo.png": "/static/media/logo.c34213fdca7ad3227ea3.png",
     "static/media/infuse.png": "/static/media/infuse.84ab9d7f570ebec53162.png",
+    "static/media/potplayer.png": "/static/media/potplayer.413dcf8281bb77401c4d.png",
     "static/media/vlc.png": "/static/media/vlc.33d0d4a6e9b5615806c0.png",
     "static/media/nplayer.png": "/static/media/nplayer.b8e2e4ad4359b28725cc.png",
+    "static/media/kmplayer.png": "/static/media/kmplayer.d96a8c190cd252971a27.png",
+    "static/media/mxplayer.png": "/static/media/mxplayer.f0b2cd1bcd63fb36cb3e.png",
+    "static/media/mxplayerpro.png": "/static/media/mxplayerpro.f0b2cd1bcd63fb36cb3e.png",
     "static/media/search.svg": "/static/media/search.459060eeae78f0a1be81e61fcc3f4c9c.svg",
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.83ceb4f8.css",
-    "static/js/main.58813c05.js"
+    "static/css/main.d150fec2.css",
+    "static/js/main.e4c51932.js"
   ]
 }
