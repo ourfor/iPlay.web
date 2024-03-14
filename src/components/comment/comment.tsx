@@ -1,10 +1,12 @@
 import Giscus from '@giscus/react';
 import { ENV } from '@helper/env';
+import style from "./comment.module.scss"
 
 export function Comment() {
     const config = ENV.giscus;
     if (!config || !config?.enabled) return null;
     return (
+        <div className={style.root}>
         <Giscus
             id="comments"
             repo={config.repo as any}
@@ -20,5 +22,6 @@ export function Comment() {
             lang={config.lang}
             loading={config.loading as any}
         />
+        </div>
     );
 }
