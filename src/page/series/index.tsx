@@ -22,6 +22,7 @@ export async function pageLoader({ request, params }: LoaderFunctionArgs) {
     const id = Number(params.id)
     const type = request.url.includes("/movie") ? "movie" : "series"
     const data = await Api.emby?.getMedia?.(id)
+    if (data?.Name) document.title = `🍹 ${data?.Name}`
     return {
         data,
         type,
