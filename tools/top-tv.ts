@@ -85,7 +85,7 @@ function buildNfo(series: Series, credits: Credits) {
 }
 
 async function makeMovieList() {
-    const totalPage = 1
+    const totalPage = 100
     const link = `https://drive.endemy.me/iplay/demo.mp4`
     for (let page = 1; page <= totalPage; page++) {
         console.log(`page: ${page}, total: ${totalPage}`)
