@@ -25,6 +25,26 @@ export interface Thumb {
     $: string
 }
 
+export interface Fanart {
+    thumb?: Thumb[]
+}
+
+// <rating name="imdb" max="10" default="true">
+// <value>8.4</value>
+// <votes>275658</votes>
+// </rating>
+export interface Rating {
+    $name: string
+    $max?: number|string
+    $default?: boolean
+    value: number|string
+    votes?: number|string
+}
+
+export interface Ratings {
+    rating?: Rating[]
+}
+
 export interface Movie {
     // The title for the movie
     title: string
@@ -71,9 +91,25 @@ export interface Movie {
 
     actor?: Actor[]
     uiniqueid?: Uniqueid[]
+    thumb?: Thumb[]
+    fanart?: Fanart
+    ratings?: Ratings
 }
 
-export function xmlModelize(obj: object) {
+export function modelize(obj: object): any {
+    const type = typeof obj
+    if (type === "function" || type === "undefined") return null
+
+    if (type === "number" ||
+        type === "string" ||
+        type === "boolean") {
+            return obj;
+    }
+    
+    if (obj instanceof Array) {
+        return obj.map(modelize)
+    }
+
     return Object.entries(obj).reduce((map, [key, value]) => {
         if (key.startsWith("$")) {
             if (key === "$") key = "#text"
@@ -83,7 +119,7 @@ export function xmlModelize(obj: object) {
         }
         return {
             ...map,
-            [key]: value
+            [key]: value ? modelize(value) : value
         }
     }, {})
 }

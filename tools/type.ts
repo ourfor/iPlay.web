@@ -5,6 +5,10 @@ export interface Pageable<T> {
     total_results: number
 }
 
+export function tmdbImageUrl(id: string, quality: string = 'original') {
+    return `https://image.tmdb.org/t/p/${quality}${id}`
+}
+
 export function imageUrl(id: string, quality: string = 'original') {
     return `https://proxyall.endemy.me/t/p/${quality}${id}?host=image.tmdb.org`
 }
