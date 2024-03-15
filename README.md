@@ -15,14 +15,6 @@
 |![推荐页面](./doc/image/Screen-20230821@2x.png)|![推荐页面2](./doc/image/Screen-20230821@2x1.png)|![媒体列表](./doc/image/Screen-20230818@2x2.png)|
 |![影片详细](image/20240314_180043.png)|![播放页面](./doc/image/Screen-20230818@2x4.png)|![登录页面](./doc/image/Screen-20230821@2x4.png)|
 
-适配移动端
-
-<div style="display: inline-flex;align-item:center;justify-content: space-around">
-<img width="45%" src="./doc/image/IMG_0255.png" />
-<img width="45%" src="./doc/image/IMG_0256.png" />
-</div>
-
-
 
 ## 功能
 
