@@ -88,7 +88,9 @@ function buildNfo(movie: Movie, credits: Credits) {
 }
 
 async function makeMovieList() {
-    for (let page = 1; page < 100; page++) {
+    const totalPage = 100
+    for (let page = 1; page <= totalPage; page++) {
+        console.log(`page: ${page}, total: ${totalPage}`)
         const data = await getTopMovie()
         data?.results.forEach(async (movie) => {
             const detail = await getMovie(movie.id)
