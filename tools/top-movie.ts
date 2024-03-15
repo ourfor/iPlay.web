@@ -88,6 +88,7 @@ function buildNfo(movie: Movie, credits: Credits) {
 }
 
 async function makeMovieList() {
+    const link = `https://api.endemy.me/stream/source.mp4`
     const totalPage = 100
     for (let page = 1; page <= totalPage; page++) {
         console.log(`page: ${page}, total: ${totalPage}`)
@@ -98,7 +99,13 @@ async function makeMovieList() {
             const nfo = buildNfo(detail!, credits!)
             await helper.download(imageUrl(movie.poster_path), `build/movie/${movie.title}/poster.jpg`)
             await helper.download(imageUrl(movie.backdrop_path), `build/movie/${movie.title}/fanart.jpg`)
-            helper.touch(`build/movie/${movie.title}/${movie.title}.strm`, "https://drive.ourfor.top/iplay/demo.mp4")
+            const url = new URL(link)
+            url.searchParams.set("title", detail?.title ?? "")
+            url.searchParams.set("imdbid", detail?.imdb_id ?? "")
+            url.searchParams.set("tmdbid", detail?.id.toString() ?? "")
+            url.searchParams.set("airdate", detail?.release_date ?? "")
+            url.searchParams.set("type", "movie")
+            helper.touch(`build/movie/${movie.title}/${movie.title}.strm`, )
             helper.touch(`build/movie/${movie.title}/${movie.title}.nfo`, nfo)
         })
         await helper.sleep(1)

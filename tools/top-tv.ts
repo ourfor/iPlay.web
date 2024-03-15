@@ -86,7 +86,7 @@ function buildNfo(series: Series, credits: Credits) {
 
 async function makeMovieList() {
     const totalPage = 100
-    const link = `https://drive.endemy.me/iplay/demo.mp4`
+    const link = `https://api.endemy.me/stream/source.mp4`
     for (let page = 1; page <= totalPage; page++) {
         console.log(`page: ${page}, total: ${totalPage}`)
         const data = await getTopTV(page)
@@ -101,7 +101,14 @@ async function makeMovieList() {
                 for (let i = 1; i <= season.episode_count; i++) {
                     const sno = season.season_number.toString().padStart(2, '0')
                     const eno = i.toString().padStart(2, '0')
-                    helper.touch(`build/tv/${detail.name}/Season ${season.season_number}/S${sno}E${eno}.strm`, link)
+                    const url = new URL(link)
+                    url.searchParams.set("title", detail.name)
+                    url.searchParams.set("tmdbid", detail.id.toString())
+                    url.searchParams.set("season", sno)
+                    url.searchParams.set("episode", eno)
+                    url.searchParams.set("type", "tv")
+                    url.searchParams.set("airdate", detail.first_air_date)
+                    helper.touch(`build/tv/${detail.name}/Season ${season.season_number}/S${sno}E${eno}.strm`, url.href)
                 }
             })
         })
