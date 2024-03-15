@@ -91,7 +91,7 @@ async function makeMovieList() {
     const totalPage = 100
     for (let page = 1; page <= totalPage; page++) {
         console.log(`page: ${page}, total: ${totalPage}`)
-        const data = await getTopMovie()
+        const data = await getTopMovie(page)
         await data?.results.forEach(async (movie) => {
             const detail = await getMovie(movie.id)
             const credits = await getMovieCredits(movie.id)
