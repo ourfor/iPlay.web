@@ -92,14 +92,14 @@ async function makeMovieList() {
     for (let page = 1; page <= totalPage; page++) {
         console.log(`page: ${page}, total: ${totalPage}`)
         const data = await getTopMovie()
-        data?.results.forEach(async (movie) => {
+        await data?.results.forEach(async (movie) => {
             const detail = await getMovie(movie.id)
             const credits = await getMovieCredits(movie.id)
             const nfo = buildNfo(detail!, credits!)
             await helper.download(imageUrl(movie.poster_path), `build/movie/${movie.title}/poster.jpg`)
             await helper.download(imageUrl(movie.backdrop_path), `build/movie/${movie.title}/fanart.jpg`)
-            await helper.touch(`build/movie/${movie.title}/${movie.title}.strm`, "https://drive.ourfor.top/iplay/demo.mp4")
-            await helper.touch(`build/movie/${movie.title}/${movie.title}.nfo`, nfo)
+            helper.touch(`build/movie/${movie.title}/${movie.title}.strm`, "https://drive.ourfor.top/iplay/demo.mp4")
+            helper.touch(`build/movie/${movie.title}/${movie.title}.nfo`, nfo)
         })
     }
 }
