@@ -41,7 +41,7 @@ export default function Page() {
     const bgImgset = imageUrl(data.Id, data.BackdropImageTags[0], "Backdrop/0")
     const imgset = imageUrl(data.Id, {maxWidth: 1050, maxHeight: 700, tag: data.ImageTags.Primary})
     const getPlayUrl = (source: MediaSource) => {
-        if (source.Path.startsWith("http")) return source.Path
+        if (source?.Path?.startsWith("http")) return source?.Path
         else return playUrl(source.DirectStreamUrl)
     }
     return (
