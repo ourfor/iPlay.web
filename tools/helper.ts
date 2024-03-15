@@ -1,5 +1,8 @@
 import { dirname } from "https://deno.land/std@0.220.0/path/mod.ts";
 import { sleep } from "https://deno.land/x/sleep/mod.ts"
+import { load } from "https://deno.land/std@0.220.0/dotenv/mod.ts";
+
+const env = await load();
 
 export async function download(url: string, path: string) {
     const response = await fetch(url)
@@ -16,12 +19,13 @@ export function touch(path: string, content = '') {
 }
 
 async function request<T>(uri: string) {
-    const url = `https://proxyall.endemy.me${uri}`;
+    const url = `https://api.themoviedb.org${uri}`;
+    const token = env["TMDB_TOKEN"]
     const options = {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        "X-HOST": "api.themoviedb.org"
+        Authorization: `Bearer ${token}`
       }
     };
     
@@ -39,5 +43,6 @@ export default {
     download,
     touch,
     request,
-    sleep
+    sleep,
+    env
 }
