@@ -101,6 +101,7 @@ async function makeMovieList() {
             helper.touch(`build/movie/${movie.title}/${movie.title}.strm`, "https://drive.ourfor.top/iplay/demo.mp4")
             helper.touch(`build/movie/${movie.title}/${movie.title}.nfo`, nfo)
         })
+        await helper.sleep(1)
     }
 }
 

@@ -1,4 +1,5 @@
 import { dirname } from "https://deno.land/std@0.220.0/path/mod.ts";
+import { sleep } from "https://deno.land/x/sleep/mod.ts"
 
 export async function download(url: string, path: string) {
     const response = await fetch(url)
@@ -37,5 +38,6 @@ async function request<T>(uri: string) {
 export default {
     download,
     touch,
-    request
+    request,
+    sleep
 }
