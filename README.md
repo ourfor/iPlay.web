@@ -2,7 +2,7 @@
 
 # 前言
 
-一个简单、开源的视频点播平台，适配多种媒体服务器数据源。
+一个简单、开源的视频点播平台，适配多种媒体服务器数据源。客户端[iPlayClient](https://github.com/ourfor/iPlayClient)
 
 ## 使用
 
