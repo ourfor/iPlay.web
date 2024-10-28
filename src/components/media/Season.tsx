@@ -40,7 +40,7 @@ export function SeasonCard(props: SeasonCardProps) {
     const src = imageUrl(props.sid, props.etag)
     return (
         <Badge>
-            <div className={style["card"]}
+            <div id={`seasoncard-${props.sid}`} className={style["card"]}
                 onClick={() => navigate(`/season/${props.sid}`)}>
                 {/* <img src={src} /> */}
                 <div className={style.img}>

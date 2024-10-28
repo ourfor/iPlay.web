@@ -6,7 +6,7 @@ import { Image } from "@components/base/Image";
 export function PeopleCard(people: People) {
     const avator = imageUrl(people.Id, "")
     return (
-        <div className={style["people"]}>
+        <div id={`people-${people.Id}`} className={style["people"]}>
             <Image ratio={2/3} src={avator} alt={people.Name} />
             <span>{people.Name}</span>
             <span>扮演 {people.Role}</span>

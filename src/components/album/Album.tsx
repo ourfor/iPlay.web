@@ -8,7 +8,7 @@ export function Album(detail: ViewDetail) {
     const navigate = useNavigate()
     const url = imageUrl(detail.Id, detail.Etag)
     return (
-        <div className={style["album"]}
+        <div id={`album-${detail.Id}`} className={style["album"]}
             onClick={() => navigate(`/album/${detail.Id}`)}>
             <Image ratio={detail.PrimaryImageAspectRatio}
                 className={style.cover} 

@@ -62,13 +62,7 @@ export default function Page() {
     }, [albums])
     
     return (
-        <div className={style.page}>
-            <div className={style.navigator}>
-                <Header className={style.header} />
-                {!_.isEmpty(recommend) && <Banner className={style["banner"]} banners={
-                    recommend.map(model => <BannerCard key={model.Id} model={model} />)
-                } />}
-            </div>
+        <div className={style.page}>                
             {!_.isEmpty(albums?.Items) && (
             <>
                 <span className={style.albumTitle}>我的媒体</span>
@@ -85,8 +79,6 @@ export default function Page() {
                 </Stack>
                 </div>
             ))}
-            <Adsense />
-            <Footer />
         </div>
     )
 }

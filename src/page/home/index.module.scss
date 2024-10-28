@@ -20,31 +20,11 @@
     }
 
     .albums {
-        flex-wrap: wrap;
-        align-items: center;
-        align-content: flex-start;
-        justify-content: space-around;
-
-        @include mobile {
-            flex-wrap: nowrap;
-            justify-content: flex-start;
-        }
-
-        @include desktop {
-            &>div {
-                flex: 1;
-                min-width: 21%;
-                max-width: 23%;
-            }
-        }
-
-        @include mobile {
-            flex-wrap: nowrap;
-            justify-content: flex-start;
-        }
+        align-items: flex-start;
     }
 
     .mediaCard {
+        margin-top: 0.5rem;
         width: 9rem;
         @include mobile {
             width: 25vw;
