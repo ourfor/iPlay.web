@@ -58,6 +58,7 @@
   },
   "devDependencies": {
     "@craco/craco": "^7.1.0",
-    "@types/lodash": "^4.14.197"
+    "@types/lodash": "^4.14.197",
+    "lottie-react": "^2.4.0"
   }
 }

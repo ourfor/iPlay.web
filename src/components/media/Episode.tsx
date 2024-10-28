@@ -26,7 +26,7 @@ export function EpisodeCard(episode: Episode) {
     }, [sources])
     const posterUrl = imageUrl(episode.Id, episode.ImageTags.Primary)
     return (
-        <div className={style.card}>
+        <div id={`episode-card-${episode.Id}`} className={style.card}>
         <div className={style["root"]} 
             key={episode.Id}>
             <div className={style.preview}>

@@ -32,8 +32,6 @@ export default function Page() {
                 </div>
             </div>
             <EpisodeList sid={data.Id} vid={data.SeriesId} />
-            <Adsense />
-            <Comment />
         </div>
     )
 }
