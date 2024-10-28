@@ -74,7 +74,7 @@ export default function Page() {
             {medias && Object.entries(medias).filter(([key, value]) => value && value.length).map(([name, media]) => (
                 <div key={name} className={style.playlist}>
                 <p className={style.title}>{name}</p>
-                <Stack direction={"row"}>
+                <Stack className={style.collection} direction={"row"}>
                     {media && media.map((movie, i) => <MediaCard className={style.mediaCard} key={`media-${i}`} {...movie} />)}
                 </Stack>
                 </div>
