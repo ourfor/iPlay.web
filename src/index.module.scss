@@ -9,6 +9,11 @@ body {
     font-family: LXGWWenKai;
     background-color: black !important;
     @include scrollbar;
+
+    div:focus {
+        outline: 3px solid blueviolet; // 设置轮廓宽度和颜色
+        border-radius: 4px;
+    }
 }
 
 :global #root {
