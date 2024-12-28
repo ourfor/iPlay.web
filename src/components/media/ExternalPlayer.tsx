@@ -7,13 +7,41 @@ import potplayerIcon from "./icon/potplayer.png"
 import kmplayerIcon from "./icon/kmplayer.png"
 import mxplayerIcon from "./icon/mxplayer.png"
 import mxplayerProIcon from "./icon/mxplayerpro.png"
-
+import iPlayIcon from "./icon/iplay.png"
 export interface ExternalPlayerProps {
     className?: string
     src: string
 }
 
 const players = {
+    iplay: {
+        title: "iPlay",
+        icon: iPlayIcon,
+        action: (videoUrl: string) => {
+            const video_url = videoUrl
+            const audio_url = ""
+            const url = "iplay://play/any";
+            const video = new URL(url);
+            const origin = new URL(video_url).origin;
+            const http_option = {
+                "demuxer-lavf-o": `headers=Referer:${origin}`,
+                "http-header-fields": `Referer:${origin}`
+            };
+            const extra = {
+                "Referer": origin
+            };
+            video.searchParams.set("option", JSON.stringify(http_option));
+            video.searchParams.set("source", JSON.stringify({
+                "video": video_url,
+                "audio": audio_url,
+                "extra": extra
+            }));
+            (window.chrome as any)?.webview?.postMessage(JSON.stringify({
+                "type": "play",
+                "data": video.href
+            }));
+        }
+    },
     iina: {
         title: "iina",
         icon: iinaIcon,
