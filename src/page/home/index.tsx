@@ -16,11 +16,13 @@ import _ from "lodash"
 import { queryParams } from "@hook/useQuery"
 import { Adsense } from "@components/adsense/Adsense"
 import { Footer } from "@components/footer/Footer"
+import { config } from "@api/config"
+import { MediaModel } from "@api/iPlayApi"
 
 export async function pageLoader({request, params}: LoaderFunctionArgs) {
     const query = queryParams<{site?: string}>(request.url)
     logger.info(`site id`, query.site)
-    const albums = await Api.emby?.getView?.()
+    const albums = await config.iplay?.getAllAlbums() 
     return {
         params: {
             siteId: query.site
@@ -32,8 +34,7 @@ export async function pageLoader({request, params}: LoaderFunctionArgs) {
 export default function Page() {
     const { albums, params: {siteId} } = useLoaderData() as SyncReturnType<typeof pageLoader>
     const { data } = usePromise(Api.emby?.getPublicInfo, [siteId])
-    const [medias, setMedias] = useState<Map<string, Media[]>>({})
-    const [recommend, setRecommend] = useState<Media[]>([])
+    const [medias, setMedias] = useState<Map<string, MediaModel[]>>({})
     useEffect(() => {
         logger.info(data)
         if (data) {
@@ -43,19 +44,15 @@ export default function Page() {
 
     useEffect(() => {
         setMedias({})
-        setRecommend([])
     }, [siteId])
 
     useEffect(() => {
-        if (albums?.Items) {
-            albums.Items.forEach(item => {
-                const id = Number(item.Id)
-                Api.emby?.getLatestMedia?.(id)
+        if (albums) {
+            albums.data?.forEach(item => {
+                const id = Number(item.id)
+                config.iplay?.getLatestAlbumMedia?.(item)
                     .then(medias => {
-                        setMedias(map => ({...map, [item.Name]: medias}))
-                        if (medias.length > 3) {
-                            setRecommend(r => [...r, medias[0], medias[1], medias[3]])
-                        }
+                        setMedias(map => ({...map, [item.name]: medias?.data}))
                     })
             })
         }
@@ -63,11 +60,11 @@ export default function Page() {
     
     return (
         <div className={style.page}>                
-            {!_.isEmpty(albums?.Items) && (
+            {!_.isEmpty(albums) && (
             <>
                 <span className={style.albumTitle}>我的媒体</span>
                 <Stack className={style.albums} direction={"row"}>
-                    {albums?.Items.map((item, i) => <Album key={`album-${i}`} {...item}/>)}
+                    {albums.data?.map((item, i) => <Album key={`album-${i}`} model={item} />)}
                 </Stack>
             </>
             )}
@@ -75,7 +72,7 @@ export default function Page() {
                 <div key={name} className={style.playlist}>
                 <p className={style.title}>{name}</p>
                 <Stack className={style.collection} direction={"row"}>
-                    {media && media.map((movie, i) => <MediaCard className={style.mediaCard} key={`media-${i}`} {...movie} />)}
+                    {media && media.map((movie, i) => <MediaCard className={style.mediaCard} key={`media-${i}`} model={movie} />)}
                 </Stack>
                 </div>
             ))}

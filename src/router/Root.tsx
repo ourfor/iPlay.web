@@ -8,31 +8,28 @@ import { logger } from "@helper/log";
 import { useEffect } from "react";
 import { LoaderFunctionArgs, Outlet, useNavigate, useNavigation } from "react-router-dom";
 import { Page } from "../page/spin";
+import { store } from "@data/Store";
+import { iPlayApi } from "@api/iPlayApi";
+import { DashIcon } from "@radix-ui/react-icons";
 
 export async function checker({params, request, context}: LoaderFunctionArgs) {
     logger.info(`check site status`)
     const path = new URL(request.url).pathname
     if (path === "/login") return null
-    const token = Api.emby?.user.AccessToken
-    if (!token) throw new Exception("login required", ExceptionType.NO_USER)
+    const authorized = config.iplay != null
+    if (!authorized) throw new Exception("login required", ExceptionType.NO_USER)
     return null
 }
 
 export default function Root() {
     const navigation = useNavigation()
-    const user = useAppSelector(state => state.site.site.user)
-    const emby = useAppSelector(state => state.site.site.emby)
+    const dashboard = useAppSelector(state => state.dashboard)
     useEffect(() => {
-      logger.info("site switch to", user?.ServerId)
-      if (user) {
-        Api.emby = new Emby(user)
+      if (dashboard) {
+        logger.info(`server ${dashboard.server}`)
+        config.iplay = new iPlayApi(dashboard.server, dashboard.username, dashboard.password)
       }
-    }, [user])
-
-    useEffect(() => {
-      logger.info("update emby config")
-      config.emby = emby
-    }, [emby])
+    }, [dashboard])
 
     useEffect(() => {
         if (navigation.state === "loading") {

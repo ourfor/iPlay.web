@@ -1,15 +1,18 @@
 @import "~@style/media.scss";
 
 .page {
-    // background: linear-gradient(77deg,rgba(0,0,0,.84) 0,rgba(0,0,0,.7) 60%,rgba(0,0,0,.4) 100%);
     color: white;
-    min-height: 100vh;
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
 
     &>.title {
         margin-left: 1rem;
     }
 
     .content {
+        width: 98%;
+        box-sizing: border-box;
         text-align: center;
         color: #e9e9e9;
         display: grid;
@@ -18,9 +21,6 @@
         flex-wrap: wrap;
         justify-content: space-evenly;
         padding: 0.5rem 0.25rem;
-        @include mobile {
-            grid-template-columns: repeat(auto-fill, 25vw);
-        }
     }
 
     .pageSelector {

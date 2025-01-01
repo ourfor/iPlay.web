@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import settingSlice from "./Setting";
 import userSlice from "./User";
 import historySlice from "./History";
+import dashboardSlice from "./Dashboard";
 import eventSlice from "./Event";
 import siteSlice, { DEFAULT_SITE, updateSite } from "./Site"
 import messageSlice from "./Message"
@@ -14,6 +15,7 @@ import { User } from "@model/User";
 import { config } from "@api/config";
 import _ from "lodash";
 import { listener, listenerMiddleware } from "./middleware/Listener";
+import { iPlayApi } from "@api/iPlayApi";
 
 const Env = {
     name: "development",
@@ -25,6 +27,10 @@ const reducer = combineReducers({
         key: [Env.storeKey, "setting"].join("/"),
         storage
     }, settingSlice),
+    dashboard: persistReducer({
+        key: [Env.storeKey, "dashboard"].join("/"),
+        storage
+    }, dashboardSlice),
     user: persistReducer({
         key: [Env.storeKey, "user"].join("/"),
         storage,
@@ -83,6 +89,15 @@ export const persistor = persistStore(store, null, () => {
     }
     if (site.user?.AccessToken) {
         Api.emby = new Emby(site.user as User)
+    }
+
+    const dashboard = state.dashboard;
+    if (dashboard.authorized) {
+        config.iplay = new iPlayApi(
+            dashboard.server,
+            dashboard.username,
+            dashboard.password
+        );
     }
 })
 

@@ -17,17 +17,7 @@ export interface SpinBoxProps {
 }
 
 export function SpinBox({children}: SpinBoxProps) {
-    const styles = useSpring({
-        from: {rotate: "0"},
-        to: {rotate: "360deg"},
-        config: {
-            duration: 1500
-        },
-        loop: true
-    })
     return (
-        <animated.div className={style.inner} style={{margin: 0, padding: 0, ...styles}}>
-            {children}
-        </animated.div>
+        <Spin />
     )
 }

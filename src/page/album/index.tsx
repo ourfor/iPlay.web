@@ -7,6 +7,7 @@ import { imageUrl } from "@api/config"
 import { Pagination } from "antd"
 import { Stack } from "@components/layout/Stack"
 import { queryParams } from "@hook/useQuery"
+import { useEffect } from "react"
 
 export async function pageLoader({params, request}: LoaderFunctionArgs) {
     const id = Number(params.id)
@@ -26,10 +27,17 @@ export async function pageLoader({params, request}: LoaderFunctionArgs) {
 export default function Page() {
     const {params: {id, page}, total, data, album } = useLoaderData() as SyncReturnType<typeof pageLoader>
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const ele = document.querySelector('[id]');
+        if (ele) {
+            (ele as HTMLElement).focus();
+        }
+    })
+
     return (
         <div className={style.page}>
             <Background src={imageUrl(id, album?.Etag ?? "")} />
-            <h3 className={style.title}>{album?.Name}</h3>
             <div className={style.content}>
                 {data && data.map(media => <MediaCard key={media.Id} {...media} />)}
             </div>

@@ -11,6 +11,7 @@ import { UpdateIcon } from "@radix-ui/react-icons"
 import { SpinBox } from "@components/animation/Spin"
 import { EmbyConfig } from "@helper/env"
 import { logger } from "@helper/log"
+import { loginToDashboard } from "@data/Dashboard"
 
 export async function pageLoader({request, params}: LoaderFunctionArgs) {
     const url = new URL(request.url)
@@ -98,7 +99,8 @@ export default function Page() {
             }
         }
         setLoading(true)
-        dispatch(loginToSite({
+        dispatch(loginToDashboard({
+            server: "http://localhost:8080",
             username,
             password,
             callback
@@ -149,6 +151,7 @@ export default function Page() {
 
                     <Button className={style["login"]}
                         onClick={submit}
+                        id="login-submit"
                         variant="soft">
                         {loading && (
                         <SpinBox>

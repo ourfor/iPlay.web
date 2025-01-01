@@ -1,11 +1,19 @@
 import { ENV, EmbyConfig } from "@helper/env";
 import { Map } from "@model/Map";
+import { iPlayApi } from "./iPlayApi";
 
 export type { EmbyConfig } from "@helper/env"
 
 export const DEFAULT_EMBY_CONFIG: EmbyConfig = ENV.emby
 
-export const config = {
+interface Config {
+    emby: EmbyConfig,
+    iplay?: iPlayApi
+    tmdb: {
+        api_key?: string
+    }
+}
+export const config: Config = {
     emby: DEFAULT_EMBY_CONFIG,
     tmdb: {
         api_key: ENV.tmdb.api_key

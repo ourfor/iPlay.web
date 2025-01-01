@@ -31,10 +31,7 @@
 
     .mediaCard {
         margin-top: 0.5rem;
-        width: 9rem;
-        @include mobile {
-            width: 25vw;
-        }
+        width: 12rem;
     }
 }
 

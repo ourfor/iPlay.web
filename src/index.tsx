@@ -26,16 +26,45 @@ const App = () => {
         const target = event.target as HTMLElement;
         if (target && typeof target.click === 'function') {
           target.click();
+          return
         }
       } else if (event.key === "Escape") {
         window.history.back();
+        return;
+      }
+
+      const gamepads = navigator.getGamepads();
+      if (gamepads.length > 0) {
+        const gamepad = gamepads[0];
+        if (gamepad?.buttons[0].pressed) {
+          const target = document.activeElement as HTMLElement;
+          if (target && typeof target.click === 'function') {
+            target.click();
+          }
+        } else if (gamepad?.buttons[1].pressed) {
+          window.history.back();
+        }
       }
     };
+
+    const handleGamepad = (event: GamepadEvent) => {
+      if (event.gamepad.buttons[0].pressed) {
+        const target = document.activeElement as HTMLElement;
+        if (target && typeof target.click === 'function') {
+          target.click();
+        }
+      } else if (event.gamepad.buttons[1].pressed) {
+        window.history.back();
+      }
+    }
+
+    window.addEventListener('gamepadconnected', handleGamepad);
 
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('gamepadconnected', handleGamepad);
     };
   }, [])
   logger.info("flush app")

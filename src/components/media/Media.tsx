@@ -7,25 +7,27 @@ import { Badge } from "@components/badge/Badge";
 import classnames from "classnames";
 import { UnplayedCount } from "@components/badge/UnplayedCount";
 import { logger } from "@helper/log";
+import { MediaModel } from "@api/iPlayApi";
 
-export interface MediaCardProps extends Media {
+export interface MediaCardProps {
     className?: string
+    model?: MediaModel
 }
 
-export function MediaCard(media: MediaCardProps) {
+export function MediaCard({ model }: MediaCardProps) {
     const navigate = useNavigate()
-    const url = imageUrl(media.Id, media.ImageTags.Primary)
     return (
         <Badge>
-            <div id={`mediacard-${media.Id}`} onClick={() => navigate(`/${media.Type === "Series" ? "series" : "movie"}/${media.Id}`)}
-                className={classnames(style.card, media.className)}>
-                <Image ratio={media.PrimaryImageAspectRatio}
+            <div id={`mediacard-${model?.id}`} onClick={() => navigate(`/${model?.type === "Series" ? "series" : "movie"}/${model?.id}`)}
+                className={style.card}>
+                <Image ratio={0.667}
+                    style={{borderRadius: "0.45rem"}}
                     className={style.img}
-                    alt={media.Name}
-                    src={url} />
-                <p>{media.Name}</p>
+                    alt={model?.title}
+                    src={model?.image.primary ?? ""} />
+                <p>{model?.title}</p>
             </div>
-            <UnplayedCount count={media.UserData.UnplayedItemCount} />
+            <UnplayedCount count={0} />
         </Badge>
     )
 }

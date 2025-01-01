@@ -20,7 +20,6 @@ export function Image({ className, ratio, src, alt, style }: ImageProps) {
                     objectFit: 'cover',
                     width: '100%',
                     height: '100%',
-                    borderRadius: 'var(--radius-2)',
                     ...style
                 }}
             />

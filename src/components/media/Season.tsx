@@ -44,7 +44,7 @@ export function SeasonCard(props: SeasonCardProps) {
                 onClick={() => navigate(`/season/${props.sid}`)}>
                 {/* <img src={src} /> */}
                 <div className={style.img}>
-                    <Image ratio={props.ratio ?? 2/3} src={src} />
+                    <Image style={{borderRadius: "0.75rem"}} ratio={props.ratio ?? 2/3} src={src} />
                 </div>
                 <p>{props.name}</p>
             </div>
