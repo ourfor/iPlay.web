@@ -9,6 +9,7 @@ import { logger } from "@helper/log";
 import { config } from "@api/config";
 import { AddNewSiteModel } from "@api/iPlayApi";
 import { produceMessage } from "@data/Message";
+import { BilibiliQRCode } from "./BilibiliQRCode";
 
 export function AddSiteDialog() {
     const dispatch = useAppDispatch()
@@ -41,6 +42,24 @@ export function AddSiteDialog() {
         }
         logger.info(result)
     }
+
+    const addNewSiteWithData = async (type: string, remark: string, data: string) => {
+        const params = {
+            type,
+            remark,
+            data
+        }
+        logger.info(params)
+        const result = await config.iplay?.addNewSite(params)
+        if (result?.code === 200) {
+            dispatch(produceMessage({
+                type: "success",
+                data: "站点添加成功",
+                duration: 1000
+            }))
+        }
+        logger.info(result)
+    }
     return (
         <Modal title={"添加站点"}
             className={style["dialog"]}
@@ -59,9 +78,12 @@ export function AddSiteDialog() {
                     onChange={protocol => setType(protocol)}
                     options={[
                         { label: "emby", value: "emby" },
-                        { label: "jellyfin", value: "jellyfin" }
+                        { label: "jellyfin", value: "jellyfin" },
+                        { label: "bilibili", value: "bilibili" }
                     ]} />
             </div>
+            {type === "emby" || type == "jellyfin" ?(
+            <>
             <div className={style["inline"]}>
                 <p className={style["title"]}>服务器</p>
                 <Input value={server ?? ""} onChange={e => setServer(e.target.value)} />
@@ -74,6 +96,9 @@ export function AddSiteDialog() {
                 <p className={style["title"]}>密　码</p>
                 <Input value={password ?? ""} onChange={e => setPassword(e.target.value)} />
             </div>
+            </>
+            ): null}
+            {type === "bilibili" ? <BilibiliQRCode onCompleted={data => addNewSiteWithData(type, remark, data)} /> : null}
             <div className={style["inline"]}>
                 <Button onClick={() => addNewSite(type, remark, server, username, password)}
                     style={{width: "80%", margin: "0.75rem auto"}}>添加</Button>
