@@ -56,7 +56,11 @@ export class iPlayApi {
         if (!this.server) return;
         const url = new URL(this.server)
         url.pathname = "/sites"
-        const res = await fetch(url)
+        const res = await fetch(url, {
+            headers: {
+                "Authorization": `Basic ${btoa(`${this.username}:${this.password}`)}`
+            }
+        })
         return await res.json() as Response<SiteModel[]>
     }
 
@@ -65,7 +69,11 @@ export class iPlayApi {
         const url = new URL(this.server)
         url.pathname = "/media/albums"
         url.searchParams.set("id", `${siteId}`)
-        const res = await fetch(url)
+        const res = await fetch(url, {
+            headers: {
+                "Authorization": `Basic ${btoa(`${this.username}:${this.password}`)}`
+            }
+        })
         return await res.json() as Response<AlbumModel[]>
     }
 
@@ -74,7 +82,11 @@ export class iPlayApi {
         const url = new URL(this.server)
         url.pathname = `/media/album/${album.id}`
         url.searchParams.set("siteId", album.parentId)
-        const res = await fetch(url)
+        const res = await fetch(url, {
+            headers: {
+                "Authorization": `Basic ${btoa(`${this.username}:${this.password}`)}`
+            }
+        })
         return await res.json() as Response<MediaModel[]> 
     }
 
@@ -85,6 +97,7 @@ export class iPlayApi {
         const res = await fetch(url, {
             method: "POST",
             headers: {
+                "Authorization": `Basic ${btoa(`${this.username}:${this.password}`)}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(model)
