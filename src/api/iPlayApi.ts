@@ -10,6 +10,12 @@ export interface AlbumModel {
     }
 }
 
+export interface SiteModel {
+    id: string
+    remark: string
+    type: string
+}
+
 export interface MediaModel {
     id: string
     type: string
@@ -21,6 +27,12 @@ export interface MediaModel {
         backdrop: string,
         logo: string
     }
+}
+
+export interface AddNewSiteModel {
+    type: string,
+    remark: string,
+    data: string
 }
 
 export interface Response<T> {
@@ -40,11 +52,19 @@ export class iPlayApi {
         this.password = password;
     }
 
-    async getAllAlbums() {
+    async getAllSites() {
+        if (!this.server) return;
+        const url = new URL(this.server)
+        url.pathname = "/sites"
+        const res = await fetch(url)
+        return await res.json() as Response<SiteModel[]>
+    }
+
+    async getAllAlbums(siteId = "1") {
         if (!this.server) return;
         const url = new URL(this.server)
         url.pathname = "/media/albums"
-        url.searchParams.set("id", "1")
+        url.searchParams.set("id", `${siteId}`)
         const res = await fetch(url)
         return await res.json() as Response<AlbumModel[]>
     }
@@ -56,5 +76,19 @@ export class iPlayApi {
         url.searchParams.set("siteId", album.parentId)
         const res = await fetch(url)
         return await res.json() as Response<MediaModel[]> 
+    }
+
+    async addNewSite(model: AddNewSiteModel) {
+        if (!this.server) return;
+        const url = new URL(this.server)
+        url.pathname = `/sites`
+        const res = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(model)
+        })
+        return await res.json() as Response<object> 
     }
 }

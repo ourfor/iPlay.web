@@ -5,7 +5,7 @@ import { Spin } from "@components/animation/Spin"
 export default function Page() {
     return (
         <div className={style.page}>
-            <Spin />
+            
         </div>
     )
 }

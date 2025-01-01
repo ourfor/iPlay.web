@@ -22,7 +22,7 @@ import { MediaModel } from "@api/iPlayApi"
 export async function pageLoader({request, params}: LoaderFunctionArgs) {
     const query = queryParams<{site?: string}>(request.url)
     logger.info(`site id`, query.site)
-    const albums = await config.iplay?.getAllAlbums() 
+    const albums = await config.iplay?.getAllAlbums(query.site ?? "1") 
     return {
         params: {
             siteId: query.site

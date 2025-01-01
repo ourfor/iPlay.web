@@ -2,6 +2,7 @@ import PageLogin, { pageLoader as pageLoginLoader } from "@page/login"
 import PageHome, { pageLoader as pageHomeLoader } from "@page/home"
 import PageSeries, { pageLoader as pageSeriesLoader } from "@page/series"
 import PageSeason, { pageLoader as pageSeasonLoader } from "@page/season"
+import PageSite from "@page/site"
 import PageTest from "@page/test"
 import PagePlay, { pageLoader as pagePlayLoader } from "@page/play"
 import PageAlbum, { pageLoader as pageAlbumLoader } from "@page/album"
@@ -68,6 +69,10 @@ const pages: RouteObject[] = [
         loader: pageAlbumLoader,
         element: <PageAlbum />,
         errorElement: <PageError /> 
+    },
+    {
+        path: "/site",
+        element: <PageSite />
     },
     {
         path: "/*",

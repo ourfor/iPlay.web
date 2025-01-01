@@ -2,7 +2,8 @@ import { Map } from "@model/Map";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export enum DialogID {
-    SETTING = "setting"
+    SETTING = "setting",
+    ADD_SITE = "add_site"
 }
 
 export interface Event {
