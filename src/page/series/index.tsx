@@ -53,7 +53,7 @@ export default function Page() {
             </div>
             <div className={style["content"]}>
                 <div className={style["media-card"]}>
-                    <img className={style["cover"]} src={data.image.backdrop} />
+                    <img className={style["cover"]} src={data.image.primary} />
                     <div>
                         <h3 className={style.title}>{data.title}</h3>
                         {/* {data.Genres.map((genre, i) => 
