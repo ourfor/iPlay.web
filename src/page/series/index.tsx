@@ -1,4 +1,4 @@
-import { imageUrl, makeUrl, playUrl } from "@api/config"
+import { config, imageUrl, makeUrl, playUrl } from "@api/config"
 import { Stack } from "@components/layout/Stack"
 import { PeopleCard } from "@components/people/PeopleCard"
 import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom"
@@ -19,12 +19,13 @@ export const colors = [
 ]
 
 export async function pageLoader({ request, params }: LoaderFunctionArgs) {
-    const id = Number(params.id)
+    const id = params.id ?? ""
+    const siteId = new URL(request.url).searchParams.get("siteId") ?? "1"
     const type = request.url.includes("/movie") ? "movie" : "series"
-    const data = await Api.emby?.getMedia?.(id)
-    if (data?.Name) document.title = `🍹 ${data?.Name}`
+    const data = await config.iplay?.getMedia?.(siteId, id)
+    if (data?.data?.title) document.title = `🍹 ${data?.data.title}`
     return {
-        data,
+        data: data?.data,
         type,
         id
     }
@@ -38,8 +39,8 @@ export default function Page() {
     } = useLoaderData() as SyncReturnType<typeof pageLoader>
     const navigate = useNavigate()
     if (!data) return null
-    const bgImgset = imageUrl(data.Id, data.BackdropImageTags[0], "Backdrop/0")
-    const imgset = imageUrl(data.Id, {maxWidth: 1050, maxHeight: 700, tag: data.ImageTags.Primary})
+    const bgImgset = data.image.backdrop
+    const imgset = imageUrl(data.id, {maxWidth: 1050, maxHeight: 700, tag: data.image.primary})
     const getPlayUrl = (source: MediaSource) => {
         if (source?.Path?.startsWith("http")) return source?.Path
         else return playUrl(source.DirectStreamUrl)
@@ -52,36 +53,36 @@ export default function Page() {
             </div>
             <div className={style["content"]}>
                 <div className={style["media-card"]}>
-                    <img className={style["cover"]} src={imgset} />
+                    <img className={style["cover"]} src={data.image.backdrop} />
                     <div>
-                        <h3 className={style.title}>{data.Name}</h3>
-                        {data.Genres.map((genre, i) => 
+                        <h3 className={style.title}>{data.title}</h3>
+                        {/* {data.Genres.map((genre, i) => 
                             <Tag color={colors[i%colors.length]} 
                                 key={`genre-${i}`}>
                                 {genre}
                             </Tag>
-                        )}
-                        <article>{data.Overview}</article>
+                        )} */}
+                        <article>{data.description}</article>
                         {type === "movie" && 
                         <Button className={style.playNow}
                             onClick={() => navigate(`/play/${id}`)} 
                             color="primary">立即播放
                         </Button>
                         }
-                        {data.MediaSources?.map((source, i) => <ExternalPlayer className={style.playerIcon} key={i} src={getPlayUrl(source)} />)}
+                        {data.sources?.map((source, i) => <ExternalPlayer className={style.playerIcon} key={i} src={source.url} />)}
                     </div>
                 </div>
                 {type === "series" && (
                     <>
                     <h4>季</h4>
-                    <SeasonCardList vid={data.Id} />
+                    <SeasonCardList vid={data.id} />
                     </>
                 )}
-                {!_.isEmpty(data.People) && (
+                {!_.isEmpty(data.actors) && (
                 <>
                     <h4>演职人员</h4>
                     <Stack direction="row">
-                        {data.People.map((people, i) => <PeopleCard key={`people-${i}`} {...people} />)}
+                        {data.actors.map((actor, i) => <PeopleCard key={`people-${i}`} model={actor} />)}
                     </Stack>
                 </>
                 )}

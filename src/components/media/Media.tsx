@@ -18,7 +18,7 @@ export function MediaCard({ model }: MediaCardProps) {
     const navigate = useNavigate()
     return (
         <Badge>
-            <div id={`mediacard-${model?.id}`} onClick={() => navigate(`/${model?.type === "Series" ? "series" : "movie"}/${model?.id}`)}
+            <div id={`mediacard-${model?.id}`} onClick={() => navigate(`/${model?.type === "Series" ? "series" : "movie"}/${model?.id}?siteId=${model?.siteId}`)}
                 className={style.card}>
                 <Image ratio={0.667}
                     style={{borderRadius: "0.45rem"}}

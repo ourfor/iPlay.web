@@ -1,13 +1,22 @@
+import { Media } from "@model/Media"
+
+export interface ActorModel {
+    id: string
+    name: string
+    avatar: string
+}
+
+export interface ImageModel {
+    primary: string,
+    backdrop: string,
+    logo: string
+}
 export interface AlbumModel {
     id: string
     parentId: string
     name: string
 
-    image: {
-        primary: string,
-        backdrop: string,
-        logo: string
-    }
+    image: ImageModel
 }
 
 export interface SiteModel {
@@ -16,12 +25,22 @@ export interface SiteModel {
     type: string
 }
 
+export interface SourceModel {
+    name: string;
+    type: string;
+    url: string;
+}
+
 export interface MediaModel {
     id: string
+    siteId: string
     type: string
     parentId: string
     title: string
-
+    description: string
+    actors: ActorModel[]
+    sources?: SourceModel[]
+    
     image: {
         primary: string,
         backdrop: string,
@@ -75,6 +94,20 @@ export class iPlayApi {
             }
         })
         return await res.json() as Response<AlbumModel[]>
+    }
+
+    async getMedia(siteId = "1", id: string) {
+        if (!this.server) return;
+        const url = new URL(this.server)
+        url.pathname = "/media/detail"
+        url.searchParams.set("siteId", `${siteId}`)
+        url.searchParams.set("id", `${id}`)
+        const res = await fetch(url, {
+            headers: {
+                "Authorization": `Basic ${btoa(`${this.username}:${this.password}`)}`
+            }
+        })
+        return await res.json() as Response<MediaModel>
     }
 
     async getLatestAlbumMedia(album: AlbumModel) {
