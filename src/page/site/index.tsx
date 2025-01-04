@@ -9,22 +9,31 @@ import { Button } from "@radix-ui/themes"
 import { useAppDispatch } from "@data/StoreHook"
 import { DialogID, openDialog } from "@data/Event"
 import { AddSiteDialog } from "./AddSiteDialog"
+import { DashIcon } from "@radix-ui/react-icons"
+import { useNavigate } from "react-router-dom"
+import { AppstoreOutlined, LoginOutlined } from '@ant-design/icons'
 
 export default function Page() {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const sites = usePromise(() => config.iplay?.getAllSites())
     return (
         <div className={style.page}>
             {sites.loading ? <Spin /> : null}
             {sites.data?.data?.map((site) => (
                 <div style={{padding: "0.5rem"}}>
-                <Card>
-                    <span>
+                <Card className={style.row}>
+                    <span style={{flexGrow: 1}}>
                         {site.remark}
                     </span>
-                    <Tag color="green" style={{position: "absolute", right: "0.2rem"}}>
-                        {site.type}
-                    </Tag>
+                    <span>
+                        <Tag icon={<LoginOutlined />} color="red" style={{cursor: "pointer"}} onClick={() => navigate(`/?site=${site.id}`) }>
+                            Open
+                        </Tag>
+                        <Tag icon={<AppstoreOutlined />} color="green">
+                            {site.type}
+                        </Tag>
+                    </span>
                 </Card>
                 </div>
             ))}
