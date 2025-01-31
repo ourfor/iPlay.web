@@ -1,16 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.ce71edfb.css",
-    "main.js": "/static/js/main.f53d3c6f.js",
+    "main.css": "/static/css/main.d03efbe0.css",
+    "main.js": "/static/js/main.a5d208b3.js",
     "static/js/359.fb56c15e.chunk.js": "/static/js/359.fb56c15e.chunk.js",
-    "static/js/190.76fd5113.chunk.js": "/static/js/190.76fd5113.chunk.js",
-    "static/js/348.da209a3c.chunk.js": "/static/js/348.da209a3c.chunk.js",
-    "static/js/664.00c4c872.chunk.js": "/static/js/664.00c4c872.chunk.js",
-    "static/js/641.ef8921fc.chunk.js": "/static/js/641.ef8921fc.chunk.js",
-    "static/js/205.e17910cc.chunk.js": "/static/js/205.e17910cc.chunk.js",
-    "static/js/193.597e4f3c.chunk.js": "/static/js/193.597e4f3c.chunk.js",
-    "static/js/653.6f9a49a1.chunk.js": "/static/js/653.6f9a49a1.chunk.js",
-    "static/js/500.709c52bd.chunk.js": "/static/js/500.709c52bd.chunk.js",
     "static/media/LXGWWenKaiLite-Regular.ttf": "/static/media/LXGWWenKaiLite-Regular.8b851a2421f6574c7623.ttf",
     "static/media/background.jpg": "/static/media/background.12f80c1886c344b6a3bf.jpg",
     "static/media/iplay.png": "/static/media/iplay.ca969b10b1ec8306768c.png",
@@ -27,7 +19,7 @@
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.ce71edfb.css",
-    "static/js/main.f53d3c6f.js"
+    "static/css/main.d03efbe0.css",
+    "static/js/main.a5d208b3.js"
   ]
 }
