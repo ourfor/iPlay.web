@@ -11,6 +11,7 @@ import Firework from "@components/firework/firework"
 import { Api } from "@api/emby"
 import { MediaCard } from "@components/media/Media"
 import { Comment } from "@components/comment/comment"
+import { config } from "@api/config"
 
 export const colors = [
     "cyan", "gold", "magenta", "orange", "lime",
@@ -21,6 +22,7 @@ export const colors = [
 export async function pageLoader({request, params}: LoaderFunctionArgs) {
     const url = new URL(request.url)
     const query = url.searchParams.get("query")
+    const siteId = url.searchParams.get("siteId")
     const page = Number(url.searchParams.get("page"))
     logger.info(`search`, url.searchParams.get("query"))
     logger.info("search")
@@ -30,7 +32,7 @@ export async function pageLoader({request, params}: LoaderFunctionArgs) {
     if (query) {
         data = await TMDB.searchMovie(query, page == 0 ? 1 : page)
         logger.info(data)
-        local = await Api.emby?.getItemWithName?.(query)
+        local = await config.iplay?.search(query, Number(siteId))
         logger.info(local)
     } else {
         recommend = await Api.emby?.searchRecommend?.()
@@ -38,6 +40,7 @@ export async function pageLoader({request, params}: LoaderFunctionArgs) {
     return {
         params: {
             query,
+            siteId
         },
         data,
         local,
@@ -46,7 +49,7 @@ export async function pageLoader({request, params}: LoaderFunctionArgs) {
 }
 
 export default function Page() {
-    const {params: {query}, recommend, data, local } = useLoaderData() as SyncReturnType<typeof pageLoader>
+    const {params: {query, siteId}, recommend, data, local } = useLoaderData() as SyncReturnType<typeof pageLoader>
     const navigate = useNavigate()
     
     return (
@@ -54,16 +57,16 @@ export default function Page() {
             <Header />
             <Search className={style.search} 
                 initValue={query ?? ""}
-                onValueChange={q => navigate(`/search?query=${q}`)} />
+                onValueChange={q => navigate(`/search?query=${q}&siteId=${siteId}`)} />
             <div className={style.searchRecommend}>
                 {recommend?.Items?.map((item, i) => <Tag key={i} color={colors[i%colors.length]} onClick={() => navigate(`/search?query=${item.Name}`)}>{item.Name}</Tag>)}
             </div>
             <div className={style.searchResult}>
                 {query?.length ?? 0 > 0 ?
-                <h3>本地结果: {query}, 共{local?.Items.length}个结果</h3>
+                <h3>本地结果: {query}, 共{local?.data?.length}个结果</h3>
                 : null}
                 <section className={style.local}>
-                    {local?.Items.map((item, i) => <MediaCard key={i} className={style.mediaCard} {...item} />)}
+                    {local?.data?.map((item, i) => <MediaCard key={i} className={style.mediaCard} model={item} />)}
                 </section>
                 {query?.length ?? 0 > 0 ?
                 <h3>外部结果: {query}, 共{data?.total_results}个结果</h3>

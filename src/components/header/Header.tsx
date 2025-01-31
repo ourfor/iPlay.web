@@ -52,7 +52,7 @@ export function Header({className}: HeaderProps) {
                 <Select.Root size="1"
                     onValueChange={switchSite}
                     defaultValue={site.site.id ?? ""}>
-                    <Select.Trigger placeholder="选择媒体文件" />
+                    <Select.Trigger aria-placeholder="选择媒体文件" />
                     <Select.Content>
                         {Object.entries(site.sites).map(([id, site], i) => 
                         <Select.Item key={`${i}`} value={id}>{site?.name}</Select.Item>)}

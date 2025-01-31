@@ -12,6 +12,7 @@ import { SpinBox } from "@components/animation/Spin"
 import { EmbyConfig } from "@helper/env"
 import { logger } from "@helper/log"
 import { loginToDashboard } from "@data/Dashboard"
+import { store } from "@data/Store"
 
 export async function pageLoader({request, params}: LoaderFunctionArgs) {
     const url = new URL(request.url)
@@ -99,8 +100,9 @@ export default function Page() {
             }
         }
         setLoading(true)
+        const site = store.getState().site.site
         dispatch(loginToDashboard({
-            server: "http://localhost:8080",
+            server: `${site.emby.protocol}://${site.emby.host}:${site.emby.port}`,
             username,
             password,
             callback

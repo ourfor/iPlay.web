@@ -10,6 +10,7 @@ import { config } from "@api/config";
 import { AddNewSiteModel } from "@api/iPlayApi";
 import { produceMessage } from "@data/Message";
 import { BilibiliQRCode } from "./BilibiliQRCode";
+import TextArea from "antd/es/input/TextArea";
 
 export function AddSiteDialog() {
     const dispatch = useAppDispatch()
@@ -79,7 +80,8 @@ export function AddSiteDialog() {
                     options={[
                         { label: "emby", value: "emby" },
                         { label: "jellyfin", value: "jellyfin" },
-                        { label: "bilibili", value: "bilibili" }
+                        { label: "bilibili", value: "bilibili" },
+                        { label: "other", value: "other" },
                     ]} />
             </div>
             {type === "emby" || type == "jellyfin" ?(
@@ -99,6 +101,7 @@ export function AddSiteDialog() {
             </>
             ): null}
             {type === "bilibili" ? <BilibiliQRCode onCompleted={data => addNewSiteWithData(type, remark, data)} /> : null}
+            {type === "other" ? <TextArea /> : null}
             <div className={style["inline"]}>
                 <Button onClick={() => addNewSite(type, remark, server, username, password)}
                     style={{width: "80%", margin: "0.75rem auto"}}>添加</Button>

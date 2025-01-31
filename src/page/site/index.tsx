@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import style from "./index.module.scss"
 import { Spin } from "@components/animation/Spin"
 import { config } from "@api/config"
@@ -16,6 +16,8 @@ import { AppstoreOutlined, LoginOutlined } from '@ant-design/icons'
 export default function Page() {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const [choose, setChoose] = useState(-1)
+    const defaultSite = usePromise(() => config.iplay?.getConfig("default-siteId"), [choose])
     const sites = usePromise(() => config.iplay?.getAllSites())
     return (
         <div className={style.page}>
@@ -37,6 +39,24 @@ export default function Page() {
                 </Card>
                 </div>
             ))}
+
+            <div style={{padding: "0.5rem"}}>
+                <Card className={style.row}>
+                    {defaultSite.loading ? <Spin /> : null}
+                    {defaultSite.data ? <div>default site: </div> : null}
+                    <span style={{flexGrow: 1}}>
+                    {sites.data?.data?.map((site) => (
+                        <>
+                            <Tag icon={<AppstoreOutlined />} 
+                                color={`${defaultSite.data?.data}` == site.id ? "red" : "green"} 
+                                onClick={() => config.iplay?.setConfig("default-siteId", site.id) && setChoose(Date.now())}>
+                                {site.remark}
+                            </Tag>
+                        </>
+                    ))}
+                    </span>
+                </Card>
+            </div>
 
             <AddSiteDialog />
             <div style={{width: "100%", display: "flex", justifyContent: "center"}}>

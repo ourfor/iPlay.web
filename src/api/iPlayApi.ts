@@ -83,11 +83,11 @@ export class iPlayApi {
         return await res.json() as Response<SiteModel[]>
     }
 
-    async getAllAlbums(siteId = "1") {
+    async getAllAlbums(siteId = "-1") {
         if (!this.server) return;
         const url = new URL(this.server)
         url.pathname = "/media/albums"
-        url.searchParams.set("id", `${siteId}`)
+        url.searchParams.set("siteId", `${siteId}`)
         const res = await fetch(url, {
             headers: {
                 "Authorization": `Basic ${btoa(`${this.username}:${this.password}`)}`
@@ -96,7 +96,7 @@ export class iPlayApi {
         return await res.json() as Response<AlbumModel[]>
     }
 
-    async getMedia(siteId = "1", id: string) {
+    async getMedia(siteId = "-1", id: string) {
         if (!this.server) return;
         const url = new URL(this.server)
         url.pathname = "/media/detail"
@@ -107,7 +107,33 @@ export class iPlayApi {
                 "Authorization": `Basic ${btoa(`${this.username}:${this.password}`)}`
             }
         })
-        return await res.json() as Response<MediaModel>
+        let result = await res.json() as Response<MediaModel>
+        result.data?.sources?.forEach(source => {
+            if (source.url.startsWith("/")) {
+                source.url = `${this.server}${source.url}`
+            }
+        }) 
+        return result;
+    }
+
+    async getMediaSource(siteId = "-1", id: string) {
+        if (!this.server) return;
+        const url = new URL(this.server)
+        url.pathname = "/media/source"
+        url.searchParams.set("siteId", `${siteId}`)
+        url.searchParams.set("id", `${id}`)
+        const res = await fetch(url, {
+            headers: {
+                "Authorization": `Basic ${btoa(`${this.username}:${this.password}`)}`
+            }
+        })
+        let sources =  await res.json() as Response<SourceModel[]>
+        sources.data?.forEach(source => {
+            if (source.url.startsWith("/")) {
+                source.url = `${this.server}${source.url}`
+            }
+        })
+        return sources
     }
 
     async getLatestAlbumMedia(album: AlbumModel) {
@@ -136,5 +162,50 @@ export class iPlayApi {
             body: JSON.stringify(model)
         })
         return await res.json() as Response<object> 
+    }
+
+    async search(keyword: string, siteId = -1) {
+        if (!this.server) return;
+        const url = new URL(this.server)
+        url.pathname = `/media/search`
+        url.searchParams.set("keyword", keyword)
+        url.searchParams.set("siteId", siteId.toString())
+        const res = await fetch(url, {
+            headers: {
+                "Authorization": `Basic ${btoa(`${this.username}:${this.password}`)}`
+            }
+        })
+        return await res.json() as Response<MediaModel[]>  
+    }
+
+    async getConfig(key: string) {
+        if (!this.server) return;
+        const url = new URL(this.server)
+        url.pathname = `/config`
+        url.searchParams.set("key", key)
+        const res = await fetch(url, {
+            headers: {
+                "Authorization": `Basic ${btoa(`${this.username}:${this.password}`)}`
+            }
+        })
+        return await res.json() as Response<string>
+    }
+
+    async setConfig(key: string, value: string) {
+        if (!this.server) return;
+        const url = new URL(this.server)
+        url.pathname = `/config`
+        const res = await fetch(url, {
+            headers: {
+                "Authorization": `Basic ${btoa(`${this.username}:${this.password}`)}`,
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                key,
+                value
+            })
+        })
+        return await res.json() as Response<string>
     }
 }

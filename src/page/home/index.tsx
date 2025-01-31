@@ -2,27 +2,21 @@ import { Album } from "@components/album/Album"
 import { MediaCard } from "@components/media/Media"
 import { logger } from "@helper/log"
 import { usePromise } from "@hook/usePromise"
-import { Media } from "@model/Media"
 import { useEffect, useState } from "react"
 import { Map } from "@model/Map"
 import style from "./index.module.scss"
-import { Header } from "@components/header/Header"
 import { Api } from "@api/emby"
-import { Banner } from "@components/banner/Banner"
-import { BannerCard } from "@components/banner/BannerCard"
-import { LoaderFunctionArgs, useLoaderData, useNavigation } from "react-router-dom"
+import { LoaderFunctionArgs, useLoaderData } from "react-router-dom"
 import { Stack } from "@components/layout/Stack"
 import _ from "lodash"
 import { queryParams } from "@hook/useQuery"
-import { Adsense } from "@components/adsense/Adsense"
-import { Footer } from "@components/footer/Footer"
 import { config } from "@api/config"
 import { MediaModel } from "@api/iPlayApi"
 
 export async function pageLoader({request, params}: LoaderFunctionArgs) {
     const query = queryParams<{site?: string}>(request.url)
     logger.info(`site id`, query.site)
-    const albums = await config.iplay?.getAllAlbums(query.site ?? "1") 
+    const albums = await config.iplay?.getAllAlbums(query.site ?? "-1") 
     return {
         params: {
             siteId: query.site

@@ -41,10 +41,6 @@ export default function Page() {
     if (!data) return null
     const bgImgset = data.image.backdrop
     const imgset = imageUrl(data.id, {maxWidth: 1050, maxHeight: 700, tag: data.image.primary})
-    const getPlayUrl = (source: MediaSource) => {
-        if (source?.Path?.startsWith("http")) return source?.Path
-        else return playUrl(source.DirectStreamUrl)
-    }
     return (
         <div className={style["page"]}>
             <Background src={bgImgset} />
@@ -65,7 +61,7 @@ export default function Page() {
                         <article>{data.description}</article>
                         {type === "movie" && 
                         <Button className={style.playNow}
-                            onClick={() => navigate(`/play/${id}`)} 
+                            onClick={() => navigate(`/play/${id}?siteId=${data.siteId}`)} 
                             color="primary">立即播放
                         </Button>
                         }

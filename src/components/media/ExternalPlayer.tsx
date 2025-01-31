@@ -18,28 +18,8 @@ const players = {
         title: "iPlay",
         icon: iPlayIcon,
         action: (videoUrl: string) => {
-            const video_url = videoUrl
-            const audio_url = ""
-            const url = "iplay://play/any";
-            const video = new URL(url);
-            const origin = new URL(video_url).origin;
-            const http_option = {
-                "demuxer-lavf-o": `headers=Referer:${origin}`,
-                "http-header-fields": `Referer:${origin}`
-            };
-            const extra = {
-                "Referer": origin
-            };
-            video.searchParams.set("option", JSON.stringify(http_option));
-            video.searchParams.set("source", JSON.stringify({
-                "video": video_url,
-                "audio": audio_url,
-                "extra": extra
-            }));
-            (window.chrome as any)?.webview?.postMessage(JSON.stringify({
-                "type": "play",
-                "data": video.href
-            }));
+            const url = `iplay://play/any?url=${btoa(videoUrl)}`;
+            window.open(url)
         }
     },
     iina: {

@@ -43,7 +43,7 @@ export function EpisodeCard(episode: Episode) {
                             value={source}
                             onValueChange={v => setSource(v)}
                             defaultValue={source ?? ""}>
-                            <Select.Trigger placeholder="选择媒体文件" />
+                            <Select.Trigger aria-placeholder="选择媒体文件" />
                             <Select.Content>
                             {sources.map(({value, label}, i) => 
                                 <Select.Item key={`${i}`} value={value}>{label}</Select.Item>)}
