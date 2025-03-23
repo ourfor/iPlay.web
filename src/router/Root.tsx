@@ -12,7 +12,9 @@ import { Page } from "../page/spin";
 export async function checker({params, request, context}: LoaderFunctionArgs) {
     logger.info(`check site status`)
     const path = new URL(request.url).pathname
-    if (path === "/login") return null
+    if (path === "/login" ||
+        path === "/dev"
+    ) return null
     const token = Api.emby?.user.AccessToken
     if (!token) throw new Exception("login required", ExceptionType.NO_USER)
     return null

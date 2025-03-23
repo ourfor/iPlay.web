@@ -7,6 +7,7 @@ import PagePlay, { pageLoader as pagePlayLoader } from "@page/play"
 import PageAlbum, { pageLoader as pageAlbumLoader } from "@page/album"
 import PageSearch, { pageLoader as pageSearchLoader } from "@page/search"
 import PageFavorite, { pageLoader as pageFavoriteLoader } from "@page/favorite"
+import PageDev from "@page/dev"
 import PageError from "@page/error"
 import { RouteObject, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { logger } from "@helper/log"
@@ -67,6 +68,11 @@ const pages: RouteObject[] = [
         path: "/album/:id",
         loader: pageAlbumLoader,
         element: <PageAlbum />,
+        errorElement: <PageError /> 
+    },
+    { 
+        path: "/dev",
+        element: <PageDev />,
         errorElement: <PageError /> 
     },
     {
