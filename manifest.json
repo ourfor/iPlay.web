@@ -11,16 +11,5 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff",
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "*.html",
-        "*.css",
-        "*.js"
-      ],
-      "matches": [],
-      "extension_ids": []
-    }
-  ]
+  "background_color": "#ffffff"
 }
